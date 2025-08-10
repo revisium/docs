@@ -12,18 +12,18 @@ Get up and running with Revisium in just a few minutes. This guide will walk you
 
 The fastest way to get started is with our hosted service:
 
-1. **Sign up** at [https://cloud.revisium.io/](https://cloud.revisium.io/signup)
-2. **Create your organization** and first project
-3. **Start building** immediately - no setup required!
+**Sign up** at [https://cloud.revisium.io/](https://cloud.revisium.io/signup) using Google or GitHub and start building immediately - no setup required!
 
 Perfect for testing, prototyping, and small projects.
 
 </TabItem>
 <TabItem value="docker-compose" label="Self-hosted (Docker)">
 
-Perfect for local development and self-hosting. Copy the following code to `docker-compose.yml` file
+Perfect for local development and self-hosting:
 
-```bash
+**Step 1:** Create a `docker-compose.yml` file with the following content:
+
+```yaml
 services:
   db:
     image: postgres:17.4-alpine
@@ -43,13 +43,21 @@ services:
       DATABASE_URL: postgresql://revisium:<password>@db:5432/revisium-dev?schema=public
 ```
 
-and then run in bash
+**Step 2:** Replace `<password>` with a secure password of your choice
+
+**Step 3:** Run the services:
 
 ```shell
 docker-compose up -d
 ```
 
-Access your instance at [http://localhost:8080](http://localhost:8080)
+**Step 4:** Access your instance at [http://localhost:8080](http://localhost:8080)
+
+**Step 5:** Login using the default credentials:
+- Username: `admin`  
+- Password: `admin`
+
+🎉 **You're ready to go!** Your Revisium instance is now running locally.
 
 </TabItem>
 </Tabs>
@@ -58,7 +66,10 @@ Access your instance at [http://localhost:8080](http://localhost:8080)
 
 ### 1. Access the Admin Interface
 
-Open your browser and navigate to [http://localhost:3000](http://localhost:3000). You'll see the Revisium Admin interface.
+**For Self-hosted:** Open your browser and navigate to [http://localhost:8080](http://localhost:8080)
+**For Cloud:** Visit your project dashboard at [cloud.revisium.io](https://cloud.revisium.io)
+
+You'll see the Revisium Admin interface where you can manage your data models and content.
 
 ### 2. Create Your First Organization
 
