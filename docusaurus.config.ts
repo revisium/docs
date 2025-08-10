@@ -83,7 +83,7 @@ const config: Config = {
           type: "docSidebar",
           sidebarId: "docsSidebar",
           position: "left",
-          label: "Documentation",
+          label: "Docs",
         },
         {
           href: "https://github.com/revisium/revisium",
