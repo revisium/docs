@@ -1,0 +1,130 @@
+/**
+ * Custom CSS for Revisium Documentation
+ * Using Revisium brand colors and typography
+ */
+
+/* Import the Atkinson Hyperlegible font used by Revisium */
+@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+/* Revisium color scheme - using exact colors from revisium.io */
+:root {
+  /* Primary colors - Revisium blue palette */
+  --ifm-color-primary: #2CA1E3;
+  --ifm-color-primary-dark: #3EA9E5;
+  --ifm-color-primary-darker: #51B2E8;
+  --ifm-color-primary-darkest: #66BBEB;
+  --ifm-color-primary-light: #7CC5EE;
+  --ifm-color-primary-lighter: #92CFF1;
+  --ifm-color-primary-lightest: #AADAF4;
+  
+  /* Typography */
+  --ifm-font-family-base: 'Atkinson Hyperlegible', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --ifm-font-family-monospace: 'JetBrains Mono', 'Fira Code', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+  
+  /* Code highlighting */
+  --ifm-code-font-size: 95%;
+  --docusaurus-highlighted-code-line-bg: rgba(44, 161, 227, 0.1);
+  
+  /* Spacing and borders */
+  --ifm-global-radius: 8px;
+  --ifm-code-background: #F3F3F3;
+  --ifm-code-color: #313941;
+  
+  /* Revisium gray palette for secondary colors */
+  --ifm-color-secondary: #6F757A;
+  --ifm-color-secondary-dark: #535A61;
+  --ifm-color-secondary-darker: #313941;
+  --ifm-color-secondary-darkest: #0A131D;
+  --ifm-color-secondary-light: #8C9195;
+  --ifm-color-secondary-lighter: #A9ACB0;
+  --ifm-color-secondary-lightest: #C6C8CB;
+}
+
+/* Dark mode colors - lighter blues for dark theme */
+[data-theme='dark'] {
+  /* Primary colors for dark mode - lighter Revisium blues */
+  --ifm-color-primary: #7CC5EE;
+  --ifm-color-primary-dark: #66BBEB;
+  --ifm-color-primary-darker: #51B2E8;
+  --ifm-color-primary-darkest: #3EA9E5;
+  --ifm-color-primary-light: #92CFF1;
+  --ifm-color-primary-lighter: #AADAF4;
+  --ifm-color-primary-lightest: #C4E5F7;
+  
+  /* Code highlighting for dark mode */
+  --docusaurus-highlighted-code-line-bg: rgba(124, 197, 238, 0.15);
+  --ifm-code-background: #313941;
+  --ifm-code-color: #E2E4E5;
+  
+  /* Background adjustments using Revisium grays */
+  --ifm-background-color: #0A131D;
+  --ifm-background-surface-color: #313941;
+}
+
+/* Logo styling */
+.navbar__logo img {
+  height: 32px;
+  width: auto;
+}
+
+/* Hero section styling - using Revisium blue gradient */
+.hero--primary {
+  background: linear-gradient(135deg, #0A131D 0%, #2CA1E3 50%, #7CC5EE 100%);
+  color: white;
+}
+
+.hero__title {
+  font-weight: 700;
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.hero__subtitle {
+  font-size: 1.25rem;
+  opacity: 0.9;
+  margin-bottom: 2rem;
+}
+
+/* Button styling */
+.button--secondary {
+  --ifm-button-background-color: rgba(255, 255, 255, 0.1);
+  --ifm-button-border-color: rgba(255, 255, 255, 0.3);
+  --ifm-button-color: white;
+  backdrop-filter: blur(10px);
+}
+
+.button--secondary:hover {
+  --ifm-button-background-color: rgba(255, 255, 255, 0.2);
+  --ifm-button-border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Code block improvements */
+.prism-code {
+  border-radius: var(--ifm-global-radius);
+  font-family: var(--ifm-font-family-monospace);
+}
+
+/* Table of contents styling */
+.table-of-contents__link {
+  font-family: var(--ifm-font-family-base);
+}
+
+/* Sidebar styling */
+.menu__link {
+  font-family: var(--ifm-font-family-base);
+}
+
+/* Responsive logo sizing */
+@media (max-width: 768px) {
+  .navbar__logo img {
+    height: 28px;
+  }
+  
+  .hero__title {
+    font-size: 2.5rem;
+  }
+  
+  .hero__subtitle {
+    font-size: 1.1rem;
+  }
+}
