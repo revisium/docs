@@ -23,6 +23,9 @@
   --ifm-font-family-monospace:
     "JetBrains Mono", "Fira Code", Monaco, "Cascadia Code", "Roboto Mono",
     Consolas, "Courier New", monospace;
+  
+  /* Font sizes */
+  --ifm-font-size-base: 16px;
 
   /* Code highlighting */
   --ifm-code-font-size: 95%;
@@ -115,6 +118,41 @@
 /* Sidebar styling */
 .menu__link {
   font-family: var(--ifm-font-family-base);
+  font-size: 14px;
+}
+
+/* Make menu caret smaller and semi-transparent */
+.menu__caret {
+  /*width: 8px !important;*/
+  /*height: 8px !important;*/
+  opacity: 0.5 !important;
+  transition: opacity 0.2s ease !important;
+}
+
+.menu__caret::before {
+  /*width: 3px !important;*/
+  /*height: 3px !important;*/
+  /*border-width: 1px 1px 0 0 !important;*/
+  border-color: var(--ifm-color-emphasis-600) !important;
+}
+
+/* Hover effect */
+.menu__link:hover .menu__caret::before  {
+  opacity: 0.1 !important;
+}
+
+/* Also apply to sublist caret elements */
+.menu__link--sublist-caret .menu__caret {
+  opacity: 0.5 !important;
+  transition: opacity 0.2s ease !important;
+}
+
+.menu__link--sublist-caret .menu__caret::before {
+  border-color: var(--ifm-color-emphasis-600) !important;
+}
+
+.menu__link--sublist-caret:hover .menu__caret::before {
+  opacity: 0.1 !important;
 }
 
 /* Responsive logo sizing */

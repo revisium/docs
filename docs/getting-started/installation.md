@@ -34,7 +34,7 @@ services:
     pull_policy: always
     depends_on:
       - db
-    image: revisium/revisium:v2.0.0
+    image: revisium/revisium:v2.2.0
     ports:
       - 8080:8080
     environment:
