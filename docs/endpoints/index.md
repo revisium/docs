@@ -36,6 +36,5 @@ From a single schema definition, get:
 
 ## Next Steps
 
-- [Configuration & Setup](./configuration) - Environment setup and Core API integration
 - [GraphQL API](./graphql/) - Complete GraphQL proxy documentation
 - [REST API](./rest/) - REST proxy documentation *(coming soon)*

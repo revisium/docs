@@ -984,8 +984,3 @@ describe('Performance Tests', () => {
 - Performance profiling for optimization
 - Load testing and benchmarking
 - Proactive alerting on performance degradation
-
-## Next Steps
-
-- [Caching](./caching) - Detailed caching strategies
-- [Configuration](../configuration) - Performance-related configuration options

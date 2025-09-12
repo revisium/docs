@@ -131,7 +131,6 @@ Now that you have your first project running:
 
 1. **Explore Endpoints**: Learn about [GraphQL API](../endpoints/graphql/) for dynamic API generation
 2. **Try Advanced Features**: Understand filtering, sorting, and relationships
-3. **Configure Your Setup**: Check [Endpoint Configuration](../endpoints/configuration)
 4. **Build Applications**: Create powerful APIs from your schemas
 5. **Deploy to Production**: Set up your production environment
 

@@ -134,4 +134,3 @@ NODE_ENV=development
 
 - [Getting Started Guide](../getting-started/) - Set up your first Revisium project
 - [Endpoints Documentation](../endpoints/) - Learn about API generation and usage
-- [Deployment Guide](../deployment/) - Production deployment strategies
