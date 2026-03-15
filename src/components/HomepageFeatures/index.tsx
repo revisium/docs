@@ -5,52 +5,45 @@ import styles from './styles.module.css';
 
 type FeatureItem = {
   title: string;
-  Svg: React.ComponentType<React.ComponentProps<'svg'>>;
   description: ReactNode;
 };
 
 const FeatureList: FeatureItem[] = [
   {
-    title: 'Visual Schema Builder',
-    Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
+    title: 'JSON Schema + Foreign Keys',
     description: (
       <>
-        Design data schemas visually or through code. Perfect for headless CMS,
-        configuration management, and rapid data prototyping without backend development.
+        Any structure with referential integrity. Validation on write, cascade rename,
+        computed fields, file attachments. Design schemas visually or via API.
       </>
     ),
   },
   {
-    title: 'Git-Inspired Workflows',
-    Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
+    title: 'Git-Like Versioning',
     description: (
       <>
-        Branch your data and schemas like code. Perfect source of truth for business rules,
-        configurations, and reference data with full history and environment management.
+        Branches, revisions, drafts. Full history, diff, rollback.
+        Draft → review → commit workflow. Schema evolution with automatic data transforms.
       </>
     ),
   },
   {
-    title: 'Multi-Protocol APIs',
-    Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
+    title: 'Auto-Generated APIs',
     description: (
       <>
-        Transform schemas into production-ready APIs instantly. Content hubs, API gateways,
-        and multi-channel applications with built-in validation and caching.
+        Typed GraphQL + REST APIs generated from your schema. Filtering, sorting, pagination,
+        FK resolution. MCP Protocol for AI agents. Admin UI included.
       </>
     ),
   },
 ];
 
-function Feature({title, Svg, description}: FeatureItem) {
+function Feature({title, description}: Readonly<FeatureItem>) {
   return (
     <div className={clsx('col col--4')}>
-      <div className="text--center">
-        <Svg className={styles.featureSvg} role="img" />
-      </div>
-      <div className="text--center padding-horiz--md">
-        <Heading as="h3">{title}</Heading>
-        <p>{description}</p>
+      <div className={styles.featureCard}>
+        <Heading as="h3" className={styles.featureTitle}>{title}</Heading>
+        <p className={styles.featureDescription}>{description}</p>
       </div>
     </div>
   );

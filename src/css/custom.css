@@ -1,20 +1,19 @@
 /**
  * Custom CSS for Revisium Documentation
- * Using Revisium brand colors and typography
+ * Grayscale design matching Revisium Admin UI
  */
 
 @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 
-/* Revisium color scheme - using exact colors from revisium.io */
+/* Light mode — neutral grayscale palette */
 :root {
-  /* Primary colors - Revisium blue palette */
-  --ifm-color-primary: #2ca1e3;
-  --ifm-color-primary-dark: #3ea9e5;
-  --ifm-color-primary-darker: #51b2e8;
-  --ifm-color-primary-darkest: #66bbeb;
-  --ifm-color-primary-light: #7cc5ee;
-  --ifm-color-primary-lighter: #92cff1;
-  --ifm-color-primary-lightest: #aadaf4;
+  --ifm-color-primary: #171717;
+  --ifm-color-primary-dark: #0a0a0a;
+  --ifm-color-primary-darker: #000000;
+  --ifm-color-primary-darkest: #000000;
+  --ifm-color-primary-light: #2e2e2e;
+  --ifm-color-primary-lighter: #404040;
+  --ifm-color-primary-lightest: #525252;
 
   /* Typography */
   --ifm-font-family-base:
@@ -23,125 +22,237 @@
   --ifm-font-family-monospace:
     "JetBrains Mono", "Fira Code", Monaco, "Cascadia Code", "Roboto Mono",
     Consolas, "Courier New", monospace;
-  
+
   /* Font sizes */
   --ifm-font-size-base: 16px;
 
   /* Code highlighting */
   --ifm-code-font-size: 95%;
-  --docusaurus-highlighted-code-line-bg: rgba(44, 161, 227, 0.1);
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.05);
 
   /* Spacing and borders */
   --ifm-global-radius: 8px;
-  --ifm-code-background: #f3f3f3;
-  --ifm-code-color: #313941;
+  --ifm-code-background: #f5f5f5;
+  --ifm-code-color: #171717;
 
-  /* Revisium gray palette for secondary colors */
-  --ifm-color-secondary: #6f757a;
-  --ifm-color-secondary-dark: #535a61;
-  --ifm-color-secondary-darker: #313941;
-  --ifm-color-secondary-darkest: #0a131d;
-  --ifm-color-secondary-light: #8c9195;
-  --ifm-color-secondary-lighter: #a9acb0;
-  --ifm-color-secondary-lightest: #c6c8cb;
+  /* Link color — subtle, not screaming blue */
+  --ifm-link-color: #525252;
+  --ifm-link-hover-color: #171717;
+
+  /* Navbar */
+  --ifm-navbar-background-color: #ffffff;
+  --ifm-navbar-shadow: 0 1px 0 0 #e5e5e5;
+
+  /* Footer */
+  --ifm-footer-background-color: #171717;
+  --ifm-footer-color: #a3a3a3;
+
+  /* Sidebar */
+  --doc-sidebar-width: 280px;
 }
 
-/* Dark mode colors - lighter blues for dark theme */
+/* Dark mode */
 [data-theme="dark"] {
-  /* Primary colors for dark mode - lighter Revisium blues */
-  --ifm-color-primary: #7cc5ee;
-  --ifm-color-primary-dark: #66bbeb;
-  --ifm-color-primary-darker: #51b2e8;
-  --ifm-color-primary-darkest: #3ea9e5;
-  --ifm-color-primary-light: #92cff1;
-  --ifm-color-primary-lighter: #aadaf4;
-  --ifm-color-primary-lightest: #c4e5f7;
+  --ifm-color-primary: #e5e5e5;
+  --ifm-color-primary-dark: #d4d4d4;
+  --ifm-color-primary-darker: #c4c4c4;
+  --ifm-color-primary-darkest: #a3a3a3;
+  --ifm-color-primary-light: #f0f0f0;
+  --ifm-color-primary-lighter: #f5f5f5;
+  --ifm-color-primary-lightest: #fafafa;
 
-  /* Code highlighting for dark mode */
-  --docusaurus-highlighted-code-line-bg: rgba(124, 197, 238, 0.15);
-  --ifm-code-background: #313941;
-  --ifm-code-color: #e2e4e5;
+  --docusaurus-highlighted-code-line-bg: rgba(255, 255, 255, 0.08);
+  --ifm-code-background: #262626;
+  --ifm-code-color: #e5e5e5;
 
-  /* Background adjustments using Revisium grays */
-  --ifm-background-color: #0a131d;
-  --ifm-background-surface-color: #313941;
+  --ifm-background-color: #0a0a0a;
+  --ifm-background-surface-color: #171717;
+
+  --ifm-link-color: #d4d4d4;
+  --ifm-link-hover-color: #f5f5f5;
+
+  --ifm-navbar-background-color: #0a0a0a;
+  --ifm-navbar-shadow: 0 1px 0 0 #262626;
+
+  --ifm-footer-background-color: #0a0a0a;
+  --ifm-footer-color: #737373;
 }
 
-/* Logo styling */
+/* ── Navbar ── */
 .navbar__logo img {
   height: 32px;
   width: auto;
 }
 
-/* Hero section styling - using Revisium blue gradient */
+.navbar__title {
+  font-weight: 600;
+}
+
+/* ── Hero section — clean, no gradient ── */
 .hero--primary {
-  background: linear-gradient(135deg, #0a131d 0%, #2ca1e3 50%, #7cc5ee 100%);
-  color: white;
+  background: #ffffff;
+  color: #171717;
+}
+
+[data-theme="dark"] .hero--primary {
+  background: #0a0a0a;
+  color: #e5e5e5;
 }
 
 .hero__title {
   font-weight: 700;
   font-size: 3rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
+  color: #171717;
+}
+
+[data-theme="dark"] .hero__title {
+  color: #f5f5f5;
 }
 
 .hero__subtitle {
-  font-size: 1.25rem;
-  opacity: 0.9;
+  font-size: 1.2rem;
+  color: #525252;
   margin-bottom: 2rem;
+  font-weight: 400;
 }
 
-/* Button styling */
-.button--secondary {
-  --ifm-button-background-color: rgba(255, 255, 255, 0.1);
-  --ifm-button-border-color: rgba(255, 255, 255, 0.3);
-  --ifm-button-color: white;
-  backdrop-filter: blur(10px);
+[data-theme="dark"] .hero__subtitle {
+  color: #a3a3a3;
 }
 
-.button--secondary:hover {
-  --ifm-button-background-color: rgba(255, 255, 255, 0.2);
-  --ifm-button-border-color: rgba(255, 255, 255, 0.5);
+/* ── Buttons on hero ── */
+.hero--primary .button--secondary {
+  background-color: #171717;
+  border-color: #171717;
+  color: #ffffff;
+  font-weight: 500;
+  border-radius: 6px;
 }
 
-/* Code block improvements */
+.hero--primary .button--secondary:hover {
+  background-color: #2e2e2e;
+  border-color: #2e2e2e;
+  color: #ffffff;
+}
+
+[data-theme="dark"] .hero--primary .button--secondary {
+  background-color: #e5e5e5;
+  border-color: #e5e5e5;
+  color: #0a0a0a;
+}
+
+[data-theme="dark"] .hero--primary .button--secondary:hover {
+  background-color: #ffffff;
+  border-color: #ffffff;
+  color: #0a0a0a;
+}
+
+.hero--primary .button--primary {
+  background-color: transparent;
+  border-color: #d4d4d4;
+  color: #171717;
+  font-weight: 500;
+  border-radius: 6px;
+}
+
+.hero--primary .button--primary:hover {
+  background-color: #f5f5f5;
+  border-color: #a3a3a3;
+  color: #171717;
+}
+
+[data-theme="dark"] .hero--primary .button--primary {
+  border-color: #404040;
+  color: #e5e5e5;
+}
+
+[data-theme="dark"] .hero--primary .button--primary:hover {
+  background-color: #171717;
+  border-color: #525252;
+  color: #e5e5e5;
+}
+
+/* ── Tabs — compact, thin indicator ── */
+.tabs {
+  font-size: 0.9rem;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.tabs__item {
+  padding: 0.4rem 0.75rem;
+  border-bottom: 2px solid transparent;
+  font-weight: 500;
+}
+
+.tabs__item--active {
+  border-bottom-color: #171717;
+  color: #171717;
+}
+
+[data-theme="dark"] .tabs__item--active {
+  border-bottom-color: #e5e5e5;
+  color: #e5e5e5;
+}
+
+[data-theme="dark"] .tabs {
+  border-bottom-color: #262626;
+}
+
+
+/* ── Content spacing ── */
+.markdown h2 {
+  margin-top: 3rem;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+[data-theme="dark"] .markdown h2 {
+  border-bottom-color: #262626;
+}
+
+.markdown h3 {
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Tighter spacing for tab content panels */
+[role="tabpanel"] {
+  padding-top: 0.5rem !important;
+  padding-bottom: 0 !important;
+}
+
+/* Less space around code blocks inside tabs */
+[role="tabpanel"] .prism-code {
+  margin-bottom: 0.5rem;
+}
+
+/* ── Code blocks ── */
 .prism-code {
   border-radius: var(--ifm-global-radius);
   font-family: var(--ifm-font-family-monospace);
 }
 
-/* Table of contents styling */
-.table-of-contents__link {
-  font-family: var(--ifm-font-family-base);
-}
-
-/* Sidebar styling */
+/* ── Sidebar ── */
 .menu__link {
   font-family: var(--ifm-font-family-base);
   font-size: 14px;
 }
 
-/* Make menu caret smaller and semi-transparent */
 .menu__caret {
-  /*width: 8px !important;*/
-  /*height: 8px !important;*/
   opacity: 0.5 !important;
   transition: opacity 0.2s ease !important;
 }
 
 .menu__caret::before {
-  /*width: 3px !important;*/
-  /*height: 3px !important;*/
-  /*border-width: 1px 1px 0 0 !important;*/
   border-color: var(--ifm-color-emphasis-600) !important;
 }
 
-/* Hover effect */
-.menu__link:hover .menu__caret::before  {
+.menu__link:hover .menu__caret::before {
   opacity: 0.1 !important;
 }
 
-/* Also apply to sublist caret elements */
 .menu__link--sublist-caret .menu__caret {
   opacity: 0.5 !important;
   transition: opacity 0.2s ease !important;
@@ -155,17 +266,22 @@
   opacity: 0.1 !important;
 }
 
-/* Responsive logo sizing */
+/* ── Table of contents ── */
+.table-of-contents__link {
+  font-family: var(--ifm-font-family-base);
+}
+
+/* ── Responsive ── */
 @media (max-width: 768px) {
   .navbar__logo img {
     height: 28px;
   }
 
   .hero__title {
-    font-size: 2.5rem;
+    font-size: 2.2rem;
   }
 
   .hero__subtitle {
-    font-size: 1.1rem;
+    font-size: 1.05rem;
   }
 }

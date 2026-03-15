@@ -3,92 +3,133 @@ import type { SidebarsConfig } from "@docusaurus/plugin-content-docs";
 const sidebars: SidebarsConfig = {
   docsSidebar: [
     "intro",
+    "quick-start",
     {
       type: "category",
-      label: "Getting Started",
+      label: "Core Concepts",
       link: {
         type: "doc",
-        id: "getting-started/index",
-      },
-      items: ["getting-started/installation", "getting-started/first-steps"],
-    },
-    {
-      type: "category",
-      label: "Endpoints",
-      link: {
-        type: "doc",
-        id: "endpoints/index",
+        id: "core-concepts/index",
       },
       items: [
-        {
-          type: "category",
-          label: "GraphQL API",
-          link: {
-            type: "doc",
-            id: "endpoints/graphql/index",
-          },
-          items: [
-            "endpoints/graphql/quickstart",
-            // "endpoints/graphql/revisions",
-            {
-              type: "category",
-              label: "Queries",
-              link: {
-                type: "doc",
-                id: "endpoints/graphql/queries/index",
-              },
-              items: [
-                "endpoints/graphql/queries/basic",
-                "endpoints/graphql/queries/filtering",
-                "endpoints/graphql/queries/sorting",
-                "endpoints/graphql/queries/pagination",
-                "endpoints/graphql/queries/relationships",
-              ],
-            },
-            {
-              type: "category",
-              label: "Types",
-              link: {
-                type: "doc",
-                id: "endpoints/graphql/types/index",
-              },
-              items: [
-                "endpoints/graphql/types/generated",
-                "endpoints/graphql/types/system",
-              ],
-            },
-            "endpoints/graphql/configuration",
-          ],
-        },
-        {
-          type: "category",
-          label: "REST API",
-          link: {
-            type: "doc",
-            id: "endpoints/rest/index",
-          },
-          items: [
-            // REST API documentation will be added here when implemented
-          ],
-        },
-        // {
-        //   type: "category",
-        //   label: "Advanced Topics",
-        //   items: ["endpoints/advanced/performance"],
-        // },
+        "core-concepts/platform-hierarchy",
+        "core-concepts/data-modeling",
+        "core-concepts/foreign-keys",
+        "core-concepts/computed-fields",
+        "core-concepts/files",
+        "core-concepts/versioning",
+        "core-concepts/branches",
+        "core-concepts/schema-evolution",
       ],
     },
-    // {
-    //   type: "category",
-    //   label: "Architecture",
-    //   link: {
-    //     type: "doc",
-    //     id: "architecture/index",
-    //   },
-    //   items: [
-    //     // Architecture sub-sections will be added here
-    //   ],
-    // },
+    {
+      type: "category",
+      label: "Querying Data",
+      link: {
+        type: "doc",
+        id: "querying-data/index",
+      },
+      items: [
+        "querying-data/filtering",
+        "querying-data/sorting",
+        "querying-data/pagination",
+        "querying-data/relationships",
+      ],
+    },
+    {
+      type: "category",
+      label: "Admin UI",
+      link: {
+        type: "doc",
+        id: "admin-ui/index",
+      },
+      items: [
+        "admin-ui/schema-editor",
+        "admin-ui/table-editor",
+        "admin-ui/row-editor",
+        "admin-ui/changes-diff",
+        "admin-ui/assets",
+        "admin-ui/branches-history",
+        "admin-ui/endpoints-mcp",
+      ],
+    },
+    {
+      type: "category",
+      label: "APIs",
+      link: {
+        type: "doc",
+        id: "apis/index",
+      },
+      items: [
+        "apis/system-api",
+        "apis/generated-graphql",
+        "apis/generated-rest",
+        "apis/mcp",
+        "apis/configuration",
+      ],
+    },
+    {
+      type: "category",
+      label: "Migrations",
+      link: {
+        type: "doc",
+        id: "migrations/index",
+      },
+      items: [
+        "migrations/cli-reference",
+        "migrations/migration-format",
+        "migrations/ci-cd",
+      ],
+    },
+    {
+      type: "category",
+      label: "Auth & Permissions",
+      link: {
+        type: "doc",
+        id: "auth-permissions/index",
+      },
+      items: [
+        "auth-permissions/authentication",
+        "auth-permissions/permissions",
+      ],
+    },
+    {
+      type: "category",
+      label: "Deployment",
+      link: {
+        type: "doc",
+        id: "deployment/index",
+      },
+      items: [
+        "deployment/standalone",
+        "deployment/docker-compose",
+        "deployment/configuration",
+        "deployment/infrastructure",
+      ],
+    },
+    {
+      type: "category",
+      label: "Use Cases",
+      link: {
+        type: "doc",
+        id: "use-cases/index",
+      },
+      items: [
+        "use-cases/dictionary-service",
+        "use-cases/headless-cms",
+        "use-cases/configuration-store",
+        "use-cases/ai-agent-memory",
+      ],
+    },
+    {
+      type: "category",
+      label: "Architecture",
+      link: {
+        type: "doc",
+        id: "architecture/index",
+      },
+      items: [],
+    },
   ],
 };
 

@@ -6,7 +6,7 @@ import type * as Preset from "@docusaurus/preset-classic";
 
 const config: Config = {
   title: "Revisium",
-  tagline: "Schema-first data platform with Git-inspired workflows",
+  tagline: "Your schema. Your data. Full control.",
   favicon: "favicon.svg",
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
@@ -54,8 +54,7 @@ const config: Config = {
           },
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
-          editUrl:
-            "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/",
+          editUrl: "https://github.com/revisium/docs/tree/master/",
           // Useful options to enforce blogging best practices
           onInlineTags: "warn",
           onInlineAuthors: "warn",
@@ -75,8 +74,6 @@ const config: Config = {
   },
 
   themeConfig: {
-    // Replace with your project's social card
-    image: "img/docusaurus-social-card.jpg",
     navbar: {
       title: "Revisium",
       logo: {

@@ -3,7 +3,6 @@ import clsx from "clsx";
 import Link from "@docusaurus/Link";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import Layout from "@theme/Layout";
-import HomepageFeatures from "@site/src/components/HomepageFeatures";
 import Heading from "@theme/Heading";
 
 import styles from "./index.module.css";
@@ -17,15 +16,17 @@ function HomepageHeader() {
           {siteConfig.title}
         </Heading>
         <p className="hero__subtitle">{siteConfig.tagline}</p>
+        <p className={styles.useCases}>
+          Build your own Headless&nbsp;CMS, Dictionary&nbsp;Service, Configuration&nbsp;Store,
+          AI&nbsp;Agent&nbsp;Memory, Knowledge&nbsp;Base — or anything that needs structured
+          data with versioning.
+        </p>
         <div className={styles.buttons}>
           <Link
             className="button button--secondary button--lg"
-            to="/docs/getting-started"
+            to="/docs/"
           >
-            Get Started 🚀
-          </Link>
-          <Link className="button button--primary button--lg" to="/docs/intro">
-            Learn More
+            Get Started
           </Link>
         </div>
       </div>
@@ -37,13 +38,10 @@ export default function Home(): ReactNode {
   const { siteConfig } = useDocusaurusContext();
   return (
     <Layout
-      title={`${siteConfig.title} - Schema-first data platform`}
-      description="Schema-first data platform with Git-inspired workflows. Build, manage, and evolve data schemas and APIs with powerful UI and API tools."
+      title={`${siteConfig.title} - Unopinionated data platform`}
+      description="Unopinionated data platform with referential integrity. JSON Schema flexibility + Foreign Keys reliability. Git-like versioning, auto-generated APIs, built-in Admin UI."
     >
       <HomepageHeader />
-      <main>
-        <HomepageFeatures />
-      </main>
     </Layout>
   );
 }
