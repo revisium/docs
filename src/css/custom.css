@@ -25,6 +25,7 @@
 
   /* Font sizes */
   --ifm-font-size-base: 16px;
+  --ifm-heading-font-weight: 600;
 
   /* Code highlighting */
   --ifm-code-font-size: 95%;
@@ -32,10 +33,13 @@
 
   /* Spacing and borders */
   --ifm-global-radius: 8px;
-  --ifm-code-background: #f5f5f5;
+  --ifm-code-background: #f6f8fa;
   --ifm-code-color: #171717;
+  --ifm-code-border-radius: 6px;
+  --ifm-code-padding-vertical: 0.1rem;
+  --ifm-code-padding-horizontal: 0.3rem;
 
-  /* Link color — subtle, not screaming blue */
+  /* Link color */
   --ifm-link-color: #525252;
   --ifm-link-hover-color: #171717;
 
@@ -48,7 +52,12 @@
   --ifm-footer-color: #a3a3a3;
 
   /* Sidebar */
-  --doc-sidebar-width: 280px;
+  --doc-sidebar-width: 260px;
+
+  /* Content area */
+  --ifm-line-height-base: 1.65;
+  --ifm-leading: 1.25rem;
+  --ifm-paragraph-margin-bottom: 1rem;
 }
 
 /* Dark mode */
@@ -62,7 +71,7 @@
   --ifm-color-primary-lightest: #fafafa;
 
   --docusaurus-highlighted-code-line-bg: rgba(255, 255, 255, 0.08);
-  --ifm-code-background: #262626;
+  --ifm-code-background: #1e1e1e;
   --ifm-code-color: #e5e5e5;
 
   --ifm-background-color: #0a0a0a;
@@ -199,13 +208,22 @@
   border-bottom-color: #262626;
 }
 
+/* ── Content typography — lighter headings, more breathing room ── */
+.markdown h1 {
+  font-weight: 600;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.02em;
+}
 
-/* ── Content spacing ── */
 .markdown h2 {
+  font-weight: 600;
+  font-size: 1.5rem;
   margin-top: 3rem;
-  margin-bottom: 0.75rem;
+  margin-bottom: 1rem;
   padding-bottom: 0.4rem;
   border-bottom: 1px solid #e5e5e5;
+  letter-spacing: -0.01em;
 }
 
 [data-theme="dark"] .markdown h2 {
@@ -213,62 +231,130 @@
 }
 
 .markdown h3 {
-  margin-top: 1.5rem;
-  margin-bottom: 0.5rem;
+  font-weight: 600;
+  font-size: 1.2rem;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.markdown p {
+  color: #404040;
+}
+
+[data-theme="dark"] .markdown p {
+  color: #a3a3a3;
+}
+
+/* ── Code blocks — softer, more padding ── */
+.prism-code {
+  border-radius: 8px;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.875rem;
+  padding: 1rem 1.25rem !important;
+  border: 1px solid #e5e5e5;
+}
+
+[data-theme="dark"] .prism-code {
+  border-color: #262626;
 }
 
 /* Tighter spacing for tab content panels */
 [role="tabpanel"] {
-  padding-top: 0.5rem !important;
+  padding-top: 0.75rem !important;
   padding-bottom: 0 !important;
 }
 
-/* Less space around code blocks inside tabs */
 [role="tabpanel"] .prism-code {
   margin-bottom: 0.5rem;
 }
 
-/* ── Code blocks ── */
-.prism-code {
-  border-radius: var(--ifm-global-radius);
-  font-family: var(--ifm-font-family-monospace);
-}
-
-/* ── Sidebar ── */
+/* ── Sidebar — lighter, more refined ── */
 .menu__link {
   font-family: var(--ifm-font-family-base);
-  font-size: 14px;
+  font-size: 13.5px;
+  font-weight: 400;
+  color: #525252;
+  padding: 0.3rem 0.75rem;
+  border-radius: 4px;
+}
+
+.menu__link:hover {
+  color: #171717;
+  background: #f5f5f5;
+}
+
+.menu__link--active {
+  font-weight: 500;
+  color: #171717;
+}
+
+[data-theme="dark"] .menu__link {
+  color: #a3a3a3;
+}
+
+[data-theme="dark"] .menu__link:hover {
+  color: #e5e5e5;
+  background: #171717;
+}
+
+[data-theme="dark"] .menu__link--active {
+  color: #e5e5e5;
 }
 
 .menu__caret {
   opacity: 0.5 !important;
   transition: opacity 0.2s ease !important;
+  transform: scale(0.75);
 }
 
 .menu__caret::before {
-  border-color: var(--ifm-color-emphasis-600) !important;
+  border-color: var(--ifm-color-emphasis-500) !important;
 }
 
-.menu__link:hover .menu__caret::before {
-  opacity: 0.1 !important;
+.menu__link:hover .menu__caret {
+  opacity: 0.7 !important;
 }
 
 .menu__link--sublist-caret .menu__caret {
-  opacity: 0.5 !important;
-  transition: opacity 0.2s ease !important;
+  opacity: 0.4 !important;
 }
 
-.menu__link--sublist-caret .menu__caret::before {
-  border-color: var(--ifm-color-emphasis-600) !important;
+.menu__link--sublist-caret:hover .menu__caret {
+  opacity: 0.7 !important;
 }
 
-.menu__link--sublist-caret:hover .menu__caret::before {
-  opacity: 0.1 !important;
-}
-
-/* ── Table of contents ── */
+/* ── Table of contents — refined ── */
 .table-of-contents__link {
   font-family: var(--ifm-font-family-base);
+  font-size: 13px;
+  color: #737373;
+}
+
+.table-of-contents__link--active {
+  color: #171717;
+  font-weight: 500;
+}
+
+[data-theme="dark"] .table-of-contents__link {
+  color: #525252;
+}
+
+[data-theme="dark"] .table-of-contents__link--active {
+  color: #e5e5e5;
+}
+
+/* ── Tables — cleaner ── */
+.markdown table {
+  font-size: 0.9rem;
+}
+
+.markdown table th {
+  font-weight: 600;
+  background: #fafafa;
+}
+
+[data-theme="dark"] .markdown table th {
+  background: #171717;
 }
 
 /* ── Responsive ── */
