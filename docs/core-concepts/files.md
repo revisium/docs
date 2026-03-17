@@ -4,22 +4,21 @@ sidebar_position: 5
 
 # Files
 
-Revisium supports file attachments at any level of your schema using the built-in `File` sub-schema. Files are stored in S3-compatible storage.
+Revisium supports file attachments at any level of your schema using the built-in File system schema. Files are stored in S3-compatible storage.
 
 ## Declaration
 
-Use `$ref: File` in your JSON Schema:
+Use the File system schema reference in your JSON Schema:
 
 ```json
 {
   "type": "object",
   "properties": {
     "title": { "type": "string", "default": "" },
-    "cover": { "$ref": "File" },
+    "cover": { "$ref": "urn:jsonschema:io:revisium:file-schema:1.0.0" },
     "gallery": {
       "type": "array",
-      "items": { "$ref": "File" },
-      "default": []
+      "items": { "$ref": "urn:jsonschema:io:revisium:file-schema:1.0.0" }
     }
   },
   "required": ["title", "cover", "gallery"]
@@ -34,13 +33,18 @@ Once uploaded, a file field contains:
 
 ```json
 {
+  "status": "uploaded",
+  "fileId": "abc123",
   "url": "https://s3.../cover.jpg",
+  "fileName": "cover.jpg",
+  "hash": "sha256...",
+  "extension": "jpg",
+  "mimeType": "image/jpeg",
   "size": 340000,
-  "mimeType": "image/jpeg"
+  "width": 1200,
+  "height": 800
 }
 ```
-
-For images, `width` and `height` are populated automatically.
 
 ## Upload Process
 
@@ -55,9 +59,9 @@ Metadata (`url`, `size`, `mimeType`) is populated automatically after upload.
 
 | Placement | Schema | Example |
 |-----------|--------|---------|
-| Single file | `{ "$ref": "File" }` | Product cover image |
-| Array of files | `{ "type": "array", "items": { "$ref": "File" } }` | Photo gallery |
-| In nested object | `{ "type": "object", "properties": { "icon": { "$ref": "File" } } }` | Category icon |
+| Single file | `{ "$ref": "urn:jsonschema:io:revisium:file-schema:1.0.0" }` | Product cover image |
+| Array of files | `{ "type": "array", "items": { "$ref": "urn:jsonschema:io:revisium:file-schema:1.0.0" } }` | Photo gallery |
+| In nested object | `{ "type": "object", "properties": { "icon": { "$ref": "urn:jsonschema:io:revisium:file-schema:1.0.0" } } }` | Category icon |
 
 ## Admin UI
 

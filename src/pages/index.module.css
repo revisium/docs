@@ -1,26 +1,42 @@
 .heroBanner {
-  padding: 4rem 0 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 60px);
   text-align: center;
   position: relative;
   overflow: hidden;
+  padding: 2rem 1rem;
 }
 
 @media screen and (max-width: 996px) {
   .heroBanner {
-    padding: 2.5rem 1rem 2rem;
+    min-height: calc(100vh - 60px);
+    padding: 2rem 1rem;
   }
 }
 
-.useCases {
-  font-size: 1rem;
+.tagline {
+  font-size: 1.3rem;
+  font-weight: 500;
   color: #525252;
-  max-width: 600px;
-  margin: 0 auto 2rem;
-  line-height: 1.6;
+  margin-bottom: 0.5rem;
 }
 
-[data-theme="dark"] .useCases {
+:global([data-theme="dark"]) .tagline {
   color: #a3a3a3;
+}
+
+.useCases {
+  font-size: 1.05rem;
+  color: #737373;
+  max-width: 600px;
+  margin: 0 auto 2rem;
+  line-height: 1.7;
+}
+
+:global([data-theme="dark"]) .useCases {
+  color: #737373;
 }
 
 .buttons {

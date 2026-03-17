@@ -5,6 +5,11 @@ const sidebars: SidebarsConfig = {
     "intro",
     "quick-start",
     {
+      type: "html",
+      value: "<div style='height: 0.75rem'></div>",
+      defaultStyle: false,
+    },
+    {
       type: "category",
       label: "Core Concepts",
       link: {

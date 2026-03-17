@@ -95,11 +95,6 @@ const config: Config = {
         },
       ],
     },
-    footer: {
-      style: "dark",
-      links: [],
-      copyright: `Copyright © ${new Date().getFullYear()} Revisium. Built with Docusaurus.`,
-    },
     prism: {
       theme: prismThemes.github,
       darkTheme: prismThemes.dracula,

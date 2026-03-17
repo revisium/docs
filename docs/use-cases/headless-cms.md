@@ -56,12 +56,11 @@ Content editors manage content in the Admin UI. Frontends consume data via auto-
     "slug": { "type": "string", "default": "" },
     "content": { "type": "string", "default": "", "contentMediaType": "text/markdown" },
     "author": { "type": "string", "default": "", "foreignKey": "authors" },
-    "cover": { "$ref": "File" },
+    "cover": { "$ref": "urn:jsonschema:io:revisium:file-schema:1.0.0" },
     "published": { "type": "boolean", "default": false },
     "tags": {
       "type": "array",
-      "items": { "type": "string", "default": "", "foreignKey": "tags" },
-      "default": []
+      "items": { "type": "string", "default": "", "foreignKey": "tags" }
     }
   },
   "required": ["title", "slug", "content", "author", "cover", "published", "tags"]
