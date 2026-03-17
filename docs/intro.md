@@ -301,8 +301,10 @@ Change types, add/remove/move fields — existing data transforms automatically.
 Auto-generated migrations, portable across environments via CI/CD.
 
 ```bash
-npx revisium schema save --folder ./schemas
-npx revisium migrate create-migrations --schemas-folder ./schemas --file ./migrations.json
+# Export migrations from source instance
+npx revisium migrate save --file ./migrations.json
+
+# Apply to target instance
 npx revisium migrate apply --file ./migrations.json
 ```
 
