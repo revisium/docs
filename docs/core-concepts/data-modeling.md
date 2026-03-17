@@ -42,8 +42,7 @@ Objects and arrays can be nested to any depth:
         "weight": { "type": "number", "default": 0 },
         "tags": {
           "type": "array",
-          "items": { "type": "string", "default": "" },
-          "default": []
+          "items": { "type": "string", "default": "" }
         }
       },
       "required": ["weight", "tags"],
@@ -73,8 +72,7 @@ A row is not limited to objects. The root type can be:
       "pricePerUnit": { "type": "number", "default": 0 }
     },
     "required": ["from", "to", "pricePerUnit"]
-  },
-  "default": []
+  }
 }
 ```
 
@@ -90,16 +88,16 @@ System fields (`id`, `createdAt`, `updatedAt`, `hash`, etc.) are stored at the d
 {
   "type": "object",
   "properties": {
-    "id": { "$ref": "RowId" },
-    "createdAt": { "$ref": "RowCreatedAt" },
-    "updatedAt": { "$ref": "RowUpdatedAt" },
+    "id": { "$ref": "urn:jsonschema:io:revisium:row-id-schema:1.0.0" },
+    "createdAt": { "$ref": "urn:jsonschema:io:revisium:row-created-at-schema:1.0.0" },
+    "updatedAt": { "$ref": "urn:jsonschema:io:revisium:row-updated-at-schema:1.0.0" },
     "title": { "type": "string", "default": "" }
   },
   "required": ["id", "createdAt", "updatedAt", "title"]
 }
 ```
 
-Available system field refs: `RowId`, `RowCreatedAt`, `RowUpdatedAt`, `RowHash`.
+Available system field refs: `urn:jsonschema:io:revisium:row-id-schema:1.0.0`, `urn:jsonschema:io:revisium:row-created-at-schema:1.0.0`, `urn:jsonschema:io:revisium:row-updated-at-schema:1.0.0`, `urn:jsonschema:io:revisium:row-hash-schema:1.0.0`.
 
 System fields can appear at any level in the schema — root, nested objects, or array items — with any field name.
 

@@ -69,8 +69,7 @@ An array of FK strings resolves to an array of objects:
         "type": "string",
         "default": "",
         "foreignKey": "tags"
-      },
-      "default": []
+      }
     }
   },
   "required": ["title", "tags"]
@@ -122,8 +121,7 @@ Foreign keys inside nested array objects are also resolved:
           "content": { "type": "string", "default": "" }
         },
         "required": ["language", "content"]
-      },
-      "default": []
+      }
     }
   },
   "required": ["title", "translations"]

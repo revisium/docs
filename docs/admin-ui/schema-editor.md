@@ -63,7 +63,7 @@ See [Computed Fields](../core-concepts/computed-fields) for formula syntax and a
 
 To add a file attachment:
 
-1. Add a **File** field (uses `$ref: File` internally)
+1. Add a **File** field (uses the File system schema internally)
 2. For galleries, use an Array of File items
 
 ## Nested Objects

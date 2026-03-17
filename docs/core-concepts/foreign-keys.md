@@ -52,8 +52,7 @@ An array of FK strings — each row references multiple rows:
     "type": "string",
     "default": "",
     "foreignKey": "tags"
-  },
-  "default": []
+  }
 }
 ```
 
@@ -75,8 +74,7 @@ Foreign keys can be placed inside nested objects:
       "content": { "type": "string", "default": "" }
     },
     "required": ["language", "content"]
-  },
-  "default": []
+  }
 }
 ```
 

@@ -15,11 +15,11 @@ function HomepageHeader() {
         <Heading as="h1" className="hero__title">
           {siteConfig.title}
         </Heading>
-        <p className="hero__subtitle">{siteConfig.tagline}</p>
+        <p className={styles.tagline}>{siteConfig.tagline}</p>
         <p className={styles.useCases}>
           Build your own Headless&nbsp;CMS, Dictionary&nbsp;Service, Configuration&nbsp;Store,
           AI&nbsp;Agent&nbsp;Memory, Knowledge&nbsp;Base — or anything that needs structured
-          data with versioning.
+          data with integrity. Versioning when you need it.
         </p>
         <div className={styles.buttons}>
           <Link

@@ -31,7 +31,7 @@ Without Redis, Revisium works with in-memory caching only (fine for single-insta
 
 ## S3 (Optional)
 
-Required for file uploads (`$ref: File` in schemas):
+Required for file uploads (File system schema in schemas):
 
 - Any S3-compatible storage works (AWS S3, MinIO, DigitalOcean Spaces, etc.)
 - Files up to 50 MB

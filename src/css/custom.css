@@ -33,7 +33,7 @@
 
   /* Spacing and borders */
   --ifm-global-radius: 8px;
-  --ifm-code-background: #f6f8fa;
+  --ifm-code-background: #ffffff;
   --ifm-code-color: #171717;
   --ifm-code-border-radius: 6px;
   --ifm-code-padding-vertical: 0.1rem;
@@ -208,6 +208,41 @@
   border-bottom-color: #262626;
 }
 
+/* ── Intro page ── */
+.intro-tagline {
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: #525252;
+  margin-bottom: 0.5rem;
+}
+
+[data-theme="dark"] .intro-tagline {
+  color: #a3a3a3;
+}
+
+.intro-usecases {
+  font-size: 1.05rem;
+  color: #737373;
+  line-height: 1.7;
+  margin-bottom: 2rem;
+}
+
+[data-theme="dark"] .intro-usecases {
+  color: #737373;
+}
+
+/* ── Content area — more left padding from sidebar ── */
+[class*="docMainContainer"] {
+  padding-left: 1.5rem !important;
+}
+
+/* ── Hide breadcrumbs, keep spacing ── */
+.theme-doc-breadcrumbs {
+  visibility: hidden;
+  height: 0;
+  margin-bottom: 1.5rem;
+}
+
 /* ── Content typography — lighter headings, more breathing room ── */
 .markdown h1 {
   font-weight: 600;
@@ -221,20 +256,24 @@
   font-size: 1.5rem;
   margin-top: 3rem;
   margin-bottom: 1rem;
-  padding-bottom: 0.4rem;
-  border-bottom: 1px solid #e5e5e5;
   letter-spacing: -0.01em;
-}
-
-[data-theme="dark"] .markdown h2 {
-  border-bottom-color: #262626;
 }
 
 .markdown h3 {
   font-weight: 600;
   font-size: 1.2rem;
-  margin-top: 2rem;
+  margin-top: 3rem;
   margin-bottom: 0.75rem;
+}
+
+.markdown ul,
+.markdown ol {
+  color: #525252;
+}
+
+[data-theme="dark"] .markdown ul,
+[data-theme="dark"] .markdown ol {
+  color: #737373;
 }
 
 .markdown p {
@@ -245,17 +284,33 @@
   color: #a3a3a3;
 }
 
-/* ── Code blocks — softer, more padding ── */
+/* ── Code blocks — clean white background with border ── */
 .prism-code {
   border-radius: 8px;
   font-family: var(--ifm-font-family-monospace);
   font-size: 0.875rem;
   padding: 1rem 1.25rem !important;
+  background-color: #ffffff !important;
   border: 1px solid #e5e5e5;
 }
 
 [data-theme="dark"] .prism-code {
-  border-color: #262626;
+  background-color: #1a1a1a !important;
+  border-color: #2a2a2a;
+}
+
+/* Code block title bar (filename) */
+div[class*="codeBlockTitle"] {
+  background-color: #fafafa !important;
+  border-bottom: 1px solid #e5e5e5;
+  font-size: 0.8rem;
+  color: #737373;
+}
+
+[data-theme="dark"] div[class*="codeBlockTitle"] {
+  background-color: #171717 !important;
+  border-bottom-color: #2a2a2a;
+  color: #737373;
 }
 
 /* Tighter spacing for tab content panels */
@@ -269,6 +324,9 @@
 }
 
 /* ── Sidebar — lighter, more refined ── */
+.menu {
+  padding-top: 2rem !important;
+}
 .menu__link {
   font-family: var(--ifm-font-family-base);
   font-size: 13.5px;

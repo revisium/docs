@@ -15,7 +15,7 @@ Every migration has:
 | `changeType` | `init` \| `update` \| `rename` \| `remove` | Migration type |
 | `id` | string | ISO 8601 timestamp — unique identifier and sort key |
 | `tableId` | string | Target table name |
-| `hash` | string | SHA-256 hash of the resulting schema (integrity check) |
+| `hash` | string | SHA-1 hash of the resulting schema (integrity check) |
 
 ## Init Migration
 
@@ -143,12 +143,12 @@ Before application, each migration is validated:
 - **Format** — valid JSON, required fields present
 - **Schema** — valid JSON Schema Draft 2020-12 (for `init`)
 - **Dependencies** — FK references point to existing tables
-- **Hash** — SHA-256 matches to detect manual modifications
+- **Hash** — SHA-1 matches to detect manual modifications
 - **Ordering** — migrations sorted chronologically by `id`
 
 ## Hash Calculation
 
-The `hash` field is a SHA-256 of the resulting schema content. It serves two purposes:
+The `hash` field is a SHA-1 of the resulting schema content. It serves two purposes:
 
 1. **Integrity check** — detects manual modifications to the migration file
 2. **Deduplication** — prevents applying the same logical change twice
