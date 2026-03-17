@@ -9,7 +9,7 @@ import { ScreenshotRow } from '@site/src/components/Screenshot';
 
 # Quick Start
 
-Get Revisium running and create your first project.
+Get Revisium running and create your first project. This guide uses the Admin UI — you can also do everything via [REST API, GraphQL, or MCP](./apis/).
 
 ## 1. Start Revisium
 
@@ -67,14 +67,7 @@ Open [http://localhost:8080](http://localhost:8080). Login: `admin` / `admin`
 </TabItem>
 </Tabs>
 
-## 2. Connect
-
-Choose how you want to interact with Revisium:
-
-<Tabs>
-<TabItem value="ui" label="Admin UI" default>
-
-Open the Admin UI in your browser:
+## 2. Open the Admin UI
 
 - **Cloud:** [cloud.revisium.io](https://cloud.revisium.io/signup) — sign in with Google or GitHub
 - **Standalone:** [http://localhost:9222](http://localhost:9222) — no auth by default, with `--auth`: `admin` / `admin`
@@ -82,58 +75,7 @@ Open the Admin UI in your browser:
 
 <Screenshot alt="Revisium Admin UI — empty project list after first launch" src="/img/screenshots/empty-project-list.png" />
 
-</TabItem>
-<TabItem value="api" label="REST API">
-
-Authenticate to get a JWT token (Standalone/Docker only — for Cloud, sign in via browser with Google/GitHub):
-
-```bash
-curl -X POST http://localhost:8080/api/auth/login \
-  -H "Content-Type: application/json" \
-  -d '{ "username": "admin", "password": "admin" }'
-```
-
-Response:
-```json
-{ "accessToken": "eyJhbGciOiJIUzI1NiIs..." }
-```
-
-Use the token in all subsequent requests:
-```bash
--H "Authorization: Bearer <accessToken>"
-```
-
-</TabItem>
-<TabItem value="mcp" label="MCP">
-
-Add Revisium as an MCP server (example for [Claude Code](https://claude.ai/claude-code)):
-
-```bash
-# Cloud
-claude mcp add --transport http revisium https://cloud.revisium.io/mcp
-
-# Standalone
-claude mcp add --transport http revisium http://localhost:9222/mcp
-
-# Docker
-claude mcp add --transport http revisium http://localhost:8080/mcp
-```
-
-Then authenticate:
-```
-You: Login to Revisium with username "admin" and password "admin"
-Claude: [Uses login tool] Successfully logged in.
-```
-
-For Cloud, use your Google/GitHub credentials instead.
-
-</TabItem>
-</Tabs>
-
 ## 3. Create a Project
-
-<Tabs>
-<TabItem value="ui" label="Admin UI" default>
 
 1. Click **New Project**
 2. Enter a name (e.g., `blog`)
@@ -141,52 +83,7 @@ For Cloud, use your Google/GitHub credentials instead.
 
 <Screenshot alt="Create Project — entering project name" src="/img/screenshots/create-project.png" />
 
-</TabItem>
-<TabItem value="api" label="REST API">
-
-Replace `<username>` with your username (`admin` for Standalone/Docker, your login for Cloud).
-
-```bash
-curl -X POST https://cloud.revisium.io/api/organization/<username>/projects \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer <accessToken>" \
-  -d '{ "projectName": "blog" }'
-```
-
-Get the `draftRevisionId` — you'll need it for all next steps:
-
-```bash
-curl https://cloud.revisium.io/api/organization/<username>/projects/blog/branches/master/draft \
-  -H "Authorization: Bearer <accessToken>"
-```
-
-Response:
-```json
-{
-  "id": "abc123-...",
-  ...
-}
-```
-
-Save the `id` value as `<draftRevisionId>` for the commands below.
-
-</TabItem>
-<TabItem value="mcp" label="MCP">
-
-```
-You: Create a project called "blog"
-
-Claude: [Uses createProject tool]
-Created project "blog" with default master branch.
-```
-
-</TabItem>
-</Tabs>
-
 ## 4. Design a Schema
-
-<Tabs>
-<TabItem value="ui" label="Admin UI" default>
 
 1. Click **New Table** and name it `posts`
 2. In the Schema Editor, add fields:
@@ -203,45 +100,7 @@ Created project "blog" with default master branch.
   <Screenshot alt="Create Table review — JSON Schema" src="/img/screenshots/create-table-schema.png" />
 </ScreenshotRow>
 
-</TabItem>
-<TabItem value="api" label="REST API">
-
-```bash
-curl -X POST https://cloud.revisium.io/api/revision/<draftRevisionId>/tables \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer <accessToken>" \
-  -d '{
-    "tableId": "posts",
-    "schema": {
-      "type": "object",
-      "properties": {
-        "title": { "type": "string", "default": "" },
-        "content": { "type": "string", "default": "", "contentMediaType": "text/markdown" },
-        "published": { "type": "boolean", "default": false }
-      },
-      "required": ["title", "content", "published"]
-    }
-  }'
-```
-
-</TabItem>
-<TabItem value="mcp" label="MCP">
-
-```
-You: Create a "posts" table with title (string), content (markdown), and published (boolean)
-
-Claude: [Reads schema specification resource]
-[Uses createTable tool]
-Created table "posts" with 3 fields.
-```
-
-</TabItem>
-</Tabs>
-
 ## 5. Add Content
-
-<Tabs>
-<TabItem value="ui" label="Admin UI" default>
 
 After creating the table, the Table Editor opens automatically (or select the table from the list in **Database**).
 
@@ -264,40 +123,7 @@ To open the full Row Editor page, hover over the row id and click **Open** from 
   <Screenshot alt="Row Editor page — full view of the record" src="/img/screenshots/row-page.png" />
 </ScreenshotRow>
 
-</TabItem>
-<TabItem value="api" label="REST API">
-
-```bash
-curl -X POST https://cloud.revisium.io/api/revision/<draftRevisionId>/tables/posts/create-row \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer <accessToken>" \
-  -d '{
-    "rowId": "hello-world",
-    "data": {
-      "title": "Hello World",
-      "content": "My first post using Revisium.",
-      "published": true
-    }
-  }'
-```
-
-</TabItem>
-<TabItem value="mcp" label="MCP">
-
-```
-You: Add a post "hello-world" with title "Hello World" and mark it as published
-
-Claude: [Uses createRow tool]
-Created row "hello-world" in posts table.
-```
-
-</TabItem>
-</Tabs>
-
 ## 6. Commit Changes
-
-<Tabs>
-<TabItem value="ui" label="Admin UI" default>
 
 Committing is optional — you can keep working in draft without committing. But when you need version history, rollback, or want to serve data via a HEAD endpoint, commit your changes.
 
@@ -321,33 +147,7 @@ Click any row change to see the field-level diff. Then click **Commit** in the t
 
 After committing, the draft resets and a new immutable revision becomes HEAD. Endpoint data availability depends on whether the endpoint is bound to HEAD or Draft (see next step).
 
-</TabItem>
-<TabItem value="api" label="REST API">
-
-```bash
-curl -X POST https://cloud.revisium.io/api/organization/<username>/projects/blog/branches/master/create-revision \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer <accessToken>" \
-  -d '{ "comment": "Add posts table" }'
-```
-
-</TabItem>
-<TabItem value="mcp" label="MCP">
-
-```
-You: Commit these changes
-
-Claude: [Uses commitRevision tool]
-Created revision with comment "Add posts table".
-```
-
-</TabItem>
-</Tabs>
-
 ## 7. Create an API Endpoint
-
-<Tabs>
-<TabItem value="ui" label="Admin UI" default>
 
 1. Expand the **Management** section in the sidebar and click **Endpoints**
 2. Select the **REST API** tab (or GraphQL)
@@ -368,30 +168,6 @@ Click the **code icon** (`</>`) to open the Swagger UI. Notice how Head shows on
   <Screenshot alt="Swagger HEAD — posts table only (committed data)" src="/img/screenshots/swagger-head.png" />
   <Screenshot alt="Swagger Draft — posts + user tables (includes uncommitted changes)" src="/img/screenshots/swagger-draft.png" />
 </ScreenshotRow>
-
-</TabItem>
-<TabItem value="api" label="REST API">
-
-First, get the HEAD revision ID:
-
-```bash
-curl https://cloud.revisium.io/api/organization/<username>/projects/blog/branches/master \
-  -H "Authorization: Bearer <accessToken>"
-```
-
-Then create an endpoint:
-
-```bash
-curl -X POST https://cloud.revisium.io/api/revision/<headRevisionId>/endpoints \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer <accessToken>" \
-  -d '{ "type": "GRAPHQL" }'
-```
-
-</TabItem>
-</Tabs>
-
-Your API is live — GraphQL and REST endpoints are auto-generated from your schema.
 
 ## 8. Query Your Data
 
