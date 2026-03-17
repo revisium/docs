@@ -10,7 +10,6 @@ Revisium is built on a set of foundational concepts that work together: a hierar
 
 | Concept | What it does |
 |---------|-------------|
-| [Platform Hierarchy](./platform-hierarchy) | Organization → Project → Branch → Revision → Table → Row |
 | [Data Modeling](./data-modeling) | Define field types, nesting, constraints for every table |
 | [Foreign Keys](./foreign-keys) | Referential integrity between tables with cascade operations |
 | [Computed Fields](./computed-fields) | Formula expressions (`x-formula`) with 40+ built-in functions |
@@ -18,5 +17,6 @@ Revisium is built on a set of foundational concepts that work together: a hierar
 | [Versioning](./versioning) | Draft → commit → HEAD workflow with full history and diff |
 | [Branches](./branches) | Isolated development lines within a project |
 | [Schema Evolution](./schema-evolution) | Change types, add/remove fields — data transforms automatically |
+| [Platform Hierarchy](./platform-hierarchy) | Organization → Project → Branch → Revision → Table → Row |
 
 These concepts combine to provide a platform where schema defines structure, foreign keys enforce relationships, versioning tracks history, and APIs are generated automatically from whatever you build.

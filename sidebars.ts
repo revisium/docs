@@ -17,7 +17,6 @@ const sidebars: SidebarsConfig = {
         id: "core-concepts/index",
       },
       items: [
-        "core-concepts/platform-hierarchy",
         "core-concepts/data-modeling",
         "core-concepts/foreign-keys",
         "core-concepts/computed-fields",
@@ -25,6 +24,7 @@ const sidebars: SidebarsConfig = {
         "core-concepts/versioning",
         "core-concepts/branches",
         "core-concepts/schema-evolution",
+        "core-concepts/platform-hierarchy",
       ],
     },
     {
