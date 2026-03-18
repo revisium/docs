@@ -191,7 +191,7 @@ Table `orders`
 
 ## FK in Nested Objects
 
-Foreign keys inside nested objects (not arrays). Example: an article has translations, each referencing a language.
+Foreign keys inside nested objects (not arrays). Example: an article has metadata with author and reviewer references.
 
 <Tabs>
 <TabItem value="data" label="Data" default>
