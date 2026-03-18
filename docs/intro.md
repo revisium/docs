@@ -1,6 +1,7 @@
 ---
 sidebar_position: 1
 sidebar_label: Revisium
+title: Revisium
 slug: /
 hide_title: true
 ---
@@ -275,7 +276,19 @@ S3 file attachments at any schema level — images, documents, galleries. Use em
 
 ### Versioning
 
-Branches, revisions, drafts. Every commit is an immutable snapshot — access any revision at any time. Full history, diff, rollback. Draft → review → commit workflow.
+Not row-level versioning. Not table-level versioning. **Project-level versioning** — one commit captures a full snapshot of all tables, schemas, and data.
+
+```
+Revision #3 (immutable snapshot)
+├── Table: products    — schema + 150 rows
+├── Table: categories  — schema + 12 rows
+├── Table: settings    — schema + 1 row
+└── Table: users       — schema + 45 rows
+```
+
+Like `git commit` — but for your entire database. Branches, drafts, full history, diff between any two revisions, rollback to any point.
+
+Versioning is optional — you can work in draft indefinitely without ever committing, just like any other database.
 
 <Screenshot alt="Branch Map — branches, revisions, and API endpoints" src="/img/screenshots/branch-map.png" />
 
