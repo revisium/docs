@@ -22,7 +22,6 @@ const sidebars: SidebarsConfig = {
         "core-concepts/computed-fields",
         "core-concepts/files",
         "core-concepts/versioning",
-        "core-concepts/branches",
         "core-concepts/schema-evolution",
         "core-concepts/platform-hierarchy",
       ],
