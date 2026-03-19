@@ -54,6 +54,9 @@
   /* Sidebar */
   --doc-sidebar-width: 260px;
 
+  /* Scroll */
+  scroll-behavior: smooth;
+
   /* Content area */
   --ifm-line-height-base: 1.65;
   --ifm-leading: 1.25rem;
@@ -274,6 +277,10 @@
 [data-theme="dark"] .markdown ul,
 [data-theme="dark"] .markdown ol {
   color: #737373;
+}
+
+.markdown a {
+  text-decoration: underline;
 }
 
 .markdown p {

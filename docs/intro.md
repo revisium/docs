@@ -274,7 +274,7 @@ S3 file attachments at any schema level — images, documents, galleries. Use em
 
 [Learn more →](./core-concepts/files)
 
-### Versioning
+### Versioning & Branches
 
 Not row-level versioning. Not table-level versioning. **Project-level versioning** — one commit captures a full snapshot of all tables, schemas, and data.
 
