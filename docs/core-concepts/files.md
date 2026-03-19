@@ -203,7 +203,7 @@ Response includes file fields with assigned `fileId`:
   "data": {
     "title": "iPhone 16 Pro",
     "cover": {
-      "status": "",
+      "status": "ready",
       "fileId": "abc123-def456-...",
       "url": "",
       "fileName": "",
