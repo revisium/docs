@@ -136,12 +136,5 @@ async function fetchAllProducts(client, pageSize = 20) {
 ## Best Practices
 
 - **Page size:** 10-20 for mobile, 20-50 for desktop, max 500
-- **Stable sorting:** Always include a unique field (like `id`) in `orderBy` for consistent pagination
+- **Stable sorting:** The platform includes a default sort to ensure consistent pagination. You can add your own `orderBy` on top.
 - **Field selection:** Only request fields you need to reduce payload size
-
-```graphql
-orderBy: [
-  { field: createdAt, direction: desc },
-  { field: id, direction: asc }  # Ensures stable ordering
-]
-```

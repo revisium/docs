@@ -186,19 +186,22 @@ Filter by built-in system metadata:
 | `updatedAt` | DateTime | `{ updatedAt: { gte: "2025-01-10T00:00:00Z" } }` |
 | `readonly` | Boolean | `{ readonly: { equals: false } }` |
 
+## Mixed Filtering
+
 System field filters and JSON path filters can be combined in the same `AND`/`OR` clause:
 
 ```graphql
-query GetRecentActiveUsers {
+query {
   users(data: {
     where: {
       AND: [
         { createdAt: { gte: "2025-01-01T00:00:00Z" } },
-        { data: { path: ["status"], equals: "active" } }
+        { data: { path: ["status"], equals: "active" } },
+        { data: { path: ["role"], in: ["admin", "editor"] } }
       ]
     }
   }) {
-    edges { node { id createdAt data { name status } } }
+    edges { node { id createdAt data { name status role } } }
   }
 }
 ```
