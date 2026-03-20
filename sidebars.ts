@@ -28,20 +28,6 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: "category",
-      label: "Querying Data",
-      link: {
-        type: "doc",
-        id: "querying-data/index",
-      },
-      items: [
-        "querying-data/filtering",
-        "querying-data/sorting",
-        "querying-data/pagination",
-        "querying-data/relationships",
-      ],
-    },
-    {
-      type: "category",
       label: "Admin UI",
       link: {
         type: "doc",
@@ -59,6 +45,21 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: "category",
+      label: "CRUD & Querying",
+      link: {
+        type: "doc",
+        id: "querying-data/index",
+      },
+      items: [
+        "querying-data/crud",
+        "querying-data/filtering",
+        "querying-data/sorting",
+        "querying-data/pagination",
+        "querying-data/relationships",
+      ],
+    },
+    {
+      type: "category",
       label: "APIs",
       link: {
         type: "doc",
@@ -66,8 +67,7 @@ const sidebars: SidebarsConfig = {
       },
       items: [
         "apis/system-api",
-        "apis/generated-graphql",
-        "apis/generated-rest",
+        "apis/generated-apis",
         "apis/mcp",
         "apis/configuration",
       ],

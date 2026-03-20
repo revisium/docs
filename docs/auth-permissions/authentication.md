@@ -23,7 +23,7 @@ mutation {
 Include the JWT in the `Authorization` header:
 
 ```bash
-curl -X POST http://localhost:8080/api/graphql \
+curl -X POST http://localhost:8080/graphql \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer <accessToken>" \
   -d '{"query": "{ me { id username } }"}'

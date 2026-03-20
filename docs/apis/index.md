@@ -6,31 +6,32 @@ sidebar_position: 6
 
 Revisium provides two categories of APIs:
 
-| Category | Purpose | Authentication |
-|----------|---------|----------------|
-| **System API** | Manage projects, branches, tables, rows, users | JWT / OAuth 2.1 |
-| **Generated APIs** | Query and consume data via typed endpoints | Optional (per endpoint) |
+| Category | Purpose | Endpoint |
+|----------|---------|----------|
+| **System API** | Manage projects, branches, tables, rows, users | `/graphql` (GraphQL), `/api/*` (REST) |
+| **Generated APIs** | Query and consume data via typed endpoints | `/endpoint/graphql/*`, `/endpoint/rest/*` |
+
+Plus [MCP](./mcp) (Model Context Protocol) for AI agents.
 
 ## System API
 
-The System API is used for administration — creating projects, designing schemas, managing branches and revisions, CRUD on rows. Available as GraphQL, REST, and MCP.
+Full CRUD for the platform — create/update/delete tables and rows, commit revisions, manage branches, upload files. Available as GraphQL (`POST /graphql`) and REST (`/api/*`).
 
-See [System API](./system-api) for details.
+Includes bulk operations: `createRows`, `updateRows`, `patchRows`, `deleteRows`.
+
+See [System API](./system-api) for all operations with examples.
 
 ## Generated APIs
 
-When you create an [endpoint](../admin-ui/endpoints-mcp), Revisium auto-generates typed GraphQL and REST APIs from your table schemas. These APIs provide:
+When you create an [endpoint](../admin-ui/endpoints-mcp), Revisium auto-generates typed APIs from your table schemas:
 
-- Typed queries matching your schema structure
-- [Filtering](../querying-data/filtering), [sorting](../querying-data/sorting), [pagination](../querying-data/pagination)
-- [Foreign key resolution](../querying-data/relationships)
-- Node and Flat type variants
+See [Generated APIs](./generated-apis) — typed GraphQL and REST with Relay pagination, FK resolution, OpenAPI/Swagger, and CRUD mutations on Draft endpoints.
 
-| Protocol | Description |
-|----------|-------------|
-| [Generated GraphQL](./generated-graphql) | Typed schema with Relay pagination, Apollo Federation support |
-| [Generated REST](./generated-rest) | OpenAPI/Swagger CRUD endpoints |
-| [MCP](./mcp) | Model Context Protocol for AI assistants |
+Generated APIs support [filtering](../querying-data/filtering), [sorting](../querying-data/sorting), [pagination](../querying-data/pagination), and [relationship resolution](../querying-data/relationships).
+
+## MCP
+
+[MCP](./mcp) — Model Context Protocol for AI assistants (Claude Code, Claude Desktop, etc.). Full CRUD, schema design, commits.
 
 ## Configuration
 
