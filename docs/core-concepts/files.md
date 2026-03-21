@@ -287,5 +287,5 @@ The Admin UI includes an Assets view — a gallery of all files across all table
 ## Limits
 
 - Maximum file size: 50 MB (not yet configurable)
-- S3-compatible storage must be configured for file uploads (see [Infrastructure](../deployment/infrastructure))
+- S3-compatible storage must be configured for file uploads (see [Deployment](../deployment/))
 - Without S3 configured, file fields are available in schemas but upload functionality is disabled

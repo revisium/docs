@@ -2,22 +2,206 @@
 sidebar_position: 3
 ---
 
-# CI/CD Integration
+# CI/CD
 
-Apply migrations automatically in your deployment pipeline.
+Apply migrations automatically in your deployment pipeline. Two main patterns: migrations at application startup, or as a separate step before deployment.
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+## Migration File in Git
 
-## General Principles
+Store migration files alongside your code:
 
-1. Store credentials in secrets management (not in code)
-2. Apply migrations **before** deploying the application
-3. Test on staging before production
-4. Migrations are idempotent — safe to retry on failure
+```
+my-project/
+├── revisium/
+│   ├── migrations.json    # schema migrations
+│   └── data/              # seed data (optional)
+│       ├── products/
+│       │   ├── iphone-16.json
+│       │   └── macbook-m4.json
+│       └── categories/
+│           └── electronics.json
+├── src/
+└── package.json
+```
 
-<Tabs>
-<TabItem value="github" label="GitHub Actions" default>
+Add npm scripts for convenience (Node.js example):
+
+```json
+{
+  "scripts": {
+    "revisium:save-migrations": "revisium migrate save --file ./revisium/migrations.json --url $REVISIUM_URL",
+    "revisium:apply-migrations": "revisium migrate apply --file ./revisium/migrations.json --commit --url $REVISIUM_URL"
+  }
+}
+```
+
+## Pattern 1: Migrations at Startup
+
+Apply migrations when the application container starts — before the app itself. Common for backend services.
+
+### Dockerfile
+
+```dockerfile
+FROM node:22-alpine AS builder
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci
+COPY . .
+RUN npm run build
+
+FROM node:22-alpine
+WORKDIR /app
+COPY --from=builder /app/dist ./dist/
+COPY --from=builder /app/revisium/ ./revisium/
+COPY --from=builder /app/package*.json ./
+RUN npm ci --omit=dev
+
+CMD ["npm", "run", "start:prod"]
+```
+
+### Startup Command
+
+```json
+{
+  "scripts": {
+    "start:prod": "npm run revisium:apply-migrations && node dist/main"
+  }
+}
+```
+
+Migrations run before the app starts. If migrations fail, the container fails and Kubernetes restarts it.
+
+### Environment Variables
+
+```bash
+REVISIUM_URL=revisium://revisium.example.com/myorg/myproject/master
+REVISIUM_USERNAME=service-account
+REVISIUM_PASSWORD=secret
+```
+
+## Pattern 2: Separate Migration Container
+
+Build a dedicated migration image with the CLI + migration files. Run it as an init container or CI step before deploying the app.
+
+### Migration Dockerfile
+
+```dockerfile
+FROM revisium/revisium-cli:latest
+
+COPY revisium/migrations.json /app/migrations.json
+COPY revisium/data/ /app/data/
+```
+
+### Kubernetes Init Container
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app
+spec:
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      initContainers:
+      - name: revisium-migrate
+        image: my-registry/my-app-migrations:latest
+        command: ["revisium"]
+        args:
+          - migrate
+          - apply
+          - --file=/app/migrations.json
+          - --commit
+        env:
+          - name: REVISIUM_URL
+            value: "revisium://revisium.example.com/myorg/myproject/master"
+          - name: REVISIUM_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: revisium-credentials
+                key: username
+          - name: REVISIUM_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: revisium-credentials
+                key: password
+      containers:
+      - name: app
+        image: my-registry/my-app:latest
+```
+
+### CI: Build Two Images
+
+```yaml
+# GitHub Actions — build app + migrations images
+jobs:
+  build:
+    strategy:
+      matrix:
+        include:
+          - name: app
+            dockerfile: Dockerfile
+            context: "."
+          - name: migrations
+            dockerfile: revisium/Dockerfile
+            context: "."
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build and push
+        uses: docker/build-push-action@v5
+        with:
+          context: ${{ matrix.context }}
+          file: ${{ matrix.dockerfile }}
+          push: true
+          tags: my-registry/my-app-${{ matrix.name }}:latest
+```
+
+## Data Seeding
+
+Upload seed data alongside migrations — useful for initial setup or test environments.
+
+### Kubernetes Seeding Job
+
+```yaml
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: revisium-seed
+spec:
+  template:
+    spec:
+      containers:
+      - name: revisium-cli
+        image: my-registry/my-app-migrations:latest
+        command: ["/bin/sh", "-c"]
+        args:
+          - |
+            revisium migrate apply --file /app/migrations.json --commit && \
+            revisium rows upload --folder /app/data --commit
+        env:
+          - name: REVISIUM_URL
+            value: "revisium://revisium.example.com/myorg/myproject/master"
+          - name: REVISIUM_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: revisium-credentials
+                key: username
+          - name: REVISIUM_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: revisium-credentials
+                key: password
+      restartPolicy: OnFailure
+```
+
+## GitHub Actions
+
+### Token Authentication (recommended)
 
 ```yaml
 name: Deploy
@@ -26,44 +210,76 @@ on:
     branches: [main]
 
 jobs:
-  migrate:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: '20'
+      - name: Apply Migrations
+        run: npx revisium migrate apply --file ./revisium/migrations.json --commit
+        env:
+          REVISIUM_URL: revisium://cloud.revisium.io/${{ vars.ORG }}/${{ vars.PROJECT }}/master
+          REVISIUM_TOKEN: ${{ secrets.REVISIUM_TOKEN }}
+```
 
+### Username/Password Authentication
+
+```yaml
+      - name: Apply Migrations
+        run: npx revisium migrate apply --file ./revisium/migrations.json --commit
+        env:
+          REVISIUM_URL: revisium://cloud.revisium.io/${{ vars.ORG }}/${{ vars.PROJECT }}/master
+          REVISIUM_USERNAME: ${{ secrets.REVISIUM_USERNAME }}
+          REVISIUM_PASSWORD: ${{ secrets.REVISIUM_PASSWORD }}
+```
+
+### Docker Image Approach
+
+```yaml
       - name: Apply Migrations
         run: |
-          npx revisium migrate apply \
-            --file ./migrations/migrations.json
-        env:
-          REVISIUM_API_URL: ${{ secrets.REVISIUM_API_URL }}
-          REVISIUM_USERNAME: ${{ secrets.REVISIUM_USERNAME }}
-          REVISIUM_PASSWORD: ${{ secrets.REVISIUM_PASSWORD }}
-          REVISIUM_ORGANIZATION: ${{ secrets.REVISIUM_ORGANIZATION }}
-          REVISIUM_PROJECT: ${{ secrets.REVISIUM_PROJECT }}
-          REVISIUM_BRANCH: master
+          docker run --rm \
+            -e REVISIUM_URL=revisium://cloud.revisium.io/${{ vars.ORG }}/${{ vars.PROJECT }}/master \
+            -e REVISIUM_TOKEN=${{ secrets.REVISIUM_TOKEN }} \
+            -v ${{ github.workspace }}/revisium/migrations.json:/app/migrations.json \
+            revisium/revisium-cli \
+            revisium migrate apply --file /app/migrations.json --commit
+```
 
-      - name: Create Revision
-        run: npx revisium revision create
-        env:
-          REVISIUM_API_URL: ${{ secrets.REVISIUM_API_URL }}
-          REVISIUM_USERNAME: ${{ secrets.REVISIUM_USERNAME }}
-          REVISIUM_PASSWORD: ${{ secrets.REVISIUM_PASSWORD }}
-          REVISIUM_ORGANIZATION: ${{ secrets.REVISIUM_ORGANIZATION }}
-          REVISIUM_PROJECT: ${{ secrets.REVISIUM_PROJECT }}
-          REVISIUM_BRANCH: master
+### Full Pipeline with Migrations and Seed Data
 
+```yaml
+name: Full Deploy
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Apply Schema Migrations
+        run: npx revisium migrate apply --file ./revisium/migrations.json --commit
+        env:
+          REVISIUM_URL: revisium://cloud.revisium.io/${{ vars.ORG }}/${{ vars.PROJECT }}/master
+          REVISIUM_TOKEN: ${{ secrets.REVISIUM_TOKEN }}
+      - name: Upload Seed Data
+        if: github.ref == 'refs/heads/main'
+        run: npx revisium rows upload --folder ./revisium/data --commit
+        env:
+          REVISIUM_URL: revisium://cloud.revisium.io/${{ vars.ORG }}/${{ vars.PROJECT }}/master
+          REVISIUM_TOKEN: ${{ secrets.REVISIUM_TOKEN }}
       - name: Deploy Application
         run: # your deployment step
 ```
 
-</TabItem>
-<TabItem value="gitlab" label="GitLab CI">
+## GitLab CI
 
 ```yaml
 stages:
@@ -72,17 +288,12 @@ stages:
 
 migrate:
   stage: migrate
-  image: node:20
+  image: revisium/revisium-cli:latest
   script:
-    - npx revisium migrate apply --file ./migrations/migrations.json
-    - npx revisium revision create
+    - revisium migrate apply --file ./revisium/migrations.json --commit
   variables:
-    REVISIUM_API_URL: $REVISIUM_API_URL
-    REVISIUM_USERNAME: $REVISIUM_USERNAME
-    REVISIUM_PASSWORD: $REVISIUM_PASSWORD
-    REVISIUM_ORGANIZATION: $REVISIUM_ORGANIZATION
-    REVISIUM_PROJECT: $REVISIUM_PROJECT
-    REVISIUM_BRANCH: master
+    REVISIUM_URL: revisium://revisium.example.com/$REVISIUM_ORG/$REVISIUM_PROJECT/master
+    REVISIUM_TOKEN: $REVISIUM_TOKEN
   only:
     - main
 
@@ -93,126 +304,44 @@ deploy:
     - main
 ```
 
-</TabItem>
-<TabItem value="kubernetes" label="Kubernetes (ArgoCD)">
-
-```yaml
-apiVersion: batch/v1
-kind: Job
-metadata:
-  name: revisium-migrations
-  annotations:
-    argocd.argoproj.io/hook: PreSync
-    argocd.argoproj.io/sync-wave: "-1"
-spec:
-  template:
-    spec:
-      containers:
-        - name: migrations
-          image: node:20
-          command:
-            - sh
-            - -c
-            - |
-              set -e
-              npx revisium migrate apply --file /migrations/migrations.json
-              npx revisium revision create
-          env:
-            - name: REVISIUM_API_URL
-              valueFrom:
-                secretKeyRef:
-                  name: revisium-secrets
-                  key: api-url
-            - name: REVISIUM_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: revisium-secrets
-                  key: username
-            - name: REVISIUM_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: revisium-secrets
-                  key: password
-            - name: REVISIUM_ORGANIZATION
-              valueFrom:
-                secretKeyRef:
-                  name: revisium-secrets
-                  key: organization
-            - name: REVISIUM_PROJECT
-              valueFrom:
-                secretKeyRef:
-                  name: revisium-secrets
-                  key: project
-          volumeMounts:
-            - name: migrations
-              mountPath: /migrations
-      volumes:
-        - name: migrations
-          configMap:
-            name: revisium-migrations
-      restartPolicy: Never
-  backoffLimit: 3
-```
-
-</TabItem>
-<TabItem value="docker" label="Docker">
-
-```dockerfile
-FROM node:20-alpine
-WORKDIR /app
-COPY migrations/ ./migrations/
-CMD ["sh", "-c", "npx revisium migrate apply --file ./migrations/migrations.json && npx revisium revision create"]
-```
+## Docker Run (Manual)
 
 ```bash
-docker build -t revisium-migrate .
+# Apply migrations
 docker run --rm \
-  -e REVISIUM_API_URL=https://revisium.example.com \
-  -e REVISIUM_USERNAME=admin \
-  -e REVISIUM_PASSWORD=secret \
-  -e REVISIUM_ORGANIZATION=myorg \
-  -e REVISIUM_PROJECT=myproject \
-  -e REVISIUM_BRANCH=master \
-  revisium-migrate
-```
+  -e REVISIUM_URL=revisium://cloud.revisium.io/myorg/myproject/master \
+  -e REVISIUM_TOKEN=$TOKEN \
+  -v ./revisium/migrations.json:/app/migrations.json \
+  revisium/revisium-cli \
+  revisium migrate apply --file /app/migrations.json --commit
 
-</TabItem>
-</Tabs>
-
-## Multi-Environment Setup
-
-```
-Local Dev → Git → Staging (CI/CD) → Production (CI/CD)
-```
-
-Use environment-specific secrets and separate CI/CD stages:
-
-```yaml
-# GitHub Actions with environments
-jobs:
-  staging:
-    environment: staging
-    steps:
-      - name: Apply to Staging
-        env:
-          REVISIUM_API_URL: ${{ secrets.STAGING_URL }}
-        run: npx revisium migrate apply --file ./migrations/migrations.json
-
-  production:
-    needs: staging
-    environment: production
-    steps:
-      - name: Apply to Production
-        env:
-          REVISIUM_API_URL: ${{ secrets.PRODUCTION_URL }}
-        run: npx revisium migrate apply --file ./migrations/migrations.json
+# Upload seed data
+docker run --rm \
+  -e REVISIUM_URL=revisium://cloud.revisium.io/myorg/myproject/master \
+  -e REVISIUM_TOKEN=$TOKEN \
+  -v ./revisium/data:/app/data \
+  revisium/revisium-cli \
+  revisium rows upload --folder /app/data --commit
 ```
 
 ## Best Practices
 
-1. **Migrations before app deployment** — ensures schema is ready when the app starts
-2. **Staging first** — always test migrations on staging before production
-3. **Never apply manually** — use CI/CD for production
-4. **Keep migration history** — don't delete old migrations (they provide audit trail)
-5. **Commit schemas and migrations together** — `git add schemas/ migrations/`
-6. **Use PreSync hooks** in Kubernetes to ensure migrations run before pods start
+```
+Dev (source of truth)
+  │
+  │  migrate save / sync schema
+  ↓
+Staging (test)
+  │
+  │  migrate apply / sync schema
+  ↓
+Production
+```
+
+1. **Migrations before app** — apply migrations before the application starts or deploys
+2. **One direction** — schema changes originate from dev, flow to staging, then production. Never backwards
+3. **Token auth for CI** — use `REVISIUM_TOKEN` instead of username/password in pipelines
+4. **Idempotent** — safe to retry on failure, already-applied migrations are skipped
+5. **Commit after apply** — use `--commit` to create a revision after migrations
+6. **Test on staging** — always apply to staging before production
+7. **Version control** — commit migration files to Git, review schema changes in PRs
