@@ -40,6 +40,7 @@ const sidebars: SidebarsConfig = {
         "admin-ui/changes-diff",
         "admin-ui/assets",
         "admin-ui/branches-history",
+        "admin-ui/migrations",
         "admin-ui/endpoints-mcp",
       ],
     },
@@ -69,20 +70,8 @@ const sidebars: SidebarsConfig = {
         "apis/system-api",
         "apis/generated-apis",
         "apis/mcp",
+        "apis/cli",
         "apis/configuration",
-      ],
-    },
-    {
-      type: "category",
-      label: "Migrations",
-      link: {
-        type: "doc",
-        id: "migrations/index",
-      },
-      items: [
-        "migrations/cli-reference",
-        "migrations/migration-format",
-        "migrations/ci-cd",
       ],
     },
     {
@@ -99,18 +88,16 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: "category",
-      label: "Deployment",
+      label: "Migrations",
       link: {
         type: "doc",
-        id: "deployment/index",
+        id: "migrations/index",
       },
       items: [
-        "deployment/standalone",
-        "deployment/docker-compose",
-        "deployment/configuration",
-        "deployment/infrastructure",
+        "migrations/ci-cd",
       ],
     },
+    "deployment/index",
     {
       type: "category",
       label: "Use Cases",
@@ -132,7 +119,9 @@ const sidebars: SidebarsConfig = {
         type: "doc",
         id: "architecture/index",
       },
-      items: [],
+      items: [
+        "architecture/specs/migration-format",
+      ],
     },
   ],
 };

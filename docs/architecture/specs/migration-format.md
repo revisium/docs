@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Migration Format
 
-Migrations are stored as a JSON array of migration objects.
+Migrations are stored as a JSON array of migration objects. See [Migrations](../../migrations/) for overview and workflows.
 
 ## Common Fields
 
@@ -53,11 +53,6 @@ Modifies an existing schema using [JSON Patch (RFC 6902)](https://datatracker.ie
       "op": "add",
       "path": "/properties/description",
       "value": { "type": "string", "default": "" }
-    },
-    {
-      "op": "add",
-      "path": "/required/-",
-      "value": "description"
     }
   ]
 }
@@ -129,8 +124,7 @@ Deletes a table. Validated that no FK dependencies exist before application:
     "tableId": "Product",
     "hash": "...",
     "schemaPatch": [
-      { "op": "add", "path": "/properties/price", "value": { "type": "number", "default": 0 } },
-      { "op": "add", "path": "/required/-", "value": "price" }
+      { "op": "add", "path": "/properties/price", "value": { "type": "number", "default": 0 } }
     ]
   }
 ]

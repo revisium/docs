@@ -28,6 +28,7 @@ The Admin UI is organized around the current project and branch:
 | [Changes & Diff](./changes-diff) | Review schema and data changes before commit |
 | [Assets](./assets) | File gallery with filtering by table, type, and status |
 | [Branches & History](./branches-history) | Branch map, revision timeline, navigation |
+| [Migrations](./migrations) | Applied migrations history, upload migration files |
 | [Endpoints & MCP](./endpoints-mcp) | API endpoint creation and MCP server configuration |
 
 ## Access
