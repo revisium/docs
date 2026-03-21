@@ -6,42 +6,27 @@ import Screenshot from '@site/src/components/Screenshot';
 
 # Branches & History
 
-## Branch Map
+## Branches
 
-The Branch Map shows a visual overview of all branches in the project:
+The Branches page lists all branches in the project. Switch between the **Branches** tab and **Revisions** tab to see the commit history for a specific branch:
 
-- Branch names and their current HEAD revision
-- Revision timeline for each branch
-- API endpoints bound to each branch/revision
-- Branch creation points (which revision a branch was forked from)
-
-<Screenshot alt="Branch Map — visual overview of branches, revisions, and API endpoints" />
-
-## Branch Selector
-
-Use the branch selector in the navigation to switch between branches. The currently active branch determines which draft and data you're working with.
+<Screenshot alt="Branches list with revision history — draft, head, and past revisions with timestamps" src="/img/screenshots/admin-branch-list.png" />
 
 ## Creating a Branch
 
-1. Navigate to the revision you want to branch from
-2. Click **Create Branch**
-3. Name the new branch
+Click **+ New branch**, select a source branch, and the new branch starts with that branch's HEAD as its starting point:
 
-The new branch starts with the selected revision as HEAD and an empty draft.
+<Screenshot alt="Create new branch dialog — select source branch" src="/img/screenshots/admin-branch-create.png" />
 
-<Screenshot alt="Create Branch dialog — entering branch name, branching from a specific revision" />
+## Branch Map
+
+The Branch Map provides a visual graph of all branches, revisions, and API endpoints in the project:
+
+<Screenshot alt="Branch Map — visual graph showing branches, revisions, fork points, and connected endpoints" src="/img/screenshots/admin-branch-map.png" />
 
 ## Revision History
 
-Each branch has a linear history of committed revisions. The timeline shows:
-
-- Revision ID and timestamp
-- Commit comment (if provided)
-- Whether API endpoints are bound to this revision
-
-Click any revision to browse its tables and data (read-only — past revisions are immutable).
-
-<Screenshot alt="Revision timeline — list of commits with timestamps and comments" />
+Each branch has a linear history of committed revisions. Click any revision to browse its tables and data (read-only — past revisions are immutable).
 
 ## Rollback
 

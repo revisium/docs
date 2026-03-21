@@ -6,13 +6,13 @@ import Screenshot from '@site/src/components/Screenshot';
 
 # Row Editor
 
-The Row Editor provides form-based and JSON editing for individual records.
-
-<Screenshot alt="Row Editor — structured form view with nested objects, arrays, FK navigation, and file preview" />
+The Row Editor provides form-based and JSON editing for individual records. Click any row in the Table Editor to open it.
 
 ## Form View
 
-Fields are rendered as form controls based on their schema type:
+Fields are rendered as interactive controls based on their schema type. Nested objects and arrays expand inline with full depth navigation:
+
+<Screenshot alt="Row Editor form view — nested objects, arrays, FK references, coordinates, and file preview" src="/img/screenshots/admin-row-form.png" />
 
 | Schema type | Form control |
 |-------------|-------------|
@@ -27,29 +27,25 @@ Fields are rendered as form controls based on their schema type:
 
 ## JSON View
 
-Toggle to JSON view to see and edit the raw JSON data with syntax highlighting. Useful for bulk edits or when the form view is too constrained.
+Toggle to JSON view to see and edit the raw JSON data with syntax highlighting:
 
-<Screenshot alt="Row Editor JSON view — raw data editing with syntax highlighting" />
+<Screenshot alt="Row Editor JSON view — raw JSON data with syntax highlighting and line numbers" src="/img/screenshots/admin-row-json.png" />
 
 ## Foreign Key Navigation
 
-FK fields show the referenced row's data inline. Click the FK value to navigate directly to the referenced row in its table.
+FK fields show an icon linking to the referenced table. Click it to open a dropdown with search, browse the target table, or create a new row and connect it:
 
-<Screenshot alt="Foreign key field — showing referenced row data with click-to-navigate" />
+<Screenshot alt="FK navigation — Select from items dropdown with search, Open Table Search, and Create and Connect" src="/img/screenshots/admin-row-fk.png" />
 
-## File Upload
+## File Fields
 
-File fields provide:
-- Drag-and-drop upload area
-- Image preview for supported formats
-- File size and type display
-- Replace/remove file actions
+File fields display inline previews for images. Upload files by clicking the file area:
 
-<Screenshot alt="File upload field — drag-and-drop area with image preview" />
+<Screenshot alt="File field — inline image preview of an uploaded file" src="/img/screenshots/admin-row-file.png" />
 
 ## Row ID
 
-Each row has a unique string `id` within its table. The id is set on creation and can be renamed (all FK references are updated automatically).
+Each row has a unique string `id` within its table. The id is set on creation and can be renamed — all FK references are updated automatically.
 
 ## Validation
 
