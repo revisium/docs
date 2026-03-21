@@ -8,45 +8,35 @@ import Screenshot from '@site/src/components/Screenshot';
 
 The Table Editor shows rows in a tabular format with configurable columns, filtering, sorting, and search.
 
-<Screenshot alt="Table Editor — tabular view with configurable columns, including nested field paths" />
-
 ## Column Configuration
 
-- Click column headers to sort
-- Drag columns to reorder
-- Show/hide columns including nested field paths (e.g., `specs.weight`)
-- Resize column widths
+Add, reorder, and configure columns — including nested field paths (e.g., `rewards.currency.silver`):
 
-<Screenshot alt="Column configuration — show/hide columns dropdown with nested paths" />
+<Screenshot alt="Column configuration — add columns dropdown with data fields, nested paths, and system fields" src="/img/screenshots/admin-table-columns.png" />
+
+Right-click a column header for sort, filter, pin, move, hide, and copy path:
+
+<Screenshot alt="Column context menu — sort, filter, pin, move, hide, copy path options" src="/img/screenshots/admin-table-column-menu.png" />
 
 ## Views
 
-Save column/filter/sort configurations as named **views** for quick switching:
+Save column order, widths, and sort settings to the default view — shared with everyone:
 
-1. Configure columns, filters, and sorts
-2. Click **Save View** and name it
-3. Switch between views from the dropdown
-
-Each table can have multiple views. Views are stored per-user and per-table.
-
-<Screenshot alt="Views dropdown — switching between saved view presets" />
+<Screenshot alt="Unsaved view settings — save column order, widths, and sort to Default view" src="/img/screenshots/admin-table-views.png" />
 
 ## Filtering
 
-Apply filters from the filter bar:
-
-- Select a field
-- Choose an operator (equals, contains, greater than, etc.)
-- Enter a value
-- Combine multiple filters
+Apply filters from the filter bar — select a field, choose an operator, enter a value. Combine multiple conditions with AND/OR logic.
 
 Filters match the same operators available in the [query API](../querying-data/filtering).
 
-<Screenshot alt="Filter bar — applying a filter with field selector, operator, and value" />
+<Screenshot alt="Filter bar — rewards.currency >= 100 with Add condition and Add group" src="/img/screenshots/admin-table-filter.png" />
 
 ## Sorting
 
-Click column headers to toggle sort direction. Multi-column sort is supported — click additional columns while holding the sort modifier.
+Sort by any column — including nested data fields. Add multiple sort levels.
+
+<Screenshot alt="Sort dialog — sorting by rewards.currency ascending with Add sort option" src="/img/screenshots/admin-table-sort.png" />
 
 ## Search
 
@@ -55,7 +45,7 @@ Full-text search across all visible columns. Type in the search bar to filter ro
 ## Row Actions
 
 - Click a row to open it in the [Row Editor](./row-editor)
-- Create new rows with **New Row**
+- Create new rows with **+** button
 - Delete rows from the row context menu
 
 ## Inline Editing

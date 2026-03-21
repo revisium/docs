@@ -1,34 +1,29 @@
 ---
-sidebar_position: 6
+sidebar_position: 7
 ---
 
 import Screenshot from '@site/src/components/Screenshot';
 
 # Migrations
 
-The Migrations page in the Admin UI shows applied migrations history and allows uploading migration files.
+The Migrations page shows the full history of schema operations and lets you apply migrations from JSON or another branch.
 
-<Screenshot alt="Admin UI — Migrations page with applied migrations list" />
+<Screenshot alt="Migrations page — 15 operations history with Apply dropdown (From JSON, From Branch)" src="/img/screenshots/admin-migrations.png" />
 
-## Applied Migrations
+## Operation History
 
-View all migrations that have been applied to the current branch:
+Each operation is listed with:
 
-- Migration ID (ISO timestamp)
-- Table affected
-- Change type (init, update, rename, remove)
-- Applied date
+- Operation description (field added, table created, etc.)
+- Target table
+- Time since applied
 
-## Upload Migrations
+## Apply Migrations
 
-Upload a `migrations.json` file directly from the browser — no CLI needed:
+Click **Apply** to import schema changes:
 
-1. Go to **Migrations** in the sidebar
-2. Click **Upload**
-3. Select your migration file
-4. Review and apply
-
-Useful for quick one-off deployments or when CLI is not available.
+- **From JSON** — paste or upload a `migrations.json` file
+- **From Branch** — pull schema changes from another branch in the same project
 
 ## See Also
 

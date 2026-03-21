@@ -8,7 +8,7 @@ import Screenshot from '@site/src/components/Screenshot';
 
 The Assets view provides a gallery of all files uploaded across tables in the current project.
 
-<Screenshot alt="Assets gallery — file grid with thumbnails, filtering by table and type" />
+<Screenshot alt="Assets gallery — file grid with thumbnails, search, type/status/size filters, and table tabs" src="/img/screenshots/admin-assets.png" />
 
 ## Gallery View
 

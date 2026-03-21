@@ -8,7 +8,7 @@ import Screenshot from '@site/src/components/Screenshot';
 
 The Schema Editor provides a visual interface for designing table schemas. Add fields, configure types, set up foreign keys, define computed fields, and attach files — all without writing JSON manually.
 
-<Screenshot alt="Schema Editor — visual schema design with nested objects, FK references, and field types" />
+<Screenshot alt="Schema Editor — quests table with nested objects, FK references, and field hierarchy" src="/img/screenshots/admin-schema-editor.png" />
 
 ## Creating a Table
 
@@ -25,7 +25,7 @@ Click **Add Field** to add a new field. Configure:
 - **Default value** — required for all fields
 - **Description** — optional documentation
 
-<Screenshot alt="Adding a new field — type selector with String, Number, Boolean, Object, Array options" />
+<Screenshot alt="Adding a new field — type selector with string, number, boolean, object, array, foreign key, Schemas, System fields" src="/img/screenshots/admin-schema-add-field.png" />
 
 ### Field Types
 
@@ -47,7 +47,7 @@ To create a relationship:
 
 For array relationships, create an Array field with String items and enable Foreign Key on the items.
 
-<Screenshot alt="Foreign Key configuration — selecting the target table for a category field" />
+<Screenshot alt="Foreign Key — selecting target table from list of available tables" src="/img/screenshots/admin-schema-fk.png" />
 
 ## Computed Fields
 
@@ -70,10 +70,10 @@ To add a file attachment:
 
 Click into an Object field to edit its sub-fields. The breadcrumb trail shows your current depth. Objects can be nested to any level.
 
-<Screenshot alt="Nested object editing — breadcrumb trail showing depth, sub-fields inside specs object" />
+<Screenshot alt="Nested object editing — sub-fields inside nested object with breadcrumb navigation" src="/img/screenshots/admin-schema-nested.png" />
 
 ## JSON View
 
 Toggle between visual and JSON view to see or edit the raw JSON Schema directly. Changes in either view are synchronized.
 
-<Screenshot alt="JSON view — raw JSON Schema with syntax highlighting" />
+<Screenshot alt="JSON view — raw JSON Schema with syntax highlighting, showing types, defaults, foreignKey, and $ref" src="/img/screenshots/admin-schema-json.png" />
