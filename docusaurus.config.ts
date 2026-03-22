@@ -28,6 +28,17 @@ const config: Config = {
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
 
+  headTags: [
+    {
+      tagName: "script",
+      attributes: {
+        defer: "true",
+        src: "https://a.revisium.io/s.js",
+        "data-website-id": "52ce4d21-f6c7-42c1-ad6f-05094c66a264",
+      },
+    },
+  ],
+
   // Even if you don't use internationalization, you can use this field to set
   // useful metadata like html lang. For example, if your site is Chinese, you
   // may want to replace "en" with "zh-Hans".
