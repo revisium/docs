@@ -84,3 +84,7 @@ const { data } = await client.query({
 **Relationships:** products → categories (FK), products → tags (FK array)
 
 See [Core Concepts](../core-concepts/) for schema design, [Migrations](../migrations/) for deployment workflow.
+
+:::tip Full Guide
+For a complete step-by-step walkthrough with NestJS integration, typed client generation, seed data, and CI/CD — see the [Dictionary Service with NestJS](../guides/dictionary-service-nestjs) guide.
+:::

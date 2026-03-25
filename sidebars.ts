@@ -114,6 +114,17 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: "category",
+      label: "Guides",
+      link: {
+        type: "doc",
+        id: "guides/index",
+      },
+      items: [
+        "guides/dictionary-service-nestjs",
+      ],
+    },
+    {
+      type: "category",
       label: "Architecture",
       link: {
         type: "doc",
