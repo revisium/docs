@@ -91,7 +91,7 @@ For local development, use the standalone mode — it bundles everything (API, A
 npx @revisium/standalone@latest
 ```
 
-Open Admin UI at [http://localhost:8888](http://localhost:8888).
+Open Admin UI at [http://localhost:9222](http://localhost:9222).
 
 :::note Production environments
 On staging and production, you'll point your backend at a **self-hosted Revisium instance** (e.g., deployed via Helm chart to your K8s cluster) or at **[Revisium Cloud](https://cloud.revisium.io)**. The integration code is identical — only the `REVISIUM_URL` environment variable changes. See [Step 6: Deploy](#step-6-deploy) for details.
@@ -179,7 +179,7 @@ Add an npm script to `package.json`:
 ```json
 {
   "scripts": {
-    "generate:faq-api": "npx @hey-api/openapi-ts -i http://localhost:8888/endpoint/openapi/<org>/<project>/<branch>/head/openapi.json -o src/features/faq/generated -c @hey-api/client-fetch"
+    "generate:faq-api": "npx @hey-api/openapi-ts -i http://localhost:9222/endpoint/openapi/<org>/<project>/<branch>/head/openapi.json -o src/features/faq/generated -c @hey-api/client-fetch"
   }
 }
 ```
@@ -244,7 +244,7 @@ Save your schema as a migration file — this is what gets deployed to other env
 ```bash
 npm run revisium:save-migrations
 # → npx revisium migrate save \
-#     --url revisium://admin:admin@localhost:8080/admin/faq/master/draft \
+#     --url revisium://admin:admin@localhost:9222/admin/faq/master/draft \
 #     --file ./revisium/migrations.json
 ```
 
@@ -257,7 +257,7 @@ If your app needs baseline data on every environment (default categories, initia
 ```bash
 npm run revisium:save-data
 # → npx revisium rows save \
-#     --url revisium://admin:admin@localhost:8080/admin/faq/master/head \
+#     --url revisium://admin:admin@localhost:9222/admin/faq/master/head \
 #     --folder ./revisium/data
 ```
 
@@ -289,10 +289,10 @@ Your backend code doesn't change between modes — only the `REVISIUM_URL` envir
 
 ```bash
 # Local
-REVISIUM_URL=http://localhost:8888
+REVISIUM_URL=http://localhost:9222
 
 # Self-hosted (K8s internal service)
-REVISIUM_URL=http://revisium.revisium.svc.cluster.local:8888
+REVISIUM_URL=http://revisium.revisium.svc.cluster.local:8080
 
 # Revisium Cloud
 REVISIUM_URL=https://your-org.cloud.revisium.io
@@ -310,8 +310,8 @@ npx @revisium/standalone@latest
 
 # Apply migrations + load seed data
 npm run revisium:seed
-# → npx revisium migrate apply --url revisium://admin:admin@localhost:8080/admin/faq/master --file ./revisium/migrations.json --commit
-# → npx revisium rows upload --url revisium://admin:admin@localhost:8080/admin/faq/master/draft --folder ./revisium/data --commit
+# → npx revisium migrate apply --url revisium://admin:admin@localhost:9222/admin/faq/master --file ./revisium/migrations.json --commit
+# → npx revisium rows upload --url revisium://admin:admin@localhost:9222/admin/faq/master/draft --folder ./revisium/data --commit
 
 # Start backend
 npm run start:dev
