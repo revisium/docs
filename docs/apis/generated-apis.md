@@ -23,6 +23,46 @@ REST:     /endpoint/rest/<username>/<project>/<branch>/head (or /draft)
 - **HEAD** — latest committed data, read-only
 - **Draft** — current working state, read + write
 
+## Authentication
+
+Generated endpoints respect the project's visibility setting:
+
+- **Public projects:** Read operations work without authentication. Write operations (on draft endpoints) require auth.
+- **Private projects:** All operations require authentication.
+
+### Using API Keys
+
+<Tabs>
+<TabItem value="rest" label="REST" default>
+
+```bash
+curl http://localhost:8080/endpoint/rest/myorg/myproject/master/head/tables/products/rows \
+  -H "X-Api-Key: rev_xxxxxxxxxxxxxxxxxxxx"
+```
+
+</TabItem>
+<TabItem value="graphql" label="GraphQL">
+
+```bash
+curl -X POST http://localhost:8080/endpoint/graphql/myorg/myproject/master/head \
+  -H "Content-Type: application/json" \
+  -H "X-Api-Key: rev_xxxxxxxxxxxxxxxxxxxx" \
+  -d '{"query": "{ products { edges { node { id data { title price } } } } }"}'
+```
+
+</TabItem>
+</Tabs>
+
+### Swagger UI
+
+Each generated REST endpoint includes a Swagger UI. Click **Authorize** and choose the **api-key** option to enter your `rev_...` key.
+
+### Apollo Sandbox
+
+For generated GraphQL endpoints, add the `X-Api-Key` header in the **Headers** panel at the bottom of Apollo Sandbox.
+
+See [API Keys](../auth-permissions/api-keys) for full documentation on creating and scoping keys.
+
 ## Queries
 
 <Tabs>

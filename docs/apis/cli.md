@@ -35,6 +35,22 @@ revisium://localhost:9222/admin/my-project/master
 revisium://localhost:8080/admin/my-project/master?token=eyJ...
 ```
 
+### Authentication
+
+When connecting to a Revisium instance, the CLI supports multiple auth methods:
+
+- **Token** — paste a JWT from the Admin UI (Settings > Get Token)
+- **API Key** — paste a personal API key (`rev_...`) — recommended for repeated local use
+- **Username & Password** — enter credentials directly or set via env vars
+
+```bash
+# JWT token
+revisium://localhost:9222/admin/my-project/master?token=eyJ...
+
+# API key (same parameter, auto-detected by rev_ prefix)
+revisium://localhost:9222/admin/my-project/master?token=rev_xxxxxxxxxxxxxxxxxxxx
+```
+
 ### Environment Variables
 
 Instead of `--url`, set these:
@@ -42,7 +58,7 @@ Instead of `--url`, set these:
 | Variable | Description |
 |----------|-------------|
 | `REVISIUM_URL` | Default connection URL |
-| `REVISIUM_TOKEN` | JWT token |
+| `REVISIUM_TOKEN` | JWT token or API key (`rev_...`) |
 | `REVISIUM_USERNAME` | Username (for auto-login) |
 | `REVISIUM_PASSWORD` | Password (for auto-login) |
 
