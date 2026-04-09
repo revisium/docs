@@ -19,6 +19,8 @@ The System GraphQL API is served at:
 
 ### Authentication
 
+**JWT (interactive sessions):**
+
 ```graphql
 mutation {
   login(data: { username: "admin", password: "admin" }) {
@@ -32,6 +34,22 @@ Use the token in the `Authorization` header:
 ```
 Authorization: Bearer <accessToken>
 ```
+
+**API Key (programmatic access):**
+
+```bash
+# System GraphQL with API key
+curl -X POST http://localhost:8080/graphql \
+  -H "Content-Type: application/json" \
+  -H "X-Api-Key: rev_xxxxxxxxxxxxxxxxxxxx" \
+  -d '{"query": "{ me { id username } }"}'
+
+# System REST with API key
+curl http://localhost:8080/api/organization/myorg/project/myproject/branch/master \
+  -H "X-Api-Key: rev_xxxxxxxxxxxxxxxxxxxx"
+```
+
+See [API Keys](../auth-permissions/api-keys) for setup and scoping.
 
 ### Tables
 

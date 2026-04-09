@@ -58,6 +58,24 @@ curl -X POST http://localhost:8080/mcp \
   -d '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2024-11-05","capabilities":{},"clientInfo":{"name":"test","version":"1.0"}}}'
 ```
 
+## API Keys
+
+For programmatic access without user sessions. See the dedicated [API Keys](./api-keys) page.
+
+Two types: **Personal** (act as you — for local dev/CLI) and **Service** (standalone identity — for CI/CD and integrations).
+
+Quick start:
+
+```bash
+# Using X-Api-Key header
+curl -H "X-Api-Key: rev_xxxxxxxxxxxxxxxxxxxx" \
+  http://localhost:8080/api/...
+
+# Using Bearer header
+curl -H "Authorization: Bearer rev_xxxxxxxxxxxxxxxxxxxx" \
+  http://localhost:8080/api/...
+```
+
 ## Session Security
 
 - JWT tokens are stateless — no server-side session storage

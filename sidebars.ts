@@ -83,6 +83,7 @@ const sidebars: SidebarsConfig = {
       },
       items: [
         "auth-permissions/authentication",
+        "auth-permissions/api-keys",
         "auth-permissions/permissions",
       ],
     },

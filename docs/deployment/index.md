@@ -248,13 +248,24 @@ All configuration is done via environment variables.
 
 See [API Configuration](../apis/configuration) for details.
 
+### API Keys
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `INTERNAL_API_KEY_ENDPOINT` | Auto-generated (monolith) | Internal key for endpoint-to-core communication. Set explicitly in microservice mode. |
+| `API_KEY_DEFAULT_EXPIRATION_DAYS` | `365` | Default expiration for new API keys |
+| `API_KEY_MAX_PER_USER` | `10` | Max personal API keys per user |
+| `API_KEY_MAX_SERVICE_PER_ORG` | `100` | Max service API keys per organization |
+
+In monolith/standalone mode, internal keys are derived automatically from `JWT_SECRET`. For multi-replica deployments, `JWT_SECRET` must be set explicitly so all pods derive the same key.
+
 ### Service Communication (Microservice Mode)
 
 | Variable | Description |
 |----------|-------------|
 | `CORE_API_URL` | URL of revisium-core service |
-| `CORE_API_USERNAME` | Service account username |
-| `CORE_API_PASSWORD` | Service account password |
+| `CORE_API_USERNAME` | Service account username (deprecated — use `INTERNAL_API_KEY_ENDPOINT`) |
+| `CORE_API_PASSWORD` | Service account password (deprecated — use `INTERNAL_API_KEY_ENDPOINT`) |
 
 In the all-in-one Docker image, these are configured automatically.
 
