@@ -234,6 +234,43 @@
   color: #737373;
 }
 
+.navbar-search {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-search__mount:empty {
+  display: none;
+}
+
+.navbar-search :is(.DocSearch-Button, .navbar-search__fallback) {
+  margin: 0;
+  min-width: 180px;
+  height: 38px;
+  border: 1px solid #d4d4d4;
+  border-radius: 999px;
+  background: #fafafa;
+  box-shadow: none;
+}
+
+[data-theme="dark"] .navbar-search :is(.DocSearch-Button, .navbar-search__fallback) {
+  border-color: #404040;
+  background: #171717;
+}
+
+.navbar-search .DocSearch-Button-Placeholder {
+  font-size: 0.92rem;
+}
+
+.navbar-search--mobile {
+  width: 100%;
+  padding: 0.5rem 0;
+}
+
+.navbar-search--mobile :is(.DocSearch-Button, .navbar-search__fallback) {
+  width: 100%;
+}
+
 /* ── Content area — more left padding from sidebar ── */
 [class*="docMainContainer"] {
   padding-left: 1.5rem !important;

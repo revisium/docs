@@ -1,0 +1,33 @@
+{
+  "index_name": "revisium_docs",
+  "start_urls": [
+    "https://docs.revisium.io"
+  ],
+  "sitemap_urls": [
+    "https://docs.revisium.io/sitemap.xml"
+  ],
+  "stop_urls": [
+    "https://docs.revisium.io/search"
+  ],
+  "selectors": {
+    "default": {
+      "lvl0": {
+        "selector": ".menu__link--active",
+        "global": true,
+        "default_value": "Documentation"
+      },
+      "lvl1": "article h1, header h1",
+      "lvl2": "article h2",
+      "lvl3": "article h3",
+      "lvl4": "article h4",
+      "lvl5": "article h5",
+      "lvl6": "article h6",
+      "text": "article p, article li, article td"
+    }
+  },
+  "strip_chars": " .,;:#",
+  "scrape_start_urls": false,
+  "custom_settings": {
+    "highlight_fields": "hierarchy.lvl0,hierarchy.lvl1,hierarchy.lvl2,hierarchy.lvl3,hierarchy.lvl4,hierarchy.lvl5,hierarchy.lvl6,content"
+  }
+}

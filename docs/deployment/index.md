@@ -190,6 +190,18 @@ For multi-pod deployments:
 
 For schema migrations in K8s, see [CI/CD](../migrations/ci-cd#pattern-2-separate-migration-container).
 
+## Docs Search with Typesense
+
+`docs.revisium.io` can use Typesense behind the same docs domain.
+
+Recommended production layout:
+
+- `docs` container serves static Docusaurus pages
+- Kubernetes ingress routes `/search/*` to the internal Typesense service
+- `docs-search-indexer` runs the stateless `typesense-docsearch-scraper`
+
+This keeps the browser pointed at the docs origin instead of a separate public Typesense endpoint.
+
 ## Configuration
 
 All configuration is done via environment variables.

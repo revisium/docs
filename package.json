@@ -23,7 +23,9 @@
     "mermaid": "^10.9.4",
     "prism-react-renderer": "^2.4.1",
     "react": "^19.1.1",
-    "react-dom": "^19.1.1"
+    "react-dom": "^19.1.1",
+    "typesense-docsearch-css": "^0.3.0",
+    "typesense-docsearch.js": "^3.4.1"
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "3.8.1",
