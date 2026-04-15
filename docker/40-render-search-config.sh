@@ -6,6 +6,14 @@ set -eu
 : "${TYPESENSE_COLLECTION_NAME:=revisium_docs}"
 : "${TYPESENSE_SEARCH_PATH:=/search}"
 
+case "${TYPESENSE_SEARCH_ENABLED}" in
+  true|false) ;;
+  *)
+    echo "TYPESENSE_SEARCH_ENABLED must be 'true' or 'false'" >&2
+    exit 1
+    ;;
+esac
+
 json_escape() {
   printf '%s' "$1" | sed \
     -e 's/\\/\\\\/g' \
