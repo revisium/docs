@@ -1,4 +1,5 @@
 import React, { useEffect, useId, useState } from "react";
+import clsx from "clsx";
 import "typesense-docsearch-css";
 import { loadSearchConfig, type SearchConfig } from "@site/src/components/search/config";
 
@@ -8,25 +9,41 @@ type SearchNavbarItemProps = {
   mobile?: boolean;
 };
 
+type SearchNavbarItemPropsReadonly = Readonly<SearchNavbarItemProps>;
+
+const DEFAULT_HTTPS_PORT = 443;
+const DEFAULT_HTTP_PORT = 80;
+const SEARCH_QUERY_BY =
+  "hierarchy.lvl0,hierarchy.lvl1,hierarchy.lvl2,hierarchy.lvl3,hierarchy.lvl4,hierarchy.lvl5,hierarchy.lvl6,content";
+const SEARCH_QUERY_BY_WEIGHTS = "8,7,6,5,4,3,2,1";
+
+function getWindowProtocol(): "http" | "https" {
+  return globalThis.location.protocol === "https:" ? "https" : "http";
+}
+
+function getWindowPort(protocol: "http" | "https"): number {
+  if (globalThis.location.port.length > 0) {
+    return Number(globalThis.location.port);
+  }
+
+  if (protocol === "https") {
+    return DEFAULT_HTTPS_PORT;
+  }
+
+  return DEFAULT_HTTP_PORT;
+}
+
 function toServerNode(config: SearchConfig): {
   host: string;
   port: number;
   protocol: "http" | "https";
   path: string;
 } {
-  const protocol =
-    config.protocol ||
-    (window.location.protocol.replace(":", "") as "http" | "https");
+  const protocol = config.protocol ?? getWindowProtocol();
 
   return {
-    host: config.host || window.location.hostname,
-    port:
-      config.port ||
-      (window.location.port.length > 0
-        ? Number(window.location.port)
-        : protocol === "https"
-          ? 443
-          : 80),
+    host: config.host ?? globalThis.location.hostname,
+    port: config.port ?? getWindowPort(protocol),
     protocol,
     path: config.path,
   };
@@ -34,8 +51,8 @@ function toServerNode(config: SearchConfig): {
 
 export default function SearchNavbarItem({
   mobile = false,
-}: SearchNavbarItemProps): React.JSX.Element | null {
-  const id = useId().replace(/:/g, "");
+}: SearchNavbarItemPropsReadonly): React.JSX.Element | null {
+  const id = useId().replaceAll(":", "");
   const [status, setStatus] = useState<SearchStatus>("loading");
 
   useEffect(() => {
@@ -63,9 +80,8 @@ export default function SearchNavbarItem({
             apiKey: config.apiKey,
           },
           typesenseSearchParameters: {
-            query_by:
-              "hierarchy.lvl0,hierarchy.lvl1,hierarchy.lvl2,hierarchy.lvl3,hierarchy.lvl4,hierarchy.lvl5,hierarchy.lvl6,content",
-            query_by_weights: "8,7,6,5,4,3,2,1",
+            query_by: SEARCH_QUERY_BY,
+            query_by_weights: SEARCH_QUERY_BY_WEIGHTS,
             drop_tokens_threshold: 3,
             typo_tokens_threshold: 1,
             per_page: 8,
@@ -96,11 +112,11 @@ export default function SearchNavbarItem({
 
   return (
     <div
-      className={[
+      className={clsx(
         "navbar__item",
         "navbar-search",
         mobile ? "navbar-search--mobile" : "navbar-search--desktop",
-      ].join(" ")}
+      )}
     >
       <div id={id} className="navbar-search__mount" />
       {status === "loading" ? (

@@ -8,6 +8,8 @@ export type SearchConfig = {
   protocol?: "http" | "https";
 };
 
+const LOCALHOST_HOSTNAMES = new Set(["localhost", "127.0.0.1"]);
+
 const LOCALHOST_FALLBACK_CONFIG: SearchConfig = {
   enabled: true,
   apiKey: "3fb8239aac050d830941b71b38063fe9a7af3dec16ac4a7a3369e554dd5ab7d9",
@@ -17,6 +19,26 @@ const LOCALHOST_FALLBACK_CONFIG: SearchConfig = {
   port: 443,
   protocol: "https",
 };
+
+function isSearchConfig(value: unknown): value is SearchConfig {
+  if (!value || typeof value !== "object") {
+    return false;
+  }
+
+  const candidate = value as Partial<SearchConfig>;
+
+  return (
+    typeof candidate.enabled === "boolean" &&
+    typeof candidate.apiKey === "string" &&
+    typeof candidate.collectionName === "string" &&
+    typeof candidate.path === "string" &&
+    (candidate.host === undefined || typeof candidate.host === "string") &&
+    (candidate.port === undefined || typeof candidate.port === "number") &&
+    (candidate.protocol === undefined ||
+      candidate.protocol === "http" ||
+      candidate.protocol === "https")
+  );
+}
 
 async function parseSearchConfig(response: Response): Promise<SearchConfig> {
   const contentType = response.headers.get("content-type") || "";
@@ -29,7 +51,13 @@ async function parseSearchConfig(response: Response): Promise<SearchConfig> {
     throw new Error("Search config did not return JSON.");
   }
 
-  return response.json() as Promise<SearchConfig>;
+  const payload: unknown = await response.json();
+
+  if (!isSearchConfig(payload)) {
+    throw new Error("Search config payload is invalid.");
+  }
+
+  return payload;
 }
 
 export async function loadSearchConfig(): Promise<SearchConfig> {
@@ -38,10 +66,7 @@ export async function loadSearchConfig(): Promise<SearchConfig> {
       await fetch("/search-config.json", { cache: "no-store" }),
     );
   } catch (error) {
-    if (
-      window.location.hostname === "localhost" ||
-      window.location.hostname === "127.0.0.1"
-    ) {
+    if (LOCALHOST_HOSTNAMES.has(globalThis.location.hostname)) {
       return LOCALHOST_FALLBACK_CONFIG;
     }
 
