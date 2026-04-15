@@ -10,12 +10,23 @@ type SearchNavbarItemProps = {
 };
 
 type SearchNavbarItemPropsReadonly = Readonly<SearchNavbarItemProps>;
+type SearchHit = {
+  url?: string;
+  url_without_anchor?: string;
+  url_without_variables?: string;
+  __docsearch_parent?: SearchHit;
+};
 
 const DEFAULT_HTTPS_PORT = 443;
 const DEFAULT_HTTP_PORT = 80;
 const SEARCH_QUERY_BY =
   "hierarchy.lvl0,hierarchy.lvl1,hierarchy.lvl2,hierarchy.lvl3,hierarchy.lvl4,hierarchy.lvl5,hierarchy.lvl6,content";
 const SEARCH_QUERY_BY_WEIGHTS = "8,7,6,5,4,3,2,1";
+const SEARCH_RESULT_URL_FIELDS = [
+  "url",
+  "url_without_anchor",
+  "url_without_variables",
+] as const;
 
 function getWindowProtocol(): "http" | "https" {
   return globalThis.location.protocol === "https:" ? "https" : "http";
@@ -47,6 +58,33 @@ function toServerNode(config: SearchConfig): {
     protocol,
     path: config.path,
   };
+}
+
+function rewriteToCurrentOrigin(url: string): string {
+  const nextUrl = new URL(url);
+
+  nextUrl.protocol = globalThis.location.protocol;
+  nextUrl.host = globalThis.location.host;
+
+  return nextUrl.toString();
+}
+
+function rewriteSearchHit(item: SearchHit): SearchHit {
+  const rewrittenItem = { ...item };
+
+  for (const field of SEARCH_RESULT_URL_FIELDS) {
+    if (typeof rewrittenItem[field] === "string") {
+      rewrittenItem[field] = rewriteToCurrentOrigin(rewrittenItem[field]);
+    }
+  }
+
+  if (rewrittenItem.__docsearch_parent) {
+    rewrittenItem.__docsearch_parent = rewriteSearchHit(
+      rewrittenItem.__docsearch_parent,
+    );
+  }
+
+  return rewrittenItem;
 }
 
 export default function SearchNavbarItem({
@@ -87,6 +125,7 @@ export default function SearchNavbarItem({
             per_page: 8,
             prioritize_exact_match: true,
           },
+          transformItems: (items: SearchHit[]) => items.map(rewriteSearchHit),
         });
 
         if (!disposed) {

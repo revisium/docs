@@ -9,16 +9,46 @@ export type SearchConfig = {
 };
 
 const LOCALHOST_HOSTNAMES = new Set(["localhost", "127.0.0.1"]);
+const SEARCH_ONLY_API_KEY =
+  "3fb8239aac050d830941b71b38063fe9a7af3dec16ac4a7a3369e554dd5ab7d9";
 
-const LOCALHOST_FALLBACK_CONFIG: SearchConfig = {
-  enabled: true,
-  apiKey: "3fb8239aac050d830941b71b38063fe9a7af3dec16ac4a7a3369e554dd5ab7d9",
-  collectionName: "revisium_docs",
-  path: "/search",
-  host: "docs.revisium.io",
-  port: 443,
-  protocol: "https",
-};
+function getLocationProtocol(): "http" | "https" {
+  return globalThis.location.protocol === "https:" ? "https" : "http";
+}
+
+function getLocationPort(protocol: "http" | "https"): number {
+  if (globalThis.location.port.length > 0) {
+    return Number(globalThis.location.port);
+  }
+
+  return protocol === "https" ? 443 : 80;
+}
+
+function buildSameOriginFallbackConfig(): SearchConfig {
+  const protocol = getLocationProtocol();
+
+  return {
+    enabled: true,
+    apiKey: SEARCH_ONLY_API_KEY,
+    collectionName: "revisium_docs",
+    path: "/search",
+    host: globalThis.location.hostname,
+    port: getLocationPort(protocol),
+    protocol,
+  };
+}
+
+function buildLocalhostFallbackConfig(): SearchConfig {
+  return {
+    enabled: true,
+    apiKey: SEARCH_ONLY_API_KEY,
+    collectionName: "revisium_docs",
+    path: "/search",
+    host: "docs.revisium.io",
+    port: 443,
+    protocol: "https",
+  };
+}
 
 function isSearchConfig(value: unknown): value is SearchConfig {
   if (!value || typeof value !== "object") {
@@ -67,9 +97,9 @@ export async function loadSearchConfig(): Promise<SearchConfig> {
     );
   } catch (error) {
     if (LOCALHOST_HOSTNAMES.has(globalThis.location.hostname)) {
-      return LOCALHOST_FALLBACK_CONFIG;
+      return buildLocalhostFallbackConfig();
     }
 
-    throw error;
+    return buildSameOriginFallbackConfig();
   }
 }
