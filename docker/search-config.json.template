@@ -1,0 +1,6 @@
+{
+  "enabled": ${TYPESENSE_SEARCH_ENABLED},
+  "apiKey": "${TYPESENSE_SEARCH_API_KEY}",
+  "collectionName": "${TYPESENSE_COLLECTION_NAME}",
+  "path": "${TYPESENSE_SEARCH_PATH}"
+}
