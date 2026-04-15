@@ -57,21 +57,30 @@ function getNavbarItemKey(item: NavbarItemConfig): string {
 }
 
 function NavbarItems({ items }: NavbarItemsProps): ReactNode {
+  const keyCounts = new Map<string, number>();
+
   return (
     <>
-      {items.map((item) => (
-        <ErrorCauseBoundary
-          key={getNavbarItemKey(item)}
-          onError={(error) =>
-            new Error(
-              `A theme navbar item failed to render.\nPlease double-check the following navbar item (themeConfig.navbar.items) of your Docusaurus config:\n${JSON.stringify(item, null, 2)}`,
-              { cause: error },
-            )
-          }
-        >
-          <NavbarItem {...item} />
-        </ErrorCauseBoundary>
-      ))}
+      {items.map((item) => {
+        const baseKey = getNavbarItemKey(item);
+        const occurrence = keyCounts.get(baseKey) ?? 0;
+        keyCounts.set(baseKey, occurrence + 1);
+        const key = occurrence === 0 ? baseKey : `${baseKey}:${occurrence}`;
+
+        return (
+          <ErrorCauseBoundary
+            key={key}
+            onError={(error) =>
+              new Error(
+                `A theme navbar item failed to render.\nPlease double-check the following navbar item (themeConfig.navbar.items) of your Docusaurus config:\n${JSON.stringify(item, null, 2)}`,
+                { cause: error },
+              )
+            }
+          >
+            <NavbarItem {...item} />
+          </ErrorCauseBoundary>
+        );
+      })}
     </>
   );
 }

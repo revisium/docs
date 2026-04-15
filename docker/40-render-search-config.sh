@@ -6,12 +6,23 @@ set -eu
 : "${TYPESENSE_COLLECTION_NAME:=revisium_docs}"
 : "${TYPESENSE_SEARCH_PATH:=/search}"
 
-export TYPESENSE_SEARCH_ENABLED
-export TYPESENSE_SEARCH_API_KEY
-export TYPESENSE_COLLECTION_NAME
-export TYPESENSE_SEARCH_PATH
+json_escape() {
+  printf '%s' "$1" | sed \
+    -e 's/\\/\\\\/g' \
+    -e 's/"/\\"/g' \
+    -e ':a' \
+    -e 'N' \
+    -e '$!ba' \
+    -e 's/\n/\\n/g' \
+    -e 's/\r/\\r/g' \
+    -e 's/\t/\\t/g'
+}
 
-envsubst \
-  '${TYPESENSE_SEARCH_ENABLED} ${TYPESENSE_SEARCH_API_KEY} ${TYPESENSE_COLLECTION_NAME} ${TYPESENSE_SEARCH_PATH}' \
-  < /etc/revisium/search-config.json.template \
-  > /usr/share/nginx/html/search-config.json
+cat > /usr/share/nginx/html/search-config.json <<EOF
+{
+  "enabled": ${TYPESENSE_SEARCH_ENABLED},
+  "apiKey": "$(json_escape "${TYPESENSE_SEARCH_API_KEY}")",
+  "collectionName": "$(json_escape "${TYPESENSE_COLLECTION_NAME}")",
+  "path": "$(json_escape "${TYPESENSE_SEARCH_PATH}")"
+}
+EOF
