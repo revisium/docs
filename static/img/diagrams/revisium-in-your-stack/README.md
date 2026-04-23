@@ -24,7 +24,7 @@ Treat `diagram.png` as the stable published asset and versioned files under `ver
 2. Generate a new candidate image outside the repo or with your preferred tool.
 3. Save the approved file as `versions/diagram.vN.png`.
 4. Copy the approved version to `diagram.png`.
-5. Replace the mermaid block in `docs/architecture/index.md` with the stable image reference if that has not already been done.
+5. Replace the mermaid block in `docs/intro.md` under `Revisium in Your Stack` with the stable image reference if that has not already been done.
 6. Add a short changelog entry in `prompt.md`.
 
 ## Docs Usage
