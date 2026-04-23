@@ -553,23 +553,11 @@ Apache 2.0, your infrastructure, no vendor lock-in. Or use [Revisium Cloud](http
 
 ## Revisium in Your Stack
 
-```mermaid
-graph TD
-    FE["Frontend"] --> PROTO
-    BE["Backend"] --> PROTO
-    MOB["Mobile"] --> PROTO
-    AI["AI Agent"] --> PROTO
-    ADMIN["Admin UI"] --> PROTO
-    CLI["revisium-cli"] --> PROTO
-    GIT["Git"] -- schemas --> CLI
-
-    subgraph R[Revisium]
-        PROTO["REST | GraphQL | MCP"]
-        CORE["Engine"]
-        DB[("PostgreSQL")]
-        PROTO --> CORE --> DB
-    end
-```
+<img
+  src="/img/diagrams/revisium-in-your-stack/diagram.png"
+  alt="Revisium in your stack"
+  style={{ width: "100%", maxWidth: "700px", display: "block", margin: "0 auto" }}
+/>
 
 - **Frontend, Backend, Mobile** — consume data via auto-generated REST and GraphQL APIs
 - **AI Agents** — interact via MCP protocol (create schemas, manage data, commit)
