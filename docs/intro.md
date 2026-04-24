@@ -556,7 +556,9 @@ Apache 2.0, your infrastructure, no vendor lock-in. Or use [Revisium Cloud](http
 <img
   src="/img/diagrams/revisium-in-your-stack/diagram.png"
   alt="Revisium in your stack"
-  style={{ width: "100%", maxWidth: "700px", display: "block", margin: "0 auto" }}
+  width="1367"
+  height="1151"
+  style={{ width: "100%", maxWidth: "820px", height: "auto", display: "block", margin: "0 auto" }}
 />
 
 - **Frontend, Backend, Mobile** — consume data via auto-generated REST and GraphQL APIs
