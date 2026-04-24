@@ -6,12 +6,12 @@ Approved and published in docs.
 
 ## Version
 
-v1
+v2
 
 ## Approved Asset
 
 - Stable asset: `/img/diagrams/revisium-in-your-stack/diagram.png`
-- Versioned asset: `static/img/diagrams/revisium-in-your-stack/versions/diagram.v1.png`
+- Versioned asset: `static/img/diagrams/revisium-in-your-stack/versions/diagram.v2.png`
 
 ## Stable Asset Path
 
@@ -37,8 +37,9 @@ Style:
 - minimal and modern
 - real product documentation diagram, not illustration
 - white background
-- thin gray borders
-- subtle blue accent color
+- grayscale palette matching the docs site
+- thin neutral gray borders
+- no saturated accent colors
 - no gradients
 - no 3D
 - no isometric perspective
@@ -47,12 +48,29 @@ Style:
 - evenly spaced elements
 - high readability, similar to Stripe or Supabase docs
 
+Color system:
+- background: #ffffff
+- primary text: #171717
+- secondary text: #525252
+- tertiary text: #737373
+- borders and dividers: #e5e5e5
+- optional active emphasis: very dark neutral, not blue
+- commit dots: neutral gray
+- Head marker: dark neutral fill
+- Draft marker: white fill with neutral dark outline
+- avoid blue section titles and blue outlines
+
 Layout:
 - two medium top cards
 - one large central card
 - PostgreSQL cylinder at the bottom
 - arrows from both top cards to the central card
 - arrow from central card to PostgreSQL
+- preserve a compact documentation-style aspect ratio close to the original v1 image
+- keep the total diagram height tight; avoid tall empty areas
+- reduce vertical padding inside cards and sections
+- keep spacing between major blocks compact and even
+- prefer a wider composition over a tall composition
 
 Top left card title:
 Applications
@@ -95,7 +113,7 @@ Inside “Branches & Revisions”:
 - two branches splitting from it labeled “release-1.4” and “release-1.5”
 - show several small gray commit dots on each branch
 - each release branch should have its own commits after splitting
-- show a blue filled dot at the end of an active branch to represent Head
+- show a dark neutral filled dot at the end of an active branch to represent Head
 - show a hollow outlined dot next to it to represent Draft
 - keep this simple and clean, not like a git client screenshot
 - straight lines only
@@ -113,6 +131,17 @@ Database cylinder labeled PostgreSQL
 Typography:
 - clean sans-serif
 - all text in English
+- keep typography compact and documentation-like, not poster-like
+- section titles should be moderately emphasized, not oversized
+- body labels and legend text should stay slightly smaller than the section titles
+- preserve comfortable readability without increasing line height unnecessarily
+
+Composition guardrails:
+- stay visually close to the density of the original v1 image
+- do not enlarge text compared with the original approved layout
+- do not increase card height unless required by content
+- keep the branch section compact and horizontally efficient
+- avoid poster-like whitespace
 ```
 
 ## Hard Rules
@@ -120,6 +149,7 @@ Typography:
 - no icons unless intentionally added to the prompt
 - no gradients
 - no shadows
+- no blue accents unless the site palette changes later
 - straight or clean connector lines only
 - no decorative background noise
 - minimal text
@@ -132,6 +162,7 @@ Typography:
 - Keep labels short enough to avoid fuzzy rendering after export.
 - Prefer PNG for the published asset unless you intentionally switch the docs page to SVG.
 - If an SVG export becomes stable and hand-editable, document that decision here before switching formats.
+- Match the docs visual system from `src/css/custom.css`: neutral grayscale, black-first typography, light gray borders, white background.
 
 ## Regeneration Checklist
 
@@ -140,15 +171,3 @@ Typography:
 3. Approve one image and save it as `versions/diagram.vN.png`.
 4. Copy the approved file to `diagram.png`.
 5. Verify the docs page still renders cleanly at normal content width.
-6. Add a new changelog entry below.
-
-## Version History
-
-### v1
-
-- First approved generated replacement image imported and published as the stable docs asset.
-- Prompt captured in this file as the current production source of truth.
-- Files:
-  - `versions/diagram.v1.png`
-  - `diagram.png`
-- Replaced the mermaid diagram in `docs/intro.md` under `Revisium in Your Stack` with the stable static image.

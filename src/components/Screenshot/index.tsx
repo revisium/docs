@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import styles from "./styles.module.css";
+import { IMAGE_DIMENSIONS } from "./imageDimensions";
 
 interface ScreenshotProps {
   alt: string;
@@ -16,9 +17,18 @@ export function ScreenshotRow({ children }: Readonly<ScreenshotRowProps>): React
 
 export default function Screenshot({ alt, src }: Readonly<ScreenshotProps>): ReactNode {
   if (src) {
+    const dimensions = IMAGE_DIMENSIONS[src];
+
     return (
       <figure className={styles.figure}>
-        <img src={src} alt={alt} className={styles.image} loading="lazy" />
+        <img
+          src={src}
+          alt={alt}
+          className={styles.image}
+          loading="lazy"
+          width={dimensions?.width}
+          height={dimensions?.height}
+        />
         <figcaption className={styles.caption}>{alt}</figcaption>
       </figure>
     );
