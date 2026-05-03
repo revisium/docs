@@ -44,13 +44,13 @@ jobs:
 
       - name: Validate release metadata
         if: ${{ steps.check_bump.outputs.bumped == 'true' }}
-        uses: revisium/revisium-actions/actions/validate-version-metadata@e6f4d30d4bd90adf706a21c541a176521ff35971 # v0.1.0
+        uses: revisium/revisium-actions/actions/validate-version-metadata@5bd118f409d299aeab62051d64176c40f5a75933 # v0.2.0
         with:
           target-version: ${{ steps.check_bump.outputs.version }}
 
       - name: Check prerelease runtime dependencies
         if: ${{ steps.check_bump.outputs.bumped == 'true' }}
-        uses: revisium/revisium-actions/actions/check-prerelease-deps@e6f4d30d4bd90adf706a21c541a176521ff35971 # v0.1.0
+        uses: revisium/revisium-actions/actions/check-prerelease-deps@5bd118f409d299aeab62051d64176c40f5a75933 # v0.2.0
         with:
           target-version: ${{ steps.check_bump.outputs.version }}
 
