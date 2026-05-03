@@ -4,7 +4,10 @@ on:
   workflow_dispatch:
     inputs:
       action:
-        description: Release train transition to run.
+        description: >
+          Release train transition to run. start-* actions run from master;
+          alpha-bump, promote-rc, rc-bump, stable, and patch run from the
+          matching release/X.Y.x branch.
         required: true
         default: start-minor-alpha
         type: choice
