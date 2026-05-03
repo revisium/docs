@@ -508,5 +508,5 @@ Data modeling defines the structure. On top of it, you can add:
 
 - **[Foreign Keys](./foreign-keys)** — relationships between tables with referential integrity
 - **[Computed Fields](./computed-fields)** — formula-based read-only fields (`x-formula`)
-- **[Files](./files)** — S3 file attachments at any schema level
+- **[Files](./files)** — file attachments at any schema level, backed by local or S3-compatible storage
 - **[Schema Evolution](./schema-evolution)** — change types, add/remove fields with automatic data transforms

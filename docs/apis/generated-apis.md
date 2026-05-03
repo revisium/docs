@@ -250,4 +250,4 @@ REST endpoints include an OpenAPI/Swagger specification with typed request/respo
 
 ## Apollo Federation
 
-GraphQL schemas support Apollo Federation for use in a federated gateway. See [Configuration](./configuration).
+Generated GraphQL node types include Apollo Federation metadata with the `@key` directive for gateway composition. Stable gateway composition depends on the generated type names, so review [Configuration](./configuration) before changing GraphQL naming variables such as prefixes and postfixes.

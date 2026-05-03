@@ -9,9 +9,21 @@ import TabItem from '@theme/TabItem';
 
 # Files
 
-Revisium supports file attachments at any level of your schema. Files are stored in S3-compatible storage and managed through the Admin UI or REST API.
+Revisium supports file attachments at any level of your schema. Files can be stored on the local filesystem for standalone or simple single-node deployments, or in S3-compatible storage for production and multi-node deployments.
 
 File fields are like slots in your schema — you define where files go, the platform handles upload, storage, and metadata. Any file type is supported: images, documents, videos, archives, or any other binary. Unopinionated: embed files directly in your tables, create a dedicated assets table, or mix both — structure it however fits your project.
+
+## Storage Providers
+
+| Deployment | Default storage behavior | File URLs |
+|------------|--------------------------|-----------|
+| Standalone | `STORAGE_PROVIDER=local`, `STORAGE_LOCAL_PATH=<data>/uploads` | Served through `PUBLIC_URL/files/...`, for example `http://localhost:9222/files/<hash>` |
+| Self-hosted single node | Set `STORAGE_PROVIDER=local` and `STORAGE_LOCAL_PATH` explicitly if you want local uploads | Served through `FILE_PLUGIN_PUBLIC_ENDPOINT`, defaulting to `http://localhost:{PORT}/files` |
+| Docker/Kubernetes/multi-pod | Set `STORAGE_PROVIDER=s3` explicitly, or leave it unset only when all `S3_*` variables are present so self-hosted S3 autodetection can select S3 | Served through the configured `FILE_PLUGIN_PUBLIC_ENDPOINT` |
+
+If no storage provider is configured in self-hosted mode and no complete S3 configuration is present, file fields still work in schemas but uploads are disabled. Standalone is different: it enables local file storage by default.
+
+`FILE_PLUGIN_PUBLIC_ENDPOINT` is the exact public URL prefix written to each uploaded file's `url`. Include `/files` in the value if your deployment serves files under `/files`; omit it only when the endpoint itself is the file root. For example, with `FILE_PLUGIN_PUBLIC_ENDPOINT=https://files.example.com/files`, uploaded file metadata contains URLs such as `https://files.example.com/files/<hash>`.
 
 ## File Fields in Schema
 
@@ -25,7 +37,7 @@ Use the File system schema reference (`$ref`) to add a file field. Works at any 
   "title": "Getting Started Guide",
   "slides": [
     {
-      "image": { "status": "uploaded", "fileId": "...", "url": "https://s3.../step1.jpg", "fileName": "step1.jpg", ... },
+      "image": { "status": "uploaded", "fileId": "...", "url": "http://localhost:9222/files/Ua4ZaUehur50VOp2odFvy", "fileName": "step1.jpg", ... },
       "caption": "Step 1: Create a project"
     },
     {
@@ -34,7 +46,7 @@ Use the File system schema reference (`$ref`) to add a file field. Works at any 
     }
   ],
   "branding": {
-    "logo": { "status": "uploaded", "fileId": "...", "url": "https://s3.../logo.svg", "fileName": "logo.svg", ... },
+    "logo": { "status": "uploaded", "fileId": "...", "url": "http://localhost:9222/files/GVke8IlpccUuYaG7pC2rR", "fileName": "logo.svg", ... },
     "color": "#171717"
   }
 }
@@ -88,7 +100,7 @@ The File schema is a pre-defined system schema — you don't need to create it. 
 |-------|------|----------|-------------|
 | `status` | string | yes | `"ready"` (slot created, awaiting upload), `"uploaded"` |
 | `fileId` | string | yes | Unique ID for upload — generated when row is created |
-| `url` | string | yes | S3 URL — populated after upload |
+| `url` | string | yes | Public file URL — populated after upload |
 | `fileName` | string | **no** | Original file name — editable by user |
 | `hash` | string | yes | Content hash (SHA-256) |
 | `extension` | string | yes | File extension (e.g., `"jpg"`, `"pdf"`) |
@@ -132,7 +144,7 @@ File uploaded — metadata populated automatically:
 {
   "status": "uploaded",
   "fileId": "Ua4ZaUehur50VOp2odFvy",
-  "url": "https://s3.../cover.jpg",
+  "url": "http://localhost:9222/files/Ua4ZaUehur50VOp2odFvy",
   "fileName": "cover.jpg",
   "hash": "a1b2c3d4e5...",
   "extension": "jpg",
@@ -152,7 +164,7 @@ New file uploaded to the same slot — metadata updated, same `fileId`:
 {
   "status": "uploaded",
   "fileId": "Ua4ZaUehur50VOp2odFvy",
-  "url": "https://s3.../cover-v2.png",
+  "url": "http://localhost:9222/files/Ua4ZaUehur50VOp2odFvy",
   "fileName": "cover-v2.png",
   "hash": "f6g7h8i9j0...",
   "extension": "png",
@@ -230,7 +242,7 @@ File fields can appear anywhere in your schema:
 **Entire row is a file** — dedicated assets table, each row = one file:
 
 ```json
-{ "status": "uploaded", "fileId": "...", "url": "https://s3.../logo.svg", "fileName": "logo.svg", ... }
+{ "status": "uploaded", "fileId": "...", "url": "http://localhost:9222/files/...", "fileName": "logo.svg", ... }
 ```
 
 **Root array of files** — each row is a gallery:
@@ -287,5 +299,6 @@ The Admin UI includes an Assets view — a gallery of all files across all table
 ## Limits
 
 - Maximum file size: 50 MB (not yet configurable)
-- S3-compatible storage must be configured for file uploads (see [Deployment](../deployment/))
-- Without S3 configured, file fields are available in schemas but upload functionality is disabled
+- Standalone enables local file storage by default under `<data>/uploads`
+- Self-hosted deployments must configure `STORAGE_PROVIDER=local` or complete S3 settings for uploads (see [Deployment](../deployment/))
+- Without a configured storage provider, file fields are available in schemas but upload functionality is disabled

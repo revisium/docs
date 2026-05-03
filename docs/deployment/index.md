@@ -20,17 +20,24 @@ Open [http://localhost:9222](http://localhost:9222). No auth by default.
 
 | Option | Default | Description |
 |--------|---------|-------------|
-| `--port` | `9222` | HTTP port |
+| `--port` | first free port from `9222` | HTTP port; scans upward until one is free |
+| `--pg-port` | first free port from `5440` | Embedded PostgreSQL port; scans upward until one is free |
 | `--auth` | `false` | Enable authentication (`admin` / `admin`) |
-| `--data` | OS temp dir | Persistent data directory |
+| `--data` | `~/.revisium` | Data directory for embedded PostgreSQL, persisted JWT secret, and default local uploads |
+| `-h`, `--help` | — | Print CLI help |
 
 ```bash
 # Custom port with auth
 npx @revisium/standalone@latest --port 3000 --auth
 
+# Fixed embedded PostgreSQL port
+npx @revisium/standalone@latest --pg-port 5555
+
 # Persistent data
 npx @revisium/standalone@latest --data ./revisium-data
 ```
+
+If the default HTTP or PostgreSQL port is busy, standalone picks the next free port unless you pass a fixed `--port` or `--pg-port`. The supported data-directory option is `--data`; the old accidental `--data-dir` alias is no longer accepted.
 
 MCP endpoint available at `/mcp`:
 
@@ -109,6 +116,8 @@ services:
       CACHE_L2_REDIS_URL: redis://redis:6379
       CACHE_BUS_HOST: redis
       CACHE_BUS_PORT: 6379
+      STORAGE_PROVIDER: s3
+      FILE_PLUGIN_PUBLIC_ENDPOINT: https://files.example.com/files
       S3_ENDPOINT: https://s3.amazonaws.com
       S3_BUCKET: my-revisium-files
       S3_REGION: us-east-1
@@ -218,6 +227,19 @@ All configuration is done via environment variables.
 |----------|---------|-------------|
 | `JWT_SECRET` | auto-generated | JWT signing secret. **Set explicitly in production and multi-pod deployments** |
 | `ADMIN_PASSWORD` | `admin` | Default admin password |
+| `TRUST_PROXY` | unset | Express `trust proxy` value. Required behind ingress, load balancers, or reverse proxies so Express uses forwarded protocol and client IP metadata |
+| `CORS_ORIGIN` | development: reflect request origin; production: same-origin only | Comma-separated credentialed CORS allowlist. Set explicitly when the Admin UI and core API use different origins |
+| `COOKIE_SECURE` | `NODE_ENV === 'production'` | Sets the cookie `Secure` flag. Use `true` for HTTPS deployments |
+| `COOKIE_SAMESITE` | `lax` | Cookie `SameSite` value: `lax`, `strict`, or `none`. `none` requires `COOKIE_SECURE=true` |
+
+Browser login uses cookies, so proxy, CORS, and cookie settings must agree:
+
+| Deployment shape | Recommended values | Notes |
+|------------------|--------------------|-------|
+| Local HTTP | `COOKIE_SECURE=false`, `COOKIE_SAMESITE=lax` | Standalone applies these defaults when `PUBLIC_URL` is local HTTP |
+| Same-site HTTPS | `COOKIE_SECURE=true`, `COOKIE_SAMESITE=lax` or `strict` | Works when Admin UI and API share the same site |
+| HTTPS behind proxy or ingress | `TRUST_PROXY=<hop-count>`, `CORS_ORIGIN=https://your-admin-origin`, `COOKIE_SECURE=true`, `COOKIE_SAMESITE=lax` | Use an explicit CORS allowlist for credentialed browser requests |
+| Cross-site embed or separate site | `COOKIE_SECURE=true`, `COOKIE_SAMESITE=none`, explicit `CORS_ORIGIN` | Browsers reject `SameSite=None` cookies unless they are also `Secure` |
 
 ### Cache
 
@@ -230,15 +252,20 @@ All configuration is done via environment variables.
 | `CACHE_BUS_PORT` | — | Redis port for cache bus |
 | `CACHE_DEBUG` | `0` | Enable cache debug logging |
 
-### S3 (File Storage)
+### File Storage
 
-| Variable | Description |
-|----------|-------------|
-| `S3_ENDPOINT` | S3-compatible endpoint URL |
-| `S3_BUCKET` | Bucket name |
-| `S3_REGION` | AWS region |
-| `S3_ACCESS_KEY_ID` | Access key |
-| `S3_SECRET_ACCESS_KEY` | Secret key |
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `STORAGE_PROVIDER` | self-hosted: unset; standalone: `local` | Storage backend: `local`, `s3`, or unset. Set `s3` explicitly for S3 deployments, or leave unset only when all `S3_*` variables are present so self-hosted S3 autodetection can select S3; otherwise uploads are disabled |
+| `STORAGE_LOCAL_PATH` | self-hosted: `./uploads`; standalone: `<data>/uploads` | Local filesystem upload directory. In self-hosted mode, `./uploads` is relative to the process working directory |
+| `FILE_PLUGIN_PUBLIC_ENDPOINT` | local: `http://localhost:{PORT}/files`; standalone: `PUBLIC_URL/files` | Exact public URL prefix used in file metadata. Required for S3; include `/files` in the value if your deployment serves files under `/files` |
+| `S3_ENDPOINT` | — | S3-compatible endpoint URL |
+| `S3_BUCKET` | — | Bucket name |
+| `S3_REGION` | — | AWS region |
+| `S3_ACCESS_KEY_ID` | — | Access key |
+| `S3_SECRET_ACCESS_KEY` | — | Secret key |
+
+Standalone stores uploads on the local filesystem by default and serves them from `/files/...`. For Docker, Kubernetes, and multi-pod deployments, use S3-compatible storage unless you intentionally mount shared local storage. Revisium does not append `/files` to an explicit `FILE_PLUGIN_PUBLIC_ENDPOINT`; it uses the value as the URL prefix.
 
 ### SMTP (Email)
 
@@ -253,10 +280,13 @@ All configuration is done via environment variables.
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `ENDPOINT_GRAPHQL_SHOW_NODE_TYPE` | `true` | Generate Node types |
-| `ENDPOINT_GRAPHQL_SHOW_FLAT_TYPE` | `true` | Generate Flat types |
-| `ENDPOINT_GRAPHQL_ADD_PROJECT_PREFIX` | `true` | Prefix types with project name |
-| `ENDPOINT_GRAPHQL_FEDERATION` | `false` | Enable Apollo Federation |
+| `GRAPHQL_HIDE_NODE_TYPES` | `false` | Hide generated GraphQL node query types |
+| `GRAPHQL_HIDE_FLAT_TYPES` | `false` | Hide generated GraphQL flat query types |
+| `GRAPHQL_HIDE_MUTATIONS` | `false` | Hide generated draft-revision GraphQL mutations |
+| `GRAPHQL_PREFIX_FOR_TABLES` | project name | Prefix generated table GraphQL types |
+| `GRAPHQL_PREFIX_FOR_COMMON` | project name | Prefix generated common GraphQL types |
+| `GRAPHQL_FLAT_POSTFIX` | `Flat` | Postfix for flat GraphQL types |
+| `GRAPHQL_NODE_POSTFIX` | empty | Postfix inserted before node type suffixes |
 
 See [API Configuration](../apis/configuration) for details.
 
@@ -302,15 +332,16 @@ Used for L2 cache and multi-pod cache invalidation:
 
 Without Redis, Revisium uses in-memory caching with PostgreSQL-based bus (fine for single-instance). Set `CACHE_ENABLED=1` to enable caching.
 
-### S3 (Optional)
+### File Storage (Optional)
 
-Required for file uploads:
+Revisium supports local filesystem storage and S3-compatible storage:
 
+- Local filesystem storage for standalone or simple single-node deployments
 - Any S3-compatible storage (AWS S3, MinIO, DigitalOcean Spaces, etc.)
 - Files up to 50 MB (not yet configurable)
-- Metadata stored in PostgreSQL, binaries in S3
+- Metadata stored in PostgreSQL, binaries in the configured storage backend
 
-Without S3, file fields are available in schemas but upload is disabled.
+Without `STORAGE_PROVIDER` and without a complete `S3_*` configuration, file fields are available in schemas but upload is disabled.
 
 ### SMTP (Optional)
 
@@ -322,5 +353,5 @@ For email notifications (e.g., user invitations).
 |-----------|----------|-------|
 | PostgreSQL 14+ | Yes | The only required dependency |
 | Node.js 20+ | Standalone/CLI only | Not needed for Docker |
-| S3-compatible storage | Optional | For file uploads |
+| File storage backend | Optional | Standalone uses local storage by default; production deployments usually use S3-compatible storage |
 | Redis | Optional | For caching and multi-pod sync |
