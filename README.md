@@ -16,7 +16,7 @@ Manual dispatch:
    matching `release/X.Y.x` branch for branch-scoped transitions.
 
 Bot dispatch can call the same `workflow_dispatch` endpoint with the `action`
-and `dry_run` inputs. The workflow is pinned to `revisium-actions` `v0.3.1` by
+and `dry_run` inputs. The workflow is pinned to `revisium-actions` `v0.3.2` by
 commit hash.
 
 Write mode requires these repository settings:
