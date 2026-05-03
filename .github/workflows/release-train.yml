@@ -29,12 +29,13 @@ on:
         type: boolean
 
 permissions:
+  actions: read
   contents: read
 
 jobs:
   release-train:
     name: Release train
-    uses: revisium/revisium-actions/.github/workflows/release-train.yml@3acf688c2c435b5049f891de670a8b3adbbe47bb # v0.3.0
+    uses: revisium/revisium-actions/.github/workflows/release-train.yml@d79f100673a30455c79042669757b48322ce436f # v0.3.1
     with:
       action: ${{ inputs.action }}
       dry_run: ${{ inputs.dry_run }}
