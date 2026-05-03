@@ -5,7 +5,7 @@ on:
   push:
     branches: [master]
     paths:
-      - 'package.json'
+      - "package.json"
 
 permissions:
   contents: write
@@ -41,6 +41,18 @@ jobs:
         run: |
           echo "❌ Version ${{ steps.check_bump.outputs.version }} matches last tag v${{ steps.check_bump.outputs.last_tag }} — skipping."
           exit 0
+
+      - name: Validate release metadata
+        if: ${{ steps.check_bump.outputs.bumped == 'true' }}
+        uses: revisium/revisium-actions/actions/validate-version-metadata@v0.1.0
+        with:
+          target-version: ${{ steps.check_bump.outputs.version }}
+
+      - name: Check prerelease runtime dependencies
+        if: ${{ steps.check_bump.outputs.bumped == 'true' }}
+        uses: revisium/revisium-actions/actions/check-prerelease-deps@v0.1.0
+        with:
+          target-version: ${{ steps.check_bump.outputs.version }}
 
       - name: Create and push tag on tag-commit
         if: ${{ steps.check_bump.outputs.bumped == 'true' }}
