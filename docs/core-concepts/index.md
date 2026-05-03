@@ -13,7 +13,7 @@ Revisium is built on a set of foundational concepts that work together: a hierar
 | [Data Modeling](./data-modeling) | Define field types, nesting, constraints for every table |
 | [Foreign Keys](./foreign-keys) | Referential integrity between tables with cascade operations |
 | [Computed Fields](./computed-fields) | Formula expressions (`x-formula`) with 40+ built-in functions |
-| [Files](./files) | S3 file attachments at any schema level |
+| [Files](./files) | File attachments at any schema level, backed by local or S3-compatible storage |
 | [Versioning & Branches](./versioning) | Draft → commit → HEAD, branches, diff, rollback |
 | [Schema Evolution](./schema-evolution) | Change types, add/remove fields — data transforms automatically |
 | [Platform Hierarchy](./platform-hierarchy) | Organization → Project → Branch → Revision → Table → Row |

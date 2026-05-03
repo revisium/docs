@@ -202,7 +202,9 @@ Read-only fields with `x-formula` expressions — 40+ built-in functions, aggreg
 
 ### Files
 
-S3 file attachments at any schema level — images, documents, galleries. Use embedded file fields directly in your tables, or create a dedicated assets table for reuse. Unopinionated — structure it however fits your project.
+File attachments at any schema level — images, documents, galleries. Use local storage for standalone and simple single-node deployments, or S3-compatible storage for production and multi-node deployments. Embed file fields directly in your tables, or create a dedicated assets table for reuse.
+
+The `fileId` identifies the upload slot; the public `url` is generated from the stored file hash.
 
 <Tabs>
 <TabItem value="data" label="Data" default>
@@ -213,9 +215,9 @@ S3 file attachments at any schema level — images, documents, galleries. Use em
   "cover": {
     "status": "uploaded",
     "fileId": "abc123",
-    "url": "https://s3.../cover.jpg",
+    "url": "http://localhost:9222/files/a1b2c3d4e5f6",
     "fileName": "cover.jpg",
-    "hash": "sha256...",
+    "hash": "a1b2c3d4e5f6...",
     "extension": "jpg",
     "mimeType": "image/jpeg",
     "size": 340000,
@@ -226,9 +228,9 @@ S3 file attachments at any schema level — images, documents, galleries. Use em
     {
       "status": "uploaded",
       "fileId": "def456",
-      "url": "https://s3.../front.jpg",
+      "url": "http://localhost:9222/files/f6e5d4c3b2a1",
       "fileName": "front.jpg",
-      "hash": "sha256...",
+      "hash": "f6e5d4c3b2a1...",
       "extension": "jpg",
       "mimeType": "image/jpeg",
       "size": 280000,
@@ -238,9 +240,9 @@ S3 file attachments at any schema level — images, documents, galleries. Use em
     {
       "status": "uploaded",
       "fileId": "ghi789",
-      "url": "https://s3.../back.jpg",
+      "url": "http://localhost:9222/files/0a1b2c3d4e5f",
       "fileName": "back.jpg",
-      "hash": "sha256...",
+      "hash": "0a1b2c3d4e5f...",
       "extension": "jpg",
       "mimeType": "image/jpeg",
       "size": 310000,
