@@ -91,6 +91,7 @@ const config: Config = {
       logo: {
         alt: "Revisium Logo",
         src: "img/logo.svg",
+        srcDark: "img/logo-dark.svg",
         height: 32,
         href: "https://revisium.io",
         target: "_self",
