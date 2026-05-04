@@ -65,6 +65,3 @@ successful build, preview the production bundle with:
 ```bash
 npm run serve
 ```
-
-- `RELEASE_BOT_CLIENT_ID` as an Actions variable.
-- `RELEASE_BOT_PRIVATE_KEY` as an Actions secret.
