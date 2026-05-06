@@ -26,7 +26,7 @@ Choose one environment for the walkthrough. Standalone is the fastest local opti
 <Tabs>
 <TabItem value="cloud" label="Cloud" default>
 
-Sign up at [cloud.revisium.io](https://cloud.revisium.io/signup) using Google or GitHub. No setup required.
+Open [cloud.revisium.io](https://cloud.revisium.io) and sign in with Google or GitHub. No local setup required.
 
 </TabItem>
 <TabItem value="standalone" label="Standalone (npx)">
@@ -79,7 +79,7 @@ Open [http://localhost:8080](http://localhost:8080). Login: `admin` / `admin`
 
 ## 2. Open the Admin UI
 
-- **Cloud:** [cloud.revisium.io](https://cloud.revisium.io/signup) — sign in with Google or GitHub
+- **Cloud:** [cloud.revisium.io](https://cloud.revisium.io) — sign in with Google or GitHub
 - **Standalone:** [http://localhost:9222](http://localhost:9222) — no auth by default, with `--auth`: `admin` / `admin`
 - **Docker:** [http://localhost:8080](http://localhost:8080) — login: `admin` / `admin`
 
@@ -151,7 +151,7 @@ Once enabled, hover over an endpoint to copy its URL or open the Swagger UI.
 
 <Screenshot alt="Endpoints enabled — Draft and Head toggles on, with copy URL and Swagger buttons" src="/img/screenshots/endpoints-on.png" />
 
-Click the **code icon** (`</>`) to open the Swagger UI. Notice how Head shows only committed tables, while Draft includes uncommitted changes (e.g., a new `user` table added after the last commit):
+Click the **code icon** (`</>`) to open the Swagger UI. Notice how HEAD shows only committed state, while Draft includes uncommitted changes:
 
 <ScreenshotRow>
   <Screenshot alt="Swagger HEAD — posts table only (committed data)" src="/img/screenshots/swagger-head.png" />
