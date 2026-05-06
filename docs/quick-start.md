@@ -155,7 +155,7 @@ Click the **code icon** (`</>`) to open the Swagger UI. Notice how HEAD shows on
 
 <ScreenshotRow>
   <Screenshot alt="Swagger HEAD — posts table only (committed data)" src="/img/screenshots/swagger-head.png" />
-  <Screenshot alt="Swagger Draft — posts + user tables (includes uncommitted changes)" src="/img/screenshots/swagger-draft.png" />
+  <Screenshot alt="Swagger Draft — endpoint documentation showing uncommitted draft changes" src="/img/screenshots/swagger-draft.png" />
 </ScreenshotRow>
 
 ## 7. Query Your Data
