@@ -9,14 +9,24 @@ import { ScreenshotRow } from '@site/src/components/Screenshot';
 
 # Quick Start
 
-Get Revisium running, create a project, model a table, and query it through a generated endpoint. This guide uses the Admin UI — you can also do everything via [REST API, GraphQL, or MCP](./apis/).
+Create a `blog` project, add a typed `posts` table, create a `posts-1` row, and query it through a generated REST Draft endpoint.
+
+In this guide, you will:
+
+- start Revisium in Cloud, Standalone, or Docker
+- model a table and add data in Draft
+- enable a generated REST endpoint
+- query the row with curl or Swagger UI
+- optionally commit the project state to HEAD
 
 ## 1. Start Revisium
+
+Choose one environment for the walkthrough. Standalone is the fastest local option; Cloud requires no local setup.
 
 <Tabs>
 <TabItem value="cloud" label="Cloud" default>
 
-Sign up at [cloud.revisium.io](https://cloud.revisium.io/signup) using Google or GitHub. No setup required.
+Open [cloud.revisium.io](https://cloud.revisium.io) and sign in with Google or GitHub. No local setup required.
 
 </TabItem>
 <TabItem value="standalone" label="Standalone (npx)">
@@ -69,7 +79,7 @@ Open [http://localhost:8080](http://localhost:8080). Login: `admin` / `admin`
 
 ## 2. Open the Admin UI
 
-- **Cloud:** [cloud.revisium.io](https://cloud.revisium.io/signup) — sign in with Google or GitHub
+- **Cloud:** [cloud.revisium.io](https://cloud.revisium.io) — sign in with Google or GitHub
 - **Standalone:** [http://localhost:9222](http://localhost:9222) — no auth by default, with `--auth`: `admin` / `admin`
 - **Docker:** [http://localhost:8080](http://localhost:8080) — login: `admin` / `admin`
 
@@ -108,7 +118,10 @@ After creating the table, the Table Editor opens automatically (or select the ta
 
 1. Click **+** in the header to create a new row
 2. Enter a row id (e.g., `posts-1`) — you can rename it later
-3. Fill in the fields or leave defaults, then confirm
+3. Fill in the fields, then confirm:
+   - `title`: `Example post`
+   - `content`: `Hello from Revisium`
+   - `published`: `false`
 
 <Screenshot alt="Creating a new row — filling in title, content, and published fields" src="/img/screenshots/row-editor-create.png" />
 
@@ -123,9 +136,69 @@ To open the full Row Editor page, hover over the row id and click **Open** from 
   <Screenshot alt="Row Editor page — full view of the record" src="/img/screenshots/row-page.png" />
 </ScreenshotRow>
 
-## 6. Commit Changes
+## 6. Create an API Endpoint
 
-Committing is optional — you can keep working in draft without committing. But when you need version history, rollback, or want to serve data via a HEAD endpoint, commit your changes.
+1. Expand the **Management** section in the sidebar and click **Endpoints**
+2. Select the **REST API** tab (or GraphQL)
+3. Toggle on **Draft**. You can also enable **Head** if you want to try the optional commit step later.
+
+<Screenshot alt="Endpoints page — REST API tab with Draft and Head toggles off" src="/img/screenshots/endpoints-off.png" />
+
+Once enabled, hover over an endpoint to copy its URL or open the Swagger UI.
+
+- **Head** — serves the latest committed revision (read-only, for production)
+- **Draft** — serves the current working state (includes uncommitted changes, for preview)
+
+<Screenshot alt="Endpoints enabled — Draft and Head toggles on, with copy URL and Swagger buttons" src="/img/screenshots/endpoints-on.png" />
+
+Click the **code icon** (`</>`) to open the Swagger UI. Notice how HEAD shows only committed state, while Draft includes uncommitted changes:
+
+<ScreenshotRow>
+  <Screenshot alt="Swagger HEAD — posts table only (committed data)" src="/img/screenshots/swagger-head.png" />
+  <Screenshot alt="Swagger Draft — endpoint documentation showing uncommitted draft changes" src="/img/screenshots/swagger-draft.png" />
+</ScreenshotRow>
+
+## 7. Query Your Data
+
+By default, endpoints require authentication. To make read queries work without a token (convenient for testing), go to **Management → Settings** and set visibility to **Public**.
+
+:::warning
+Use public visibility only for local testing, public content, or controlled preview scenarios. For private or production data, keep the project private and use API keys or another supported authentication method.
+:::
+
+<Screenshot alt="Settings — switching project visibility to Public for unauthenticated read access" src="/img/screenshots/settings-public.png" />
+
+Now query your data with a simple curl. This example uses the Standalone endpoint on port `9222`; for Cloud or Docker, copy the endpoint URL from the Admin UI.
+
+```bash
+curl -X GET \
+  'http://localhost:9222/endpoint/rest/admin/blog/master/draft/tables/posts/row/posts-1' \
+  -H 'accept: application/json'
+```
+
+Expected response shape (timestamps and metadata will vary):
+
+```json
+{
+  "id": "posts-1",
+  "createdAt": "2026-03-15T10:30:00Z",
+  "updatedAt": "2026-03-15T10:30:00Z",
+  "readonly": false,
+  "data": {
+    "title": "Example post",
+    "content": "Hello from Revisium",
+    "published": false
+  }
+}
+```
+
+Or use the Swagger UI — click **Try it out**, execute, and see the response:
+
+<Screenshot alt="Swagger UI — GET request to posts/row/posts-1 with full JSON response" src="/img/screenshots/swagger-response.png" />
+
+## 8. Optional: Commit Changes and Use HEAD
+
+Draft endpoints update as you edit data. Commit when you want the current project state to become an immutable HEAD revision for stable, read-only access.
 
 You can commit directly from the sidebar — click the **checkmark** next to the branch name, add an optional comment, and click **Commit**.
 
@@ -145,47 +218,7 @@ Click any row change to see the field-level diff. Then click **Commit** in the t
   <Screenshot alt="Commit dialog — entering comment and confirming" src="/img/screenshots/commit-dialog.png" />
 </ScreenshotRow>
 
-After committing, the draft resets and a new immutable revision becomes HEAD. Endpoint data availability depends on whether the endpoint is bound to HEAD or Draft (see next step).
-
-## 7. Create an API Endpoint
-
-1. Expand the **Management** section in the sidebar and click **Endpoints**
-2. Select the **REST API** tab (or GraphQL)
-3. Toggle on **Draft** and/or **Head** endpoints
-
-<Screenshot alt="Endpoints page — REST API tab with Draft and Head toggles off" src="/img/screenshots/endpoints-off.png" />
-
-Once enabled, hover over an endpoint to copy its URL or open the Swagger UI.
-
-- **Head** — serves the latest committed revision (read-only, for production)
-- **Draft** — serves the current working state (includes uncommitted changes, for preview)
-
-<Screenshot alt="Endpoints enabled — Draft and Head toggles on, with copy URL and Swagger buttons" src="/img/screenshots/endpoints-on.png" />
-
-Click the **code icon** (`</>`) to open the Swagger UI. Notice how Head shows only committed tables, while Draft includes uncommitted changes (e.g., a new `user` table added after the last commit):
-
-<ScreenshotRow>
-  <Screenshot alt="Swagger HEAD — posts table only (committed data)" src="/img/screenshots/swagger-head.png" />
-  <Screenshot alt="Swagger Draft — posts + user tables (includes uncommitted changes)" src="/img/screenshots/swagger-draft.png" />
-</ScreenshotRow>
-
-## 8. Query Your Data
-
-By default, endpoints require authentication. To make read queries work without a token (convenient for testing), go to **Management → Settings** and set visibility to **Public**.
-
-<Screenshot alt="Settings — switching project visibility to Public for unauthenticated read access" src="/img/screenshots/settings-public.png" />
-
-Now query your data with a simple curl (example for Standalone on port 9222):
-
-```bash
-curl -X GET \
-  'http://localhost:9222/endpoint/rest/admin/blog/master/draft/tables/posts/row/posts-1' \
-  -H 'accept: application/json'
-```
-
-Or use the Swagger UI — click **Try it out**, execute, and see the response:
-
-<Screenshot alt="Swagger UI — GET request to posts/row/posts-1 with full JSON response" src="/img/screenshots/swagger-response.png" />
+After committing, the draft resets and a new immutable revision becomes HEAD. HEAD endpoints serve the latest committed revision; Draft endpoints continue to serve the current working state.
 
 ## Result
 
