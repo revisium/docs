@@ -15,9 +15,37 @@ import TabItem from '@theme/TabItem';
 
 <p className="intro-tagline">Your schema. Your data. Full control.</p>
 
-<p className="intro-usecases">Build your own Headless CMS, Dictionary Service, Configuration Store, AI Agent Memory, Knowledge Base — or anything that needs structured data with integrity. Versioning when you need it.</p>
+<p className="intro-usecases">Revisium is a versioned structured data platform: model data with JSON Schema, edit it in Admin UI, expose it through generated REST and GraphQL APIs, and manage changes with Git-like revisions.</p>
 
-## Key Features
+<div className="intro-route-grid">
+  <a className="intro-route intro-route-primary" href="./quick-start">
+    <span className="intro-route-kicker">Start here</span>
+    <strong>Create a project and explore the workflow</strong>
+    <span>Launch Revisium, model a table, add data, and see how it becomes available through generated APIs.</span>
+  </a>
+  <a className="intro-route" href="./use-cases/">
+    <span className="intro-route-kicker">Choose a use case</span>
+    <strong>CMS, dictionaries, config, AI memory</strong>
+    <span>See practical ways teams use Revisium for structured operational data.</span>
+  </a>
+  <a className="intro-route" href="./core-concepts/">
+    <span className="intro-route-kicker">Understand the model</span>
+    <strong>Schemas, branches, revisions, APIs</strong>
+    <span>Learn the concepts that make Revisium different from a regular CMS or database.</span>
+  </a>
+</div>
+
+## What You Can Build
+
+Use Revisium when your application needs structured data that stays editable, validated, versioned, and available through APIs.
+
+- **Headless CMS** — manage content models, entries, media, and publishing workflows.
+- **Dictionary service** — keep product catalogs, taxonomies, localization keys, and reference data consistent.
+- **Configuration store** — edit operational settings safely, review changes, and promote them across environments.
+- **AI agent memory** — give agents schema-aware storage they can read, update, and commit through MCP.
+- **Internal data platform** — combine Admin UI, generated APIs, and revision history for team-owned data.
+
+## Core Capabilities
 
 ### One Platform, Many Interfaces
 
@@ -570,7 +598,7 @@ Apache 2.0, your infrastructure, no vendor lock-in. Or use [Revisium Cloud](http
 
 ## Next Steps
 
-- **[Quick Start](./quick-start)** — Get Revisium running in under 2 minutes
+- **[Quick Start](./quick-start)** — Create a project and explore generated APIs
 - **[Core Concepts](./core-concepts/)** — Data model, schemas, versioning
 - **[Admin UI](./admin-ui/)** — Visual schema design and data management
 - **[APIs](./apis/)** — System API, generated APIs, MCP

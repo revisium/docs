@@ -9,7 +9,7 @@ import { ScreenshotRow } from '@site/src/components/Screenshot';
 
 # Quick Start
 
-Get Revisium running and create your first project. This guide uses the Admin UI — you can also do everything via [REST API, GraphQL, or MCP](./apis/).
+Get Revisium running, create a project, model a table, and query it through a generated endpoint. This guide uses the Admin UI — you can also do everything via [REST API, GraphQL, or MCP](./apis/).
 
 ## 1. Start Revisium
 
@@ -179,7 +179,7 @@ Now query your data with a simple curl (example for Standalone on port 9222):
 
 ```bash
 curl -X GET \
-  'http://localhost:9222/endpoint/rest/admin/blog/master/draft/tables/posts/row/hello-world' \
+  'http://localhost:9222/endpoint/rest/admin/blog/master/draft/tables/posts/row/posts-1' \
   -H 'accept: application/json'
 ```
 
