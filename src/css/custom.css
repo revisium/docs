@@ -269,6 +269,16 @@
   outline-offset: 3px;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .intro-route {
+    transition: none;
+  }
+
+  .intro-route:hover {
+    transform: none;
+  }
+}
+
 .intro-route-primary {
   border-color: #171717;
 }
@@ -302,6 +312,10 @@
   border-color: #525252;
   color: #e5e5e5;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
+}
+
+[data-theme="dark"] .intro-route:focus-visible {
+  outline-color: #ffffff;
 }
 
 [data-theme="dark"] .intro-route-primary {
