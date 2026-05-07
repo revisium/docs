@@ -15,23 +15,30 @@ import TabItem from '@theme/TabItem';
 
 <p className="intro-tagline">Your schema. Your data. Full control.</p>
 
-<p className="intro-usecases">Revisium is a versioned structured data platform: model data with JSON Schema, edit it in Admin UI, expose it through generated REST and GraphQL APIs, and manage changes with Git-like revisions.</p>
+<p className="intro-usecases">Revisium is a versioned structured data platform for teams that need editable, validated data behind generated APIs. Model tables with JSON Schema, work safely in Draft, and commit to HEAD when you want a stable revision to serve.</p>
+
+<div className="intro-workflow-line" aria-label="Revisium workflow">
+  <span>Model data</span>
+  <span>Work in Draft</span>
+  <span>Expose generated APIs</span>
+  <span>Commit to HEAD</span>
+</div>
 
 <div className="intro-route-grid">
   <a className="intro-route intro-route-primary" href="./quick-start">
     <span className="intro-route-kicker">Start here</span>
-    <strong>Create a project and explore the workflow</strong>
-    <span>Launch Revisium, model a table, add data, and see how it becomes available through generated APIs.</span>
+    <strong>Run the Draft-to-API workflow</strong>
+    <span>Create a project, add typed data, and query a generated Draft endpoint.</span>
+  </a>
+  <a className="intro-route" href="./core-concepts/">
+    <span className="intro-route-kicker">Understand the model</span>
+    <strong>Draft, HEAD, branches, revisions</strong>
+    <span>Learn the concepts that make Revisium different from a regular CMS or database.</span>
   </a>
   <a className="intro-route" href="./use-cases/">
     <span className="intro-route-kicker">Choose a use case</span>
     <strong>CMS, dictionaries, config, AI memory</strong>
     <span>See practical ways teams use Revisium for structured operational data.</span>
-  </a>
-  <a className="intro-route" href="./core-concepts/">
-    <span className="intro-route-kicker">Understand the model</span>
-    <strong>Schemas, branches, revisions, APIs</strong>
-    <span>Learn the concepts that make Revisium different from a regular CMS or database.</span>
   </a>
 </div>
 
