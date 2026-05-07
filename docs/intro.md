@@ -52,6 +52,46 @@ Use Revisium when your application needs structured data that stays editable, va
 - **AI agent memory** — give agents schema-aware storage they can read, update, and commit through MCP.
 - **Internal data platform** — combine Admin UI, generated APIs, and revision history for team-owned data.
 
+## Where Revisium Fits
+
+Revisium acts as a versioned workspace between data operators and runtime consumers. Teams manage change in Draft, then publish a stable HEAD revision through generated APIs.
+
+<div className="intro-architecture-map-core" aria-label="Revisium core workspace architecture map">
+  <div className="intro-core-side">
+    <span className="intro-architecture-label">Manage</span>
+    <strong>People & Agents</strong>
+    <span>Admin UI, CLI, GraphQL, MCP</span>
+  </div>
+
+  <div className="intro-core-center">
+    <span className="intro-architecture-label">Revisium</span>
+    <strong>Versioned Data Workspace</strong>
+    <div className="intro-core-lane">
+      <span>Draft workspace</span>
+      <b aria-hidden="true">→</b>
+      <span>HEAD revision</span>
+    </div>
+    <div className="intro-core-pills">
+      <span>JSON Schema</span>
+      <span>Relations</span>
+      <span>Computed fields</span>
+      <span>Files</span>
+    </div>
+    <div className="intro-core-api">Generated APIs: REST, GraphQL, MCP</div>
+  </div>
+
+  <div className="intro-core-side">
+    <span className="intro-architecture-label">Consume</span>
+    <strong>Apps & Services</strong>
+    <span>Read stable data from generated interfaces</span>
+  </div>
+
+  <div className="intro-core-storage">
+    <span className="intro-architecture-label">Storage</span>
+    <strong>PostgreSQL</strong>
+  </div>
+</div>
+
 ## Core Capabilities
 
 ### One Platform, Many Interfaces
@@ -587,21 +627,6 @@ Apache 2.0, your infrastructure, no vendor lock-in. Or use [Revisium Cloud](http
 - **Kubernetes** — Helm chart, horizontal scaling
 
 [Learn more →](./deployment/)
-
-## Revisium in Your Stack
-
-<img
-  src="/img/diagrams/revisium-in-your-stack/diagram.png"
-  alt="Revisium in your stack"
-  width="1367"
-  height="1151"
-  style={{ width: "100%", maxWidth: "820px", height: "auto", display: "block", margin: "0 auto" }}
-/>
-
-- **Frontend, Backend, Mobile** — consume data via auto-generated REST and GraphQL APIs
-- **AI Agents** — interact via MCP protocol (create schemas, manage data, commit)
-- **Admin UI** — ready-made UI for schema design, data management, and change review
-- **CI/CD** — export schemas to Git, apply migrations across environments with revisium-cli
 
 ## Next Steps
 
