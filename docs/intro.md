@@ -56,7 +56,7 @@ Use Revisium when your application needs structured data that stays editable, va
 
 Revisium acts as a versioned workspace between data operators and runtime consumers. Teams manage change in Draft, then publish a stable HEAD revision through generated APIs.
 
-<div className="intro-architecture-map-core" aria-label="Revisium core workspace architecture map">
+<div className="intro-architecture-map-core" role="img" aria-label="Revisium core workspace architecture map">
   <div className="intro-core-side">
     <span className="intro-architecture-label">Manage</span>
     <strong>People & Agents</strong>

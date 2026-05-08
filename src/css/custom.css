@@ -834,6 +834,7 @@ div[class*="codeBlockTitle"] {
   }
 
   .intro-core-lane b {
+    display: block;
     text-align: center;
     transform: rotate(90deg);
   }
