@@ -366,6 +366,148 @@
   color: #a3a3a3;
 }
 
+.intro-architecture-map-core {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.65fr) minmax(0, 0.85fr);
+  gap: 0.75rem;
+  align-items: center;
+  margin: 1.25rem 0 2.5rem;
+}
+
+.intro-core-side,
+.intro-core-center,
+.intro-core-storage {
+  box-sizing: border-box;
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  padding: 1rem;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+.intro-core-side {
+  min-height: 9.5rem;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.intro-core-center {
+  gap: 0.8rem;
+  border-color: #171717;
+}
+
+.intro-core-side strong,
+.intro-core-center strong,
+.intro-core-storage strong {
+  color: #171717;
+  font-size: 0.98rem;
+  line-height: 1.35;
+}
+
+.intro-core-side > span:last-child {
+  color: #737373;
+  font-size: 0.85rem;
+  line-height: 1.45;
+}
+
+.intro-core-lane {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  gap: 0.45rem;
+  align-items: center;
+}
+
+.intro-core-lane span,
+.intro-core-api,
+.intro-core-pills span {
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  color: #525252;
+  background: #fafafa;
+}
+
+.intro-core-lane span {
+  padding: 0.65rem;
+  font-size: 0.84rem;
+  line-height: 1.3;
+  text-align: center;
+}
+
+.intro-core-lane b {
+  color: #a3a3a3;
+  font-weight: 400;
+}
+
+.intro-core-pills {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.45rem;
+}
+
+.intro-core-pills span {
+  padding: 0.45rem 0.55rem;
+  font-size: 0.8rem;
+  line-height: 1.25;
+}
+
+.intro-core-api {
+  padding: 0.65rem;
+  font-size: 0.84rem;
+  line-height: 1.3;
+  text-align: center;
+}
+
+.intro-core-storage {
+  grid-column: 2;
+  align-items: center;
+  margin: 0.2rem auto 0;
+  padding: 0.8rem 1.5rem;
+  border-radius: 999px;
+}
+
+.intro-architecture-label,
+.intro-core-storage span {
+  color: #737373;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+[data-theme="dark"] .intro-core-side,
+[data-theme="dark"] .intro-core-center,
+[data-theme="dark"] .intro-core-storage {
+  border-color: #262626;
+  background: #0f0f0f;
+}
+
+[data-theme="dark"] .intro-core-center {
+  border-color: #a3a3a3;
+}
+
+[data-theme="dark"] .intro-core-side strong,
+[data-theme="dark"] .intro-core-center strong,
+[data-theme="dark"] .intro-core-storage strong {
+  color: #f5f5f5;
+}
+
+[data-theme="dark"] .intro-core-side > span:last-child,
+[data-theme="dark"] .intro-architecture-label,
+[data-theme="dark"] .intro-core-storage span {
+  color: #a3a3a3;
+}
+
+[data-theme="dark"] .intro-core-lane span,
+[data-theme="dark"] .intro-core-api,
+[data-theme="dark"] .intro-core-pills span {
+  border-color: #262626;
+  color: #a3a3a3;
+  background: #171717;
+}
+
 .navbar-search {
   display: flex;
   align-items: center;
@@ -593,6 +735,12 @@ div[class*="codeBlockTitle"] {
 
 /* ── Responsive ── */
 @media (max-width: 768px) {
+  html,
+  body,
+  #__docusaurus {
+    overflow-x: hidden;
+  }
+
   .navbar__logo img {
     height: 28px;
   }
@@ -607,14 +755,41 @@ div[class*="codeBlockTitle"] {
 
   [class*="docMainContainer"] {
     padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .container {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  .row {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
   }
 
   [class*="docItemCol"] {
     min-width: 0;
+    max-width: 100%;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
   }
 
   .markdown {
     overflow-wrap: break-word;
+  }
+
+  .theme-code-block,
+  .prism-code {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  .prism-code {
+    padding: 0.85rem 1rem !important;
+    font-size: 0.8rem;
   }
 
   .intro-route-grid {
@@ -638,5 +813,34 @@ div[class*="codeBlockTitle"] {
 
   .intro-route:hover {
     transform: none;
+  }
+
+  .intro-architecture-map-core {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    margin: 1rem 0 2rem;
+  }
+
+  .intro-core-side,
+  .intro-core-center,
+  .intro-core-storage {
+    min-height: auto;
+    padding: 0.95rem;
+  }
+
+  .intro-core-lane,
+  .intro-core-pills {
+    grid-template-columns: 1fr;
+  }
+
+  .intro-core-lane b {
+    display: block;
+    text-align: center;
+    transform: rotate(90deg);
+  }
+
+  .intro-core-storage {
+    grid-column: auto;
+    border-radius: 12px;
   }
 }
