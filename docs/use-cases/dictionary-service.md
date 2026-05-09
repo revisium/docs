@@ -53,12 +53,15 @@ Services consume data via auto-generated REST or GraphQL APIs. Data is managed i
 import { RevisiumClient } from '@revisium/client';
 
 const revisium = new RevisiumClient({
-  url: process.env.REVISIUM_URL,
-  username: process.env.REVISIUM_USER,
-  password: process.env.REVISIUM_PASS,
+  baseUrl: process.env.REVISIUM_URL ?? 'http://localhost:8080',
 });
+revisium.loginWithApiKey(process.env.REVISIUM_API_KEY!);
 
-// Or use the generated GraphQL endpoint directly
+const categories = await revisium
+  .revision({ org: 'my-org', project: 'dictionary' })
+  .then((scope) => scope.getRows('categories', { first: 100 }));
+
+// Or use the generated REST/GraphQL endpoint directly
 const response = await fetch('https://revisium.example.com/endpoint/categories');
 ```
 

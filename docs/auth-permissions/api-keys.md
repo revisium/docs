@@ -121,7 +121,7 @@ API Keys work with all Revisium API surfaces. Three authentication methods are s
 
 ```bash
 curl http://localhost:8080/api/organization/myorg/project/myproject/branch/master \
-  -H "X-Api-Key: rev_xxxxxxxxxxxxxxxxxxxx"
+  -H "X-Api-Key: rev_xxxxxxxxxxxxxxxxxxxxxx"
 ```
 
 </TabItem>
@@ -130,7 +130,7 @@ curl http://localhost:8080/api/organization/myorg/project/myproject/branch/maste
 ```bash
 curl -X POST http://localhost:8080/graphql \
   -H "Content-Type: application/json" \
-  -H "X-Api-Key: rev_xxxxxxxxxxxxxxxxxxxx" \
+  -H "X-Api-Key: rev_xxxxxxxxxxxxxxxxxxxxxx" \
   -d '{"query": "{ me { id username } }"}'
 ```
 
@@ -139,7 +139,7 @@ curl -X POST http://localhost:8080/graphql \
 
 ```bash
 curl http://localhost:8080/endpoint/rest/myorg/myproject/master/head/tables/products/rows \
-  -H "X-Api-Key: rev_xxxxxxxxxxxxxxxxxxxx"
+  -H "X-Api-Key: rev_xxxxxxxxxxxxxxxxxxxxxx"
 ```
 
 </TabItem>
@@ -148,7 +148,7 @@ curl http://localhost:8080/endpoint/rest/myorg/myproject/master/head/tables/prod
 ```bash
 curl -X POST http://localhost:8080/endpoint/graphql/myorg/myproject/master/head \
   -H "Content-Type: application/json" \
-  -H "X-Api-Key: rev_xxxxxxxxxxxxxxxxxxxx" \
+  -H "X-Api-Key: rev_xxxxxxxxxxxxxxxxxxxxxx" \
   -d '{"query": "{ products { edges { node { id data { title price } } } } }"}'
 ```
 
@@ -162,7 +162,7 @@ Same header as JWT, but with the `rev_` prefix. The server auto-detects key type
 ```bash
 curl -X POST http://localhost:8080/graphql \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer rev_xxxxxxxxxxxxxxxxxxxx" \
+  -H "Authorization: Bearer rev_xxxxxxxxxxxxxxxxxxxxxx" \
   -d '{"query": "{ me { id username } }"}'
 ```
 
@@ -171,7 +171,7 @@ curl -X POST http://localhost:8080/graphql \
 For cases where headers aren't available (e.g., webhook URLs):
 
 ```
-https://your-instance/api/...?api_key=rev_xxxxxxxxxxxxxxxxxxxx
+https://your-instance/api/...?api_key=rev_xxxxxxxxxxxxxxxxxxxxxx
 ```
 
 :::warning
@@ -200,7 +200,7 @@ For generated GraphQL endpoints:
 2. In the **Headers** panel at the bottom, click "New header"
 3. Add:
    - Header name: `X-Api-Key`
-   - Value: `rev_xxxxxxxxxxxxxxxxxxxx`
+   - Value: `rev_xxxxxxxxxxxxxxxxxxxxxx`
 4. Run your queries — the header is sent automatically
 
 <Screenshot alt="Apollo Sandbox — Headers panel with X-Api-Key header configured" src="/img/screenshots/api-keys-apollo-sandbox.png" />

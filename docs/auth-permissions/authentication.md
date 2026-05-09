@@ -134,11 +134,11 @@ Quick start:
 
 ```bash
 # Using X-Api-Key header
-curl -H "X-Api-Key: rev_xxxxxxxxxxxxxxxxxxxx" \
+curl -H "X-Api-Key: rev_xxxxxxxxxxxxxxxxxxxxxx" \
   http://localhost:8080/api/...
 
 # Using Bearer header
-curl -H "Authorization: Bearer rev_xxxxxxxxxxxxxxxxxxxx" \
+curl -H "Authorization: Bearer rev_xxxxxxxxxxxxxxxxxxxxxx" \
   http://localhost:8080/api/...
 ```
 

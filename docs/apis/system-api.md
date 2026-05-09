@@ -41,12 +41,12 @@ Authorization: Bearer <accessToken>
 # System GraphQL with API key
 curl -X POST http://localhost:8080/graphql \
   -H "Content-Type: application/json" \
-  -H "X-Api-Key: rev_xxxxxxxxxxxxxxxxxxxx" \
+  -H "X-Api-Key: rev_xxxxxxxxxxxxxxxxxxxxxx" \
   -d '{"query": "{ me { id username } }"}'
 
 # System REST with API key
 curl http://localhost:8080/api/organization/myorg/project/myproject/branch/master \
-  -H "X-Api-Key: rev_xxxxxxxxxxxxxxxxxxxx"
+  -H "X-Api-Key: rev_xxxxxxxxxxxxxxxxxxxxxx"
 ```
 
 See [API Keys](../auth-permissions/api-keys) for setup and scoping.
@@ -385,11 +385,14 @@ The [@revisium/client](https://github.com/revisium/revisium-client) TypeScript l
 import { RevisiumClient } from '@revisium/client';
 
 const client = new RevisiumClient({
-  url: 'http://localhost:8080',
-  username: 'admin',
-  password: 'admin',
+  baseUrl: 'http://localhost:8080',
 });
+await client.login('admin', 'admin');
 
-const project = await client.getProject('my-org', 'my-project');
-const tables = await client.getTables(revisionId);
+const project = await client.org('my-org').project('my-project').get();
+const scope = await client.revision({
+  org: 'my-org',
+  project: 'my-project',
+});
+const tables = await scope.getTables();
 ```

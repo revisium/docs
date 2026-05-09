@@ -48,7 +48,7 @@ When connecting to a Revisium instance, the CLI supports multiple auth methods:
 revisium://localhost:9222/admin/my-project/master?token=eyJ...
 
 # API key (via apikey parameter or auto-detected by rev_ prefix in token)
-revisium://localhost:9222/admin/my-project/master?apikey=rev_xxxxxxxxxxxxxxxxxxxx
+revisium://localhost:9222/admin/my-project/master?apikey=rev_xxxxxxxxxxxxxxxxxxxxxx
 ```
 
 ### Environment Variables

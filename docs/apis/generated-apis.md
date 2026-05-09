@@ -37,7 +37,7 @@ Generated endpoints respect the project's visibility setting:
 
 ```bash
 curl http://localhost:8080/endpoint/rest/myorg/myproject/master/head/tables/products/rows \
-  -H "X-Api-Key: rev_xxxxxxxxxxxxxxxxxxxx"
+  -H "X-Api-Key: rev_xxxxxxxxxxxxxxxxxxxxxx"
 ```
 
 </TabItem>
@@ -46,7 +46,7 @@ curl http://localhost:8080/endpoint/rest/myorg/myproject/master/head/tables/prod
 ```bash
 curl -X POST http://localhost:8080/endpoint/graphql/myorg/myproject/master/head \
   -H "Content-Type: application/json" \
-  -H "X-Api-Key: rev_xxxxxxxxxxxxxxxxxxxx" \
+  -H "X-Api-Key: rev_xxxxxxxxxxxxxxxxxxxxxx" \
   -d '{"query": "{ products { edges { node { id data { title price } } } } }"}'
 ```
 
