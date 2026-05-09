@@ -4,6 +4,7 @@ const sidebars: SidebarsConfig = {
   docsSidebar: [
     "intro",
     "quick-start",
+    "examples",
     {
       type: "html",
       value: "<div style='height: 0.75rem'></div>",
