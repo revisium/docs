@@ -35,4 +35,4 @@ The Admin UI is organized around the current project and branch:
 
 - **Standalone:** [http://localhost:9222](http://localhost:9222)
 - **Docker:** [http://localhost:8080](http://localhost:8080)
-- **Cloud:** [cloud.revisium.io](https://cloud.revisium.io/signup)
+- **Cloud Early Access:** [cloud.revisium.io](https://cloud.revisium.io) — hosted sandbox for evaluation, demos, and early projects

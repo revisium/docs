@@ -13,7 +13,7 @@ Create a `blog` project, add a typed `posts` table, create a `posts-1` row, and 
 
 In this guide, you will:
 
-- start Revisium in Cloud, Standalone, or Docker
+- start Revisium in Cloud Early Access, Standalone, or Docker
 - model a table and add data in Draft
 - enable a generated REST endpoint
 - query the row with curl or Swagger UI
@@ -21,12 +21,18 @@ In this guide, you will:
 
 ## 1. Start Revisium
 
-Choose one environment for the walkthrough. Standalone is the fastest local option; Cloud requires no local setup.
+Choose one environment for the walkthrough. Cloud requires no local setup; Standalone is the fastest local option.
+
+:::note Cloud Early Access
+Revisium Cloud is currently in Early Access. Use it as a hosted sandbox for evaluation, demos, and early projects. For production workloads that require full operational control, use self-hosted Docker or Kubernetes.
+:::
 
 <Tabs>
-<TabItem value="cloud" label="Cloud" default>
+<TabItem value="cloud" label="Cloud Early Access" default>
 
 Open [cloud.revisium.io](https://cloud.revisium.io) and sign in with Google or GitHub. No local setup required.
+
+This is the hosted Early Access sandbox. It is the easiest way to try the workflow, but it should not be treated as a production SLA commitment yet.
 
 </TabItem>
 <TabItem value="standalone" label="Standalone (npx)">
@@ -79,7 +85,7 @@ Open [http://localhost:8080](http://localhost:8080). Login: `admin` / `admin`
 
 ## 2. Open the Admin UI
 
-- **Cloud:** [cloud.revisium.io](https://cloud.revisium.io) — sign in with Google or GitHub
+- **Cloud Early Access:** [cloud.revisium.io](https://cloud.revisium.io) — hosted sandbox; sign in with Google or GitHub
 - **Standalone:** [http://localhost:9222](http://localhost:9222) — no auth by default, with `--auth`: `admin` / `admin`
 - **Docker:** [http://localhost:8080](http://localhost:8080) — login: `admin` / `admin`
 
