@@ -105,7 +105,7 @@ const config: Config = {
         },
         {
           href: "https://cloud.revisium.io",
-          label: "Log in",
+          html: "Log in",
           position: "right",
           className: "navbar-login-link",
         },
