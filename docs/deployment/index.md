@@ -5,7 +5,7 @@ sidebar_position: 9
 # Deployment
 
 :::tip Want the hosted path?
-[Revisium Cloud](https://cloud.revisium.io) is currently in Early Access. Use it as a hosted sandbox for evaluation, demos, and early projects. For production workloads that require full operational control, use the self-hosted options below.
+[Cloud Early Access](https://cloud.revisium.io) is currently available as a hosted sandbox for evaluation, demos, and early projects. For production workloads that require full operational control, use the self-hosted options below.
 :::
 
 ## Standalone
