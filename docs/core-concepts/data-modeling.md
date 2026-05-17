@@ -8,7 +8,32 @@ import TabItem from '@theme/TabItem';
 
 # Data Modeling
 
-Every table in Revisium is defined by a JSON Schema. You design the schema — the platform enforces it on every write, generates APIs from it, and transforms data automatically when the schema changes.
+Every table in Revisium is defined by a JSON Schema. You design the schema once — Revisium uses it to render the Admin UI, validate every write, generate APIs, and transform existing data when the schema changes.
+
+Think of a Revisium schema as a product contract for structured data. It describes what editors can change in the UI, what applications can read from generated APIs, and what rules are enforced before data reaches your runtime consumers.
+
+## What Data Modeling Controls
+
+Data modeling is the layer that connects the visual Admin UI with runtime APIs.
+
+| Schema decision | What it changes in the Admin UI | What it changes in APIs |
+|---|---|---|
+| Field name and type | Table columns, row editor controls, inline editing behavior | Generated GraphQL fields, REST/OpenAPI schema, validation errors |
+| Nested object | Grouped/nested fields in the schema and row editors | Nested response objects and selectable GraphQL projections |
+| Array | Repeatable controls and list-like JSON values | Array response fields, array filtering/sorting support where available |
+| Enum | Constrained values in forms and filters | Enum-like values documented in generated API schemas |
+| `contentMediaType` / `format` | Better editing affordances for Markdown, dates, email, and rich text | Stronger validation and clearer API contracts |
+| Default value | New rows start with valid values | Schema evolution can add fields to existing rows safely |
+
+The same model powers several product surfaces:
+
+- **Schema Editor** — design table fields and review the resulting JSON Schema.
+- **Table Editor** — scan, filter, sort, resize, hide, and edit data in rows.
+- **Row Editor** — work with one row as a structured form or JSON document.
+- **Generated APIs** — query the same data through GraphQL, REST/OpenAPI, and MCP.
+- **Schema Evolution** — add, remove, move, and change fields while Revisium updates existing rows.
+
+<Screenshot alt="Admin UI — table editor with filtering, nested field columns, and inline editing" src="/img/screenshots/admin-ui-table-editor.png" />
 
 ## Define a Table
 
@@ -49,6 +74,61 @@ A table has a name, a schema (structure), and rows (data). Here's a `products` t
 The schema defines what fields exist, their types, and default values. Any data that doesn't match the schema is rejected.
 
 <Screenshot alt="Schema Editor — products table with field type selector (string, number, boolean, object, array, foreign key, schemas, system fields)" src="/img/screenshots/schema-editor-field-types.png" />
+
+## From Schema To UI
+
+After you create a table, Revisium uses the schema to build editing surfaces automatically.
+
+In the **Schema Editor**, each field is explicit: its type, default value, nested structure, enum values, foreign key, file reference, or computed formula. This makes the model reviewable before data entry starts.
+
+In the **Table Editor**, each row is displayed according to the same schema. Primitive fields can be edited inline, nested fields can be shown as columns, and view settings such as column order, widths, filters, and sorts can be saved for the table.
+
+In the **Row Editor**, the same row becomes a detailed form. This is useful when the data is nested, has long text fields, includes files, or needs careful review before saving.
+
+<Screenshot alt="Row Editor — editing a structured row as a form" src="/img/screenshots/row-page.png" />
+
+## From Schema To APIs
+
+The same schema is also the source for generated API contracts. When a table is exposed through a generated endpoint, Revisium can serve typed data through GraphQL and REST/OpenAPI.
+
+For example, a `products` table can be queried as rows with system fields plus typed `data`:
+
+```graphql
+query {
+  products(data: {
+    first: 10
+    orderBy: [{ data: { path: "price", direction: "desc", type: "float" } }]
+  }) {
+    totalCount
+    edges {
+      node {
+        id
+        data {
+          title
+          price
+          inStock
+        }
+      }
+    }
+  }
+}
+```
+
+That means a schema is not just documentation. It is the source used by editors, validators, generated APIs, and client applications.
+
+## Example Use Cases
+
+The same modeling primitives work across different domains:
+
+| Use case | Example tables | Modeling features |
+|---|---|---|
+| Headless CMS | `pages`, `blog_posts`, `authors`, `navigation` | Markdown strings, file fields, publish dates, author foreign keys |
+| Product catalog | `products`, `categories`, `prices`, `variants` | Nested specs, arrays of variants, enums, computed labels |
+| Game or simulation data | `regions`, `heroes`, `items`, `quests` | Localized strings, foreign keys, embedded arrays, computed fields |
+| Configuration store | `feature_flags`, `plans`, `limits`, `experiments` | Root primitives, structured rules, safe defaults, schema evolution |
+| User-generated workflow data | `form_submissions`, `comments`, `wishlists` | Structured records that admins can review, filter, and process |
+
+The important part is not the domain. The pattern is the same: define the shape once, edit it safely, and serve it through APIs.
 
 ## Field Types
 
@@ -363,6 +443,19 @@ A complete table schema with nested objects and arrays:
 
 <Screenshot alt="Schema Editor — products table with nested specs and variants" src="/img/screenshots/schema-full-example.png" />
 
+## Working With Nested Data In The UI
+
+Nested objects and arrays are useful when a row owns structured details that should stay together.
+
+Examples:
+
+- product `specs` with `weight`, `dimensions`, and `tags`;
+- article `seo` metadata with title, description, and Open Graph image;
+- quest `steps[]` where each step has text, rewards, and completion rules;
+- form submission `answers[]` where each answer stores a field id and value.
+
+In the Admin UI, nested data can be edited in the row form and selected as table columns when the value is useful for scanning. In APIs, the same nested shape is available as JSON/GraphQL fields, so clients can request only the parts they need.
+
 ## Default Values
 
 Primitive fields (string, number, boolean) must have a `default` value. Defaults serve two purposes:
@@ -510,3 +603,5 @@ Data modeling defines the structure. On top of it, you can add:
 - **[Computed Fields](./computed-fields)** — formula-based read-only fields (`x-formula`)
 - **[Files](./files)** — file attachments at any schema level, backed by local or S3-compatible storage
 - **[Schema Evolution](./schema-evolution)** — change types, add/remove fields with automatic data transforms
+- **[Table Editor](../admin-ui/table-editor)** — how modeled data appears as columns, filters, sorts, and saved views
+- **[Generated APIs](../apis/)** — how schemas become GraphQL, REST/OpenAPI, and MCP surfaces

@@ -13,15 +13,15 @@ import TabItem from '@theme/TabItem';
 
 <h1>Revisium</h1>
 
-<p className="intro-tagline">Your schema. Your data. Full control.</p>
+<p className="intro-tagline">Model any structured data. Serve it through generated APIs.</p>
 
-<p className="intro-usecases">Revisium is a versioned structured data platform for teams that need editable, validated data behind generated APIs. Model tables with JSON Schema, work safely in Draft, and commit to HEAD when you want a stable revision to serve.</p>
+<p className="intro-usecases">Revisium helps teams describe data with JSON Schema, edit it safely in the Admin UI, and expose it to apps, services, and agents through REST, GraphQL, CLI, and MCP. Draft, HEAD, branches, and revisions are the workflow layer for reviewing and publishing changes when you need it.</p>
 
 <div className="intro-workflow-line" aria-label="Revisium workflow">
-  <span>Model data</span>
-  <span>Work in Draft</span>
-  <span>Expose generated APIs</span>
-  <span>Commit to HEAD</span>
+  <span>Model schema</span>
+  <span>Edit structured data</span>
+  <span>Validate every write</span>
+  <span>Use generated APIs</span>
 </div>
 
 <div className="intro-route-grid">
@@ -33,17 +33,17 @@ import TabItem from '@theme/TabItem';
   <a className="intro-route" href="./quick-start">
     <span className="intro-route-kicker">Start here</span>
     <strong>Run the Draft-to-API workflow</strong>
-    <span>Create a project, add typed data, and query a generated Draft endpoint.</span>
+    <span>Create a project, model a table, add data, and query it through a generated endpoint.</span>
   </a>
   <a className="intro-route" href="./core-concepts/">
-    <span className="intro-route-kicker">Understand the model</span>
-    <strong>Draft, HEAD, branches, revisions</strong>
-    <span>Learn the concepts that make Revisium different from a regular CMS or database.</span>
+    <span className="intro-route-kicker">Learn the model</span>
+    <strong>Schemas, tables, APIs, revisions</strong>
+    <span>Learn how Revisium organizes structured data, generated interfaces, and safe change workflows.</span>
   </a>
   <a className="intro-route" href="./use-cases/">
-    <span className="intro-route-kicker">Choose a use case</span>
-    <strong>CMS, dictionaries, config, AI memory</strong>
-    <span>See practical ways teams use Revisium for structured operational data.</span>
+    <span className="intro-route-kicker">Map a use case</span>
+    <strong>CMS, catalogs, config, AI memory</strong>
+    <span>See where Revisium fits in common product and platform workflows.</span>
   </a>
 </div>
 
@@ -51,19 +51,36 @@ import TabItem from '@theme/TabItem';
 Revisium Cloud is currently in Early Access: use it as a hosted sandbox for evaluation and early projects. For production workloads that require full operational control, use self-hosted Docker or Kubernetes.
 :::
 
-## What You Can Build
+## Common Use Cases
 
-Use Revisium when your application needs structured data that stays editable, validated, versioned, and available through APIs.
+Revisium fits best when structured data needs validation, reviewable changes, revision history, and programmatic access.
 
-- **Headless CMS** — manage content models, entries, media, and publishing workflows.
-- **Dictionary service** — keep product catalogs, taxonomies, localization keys, and reference data consistent.
-- **Configuration store** — edit operational settings safely, review changes, and promote them across environments.
-- **AI agent memory** — give agents schema-aware storage they can read, update, and commit through MCP.
-- **Internal data platform** — combine Admin UI, generated APIs, and revision history for team-owned data.
+<div className="intro-usecase-grid">
+  <div className="intro-usecase-card">
+    <strong>Content-backed products</strong>
+    <span>Model pages, entries, media, and localized content without hard-coding every change.</span>
+  </div>
+  <div className="intro-usecase-card">
+    <strong>Catalogs and reference data</strong>
+    <span>Maintain product catalogs, taxonomies, lookup tables, and shared dictionaries with schema validation.</span>
+  </div>
+  <div className="intro-usecase-card">
+    <strong>Operational configuration</strong>
+    <span>Review settings changes before they reach apps, services, or environments.</span>
+  </div>
+  <div className="intro-usecase-card">
+    <strong>Agent-accessible data</strong>
+    <span>Expose schema-aware storage that agents can read and update through MCP.</span>
+  </div>
+  <div className="intro-usecase-card">
+    <strong>Team-owned data workflows</strong>
+    <span>Give non-developers an Admin UI while keeping APIs, revisions, and export paths available for engineers.</span>
+  </div>
+</div>
 
 ## Where Revisium Fits
 
-Revisium acts as a versioned workspace between data operators and runtime consumers. Teams manage change in Draft, then publish a stable HEAD revision through generated APIs.
+Revisium acts as a schema-based workspace between data operators and runtime consumers. Teams model structured data once, edit it through visual or programmatic interfaces, and expose it through generated APIs. Draft, HEAD, branches, and revisions add reviewable change management on top of that model.
 
 <div className="intro-architecture-map-core" role="img" aria-label="Revisium core workspace architecture map">
   <div className="intro-core-side">
@@ -74,14 +91,14 @@ Revisium acts as a versioned workspace between data operators and runtime consum
 
   <div className="intro-core-center">
     <span className="intro-architecture-label">Revisium</span>
-    <strong>Versioned Data Workspace</strong>
+    <strong>Structured Data Workspace</strong>
     <div className="intro-core-lane">
-      <span>Draft workspace</span>
+      <span>JSON Schema model</span>
       <b aria-hidden="true">→</b>
-      <span>HEAD revision</span>
+      <span>Generated APIs</span>
     </div>
     <div className="intro-core-pills">
-      <span>JSON Schema</span>
+      <span>Draft & HEAD</span>
       <span>Relations</span>
       <span>Computed fields</span>
       <span>Files</span>
