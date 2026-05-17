@@ -73,4 +73,4 @@ when the container starts.
 
 | Variable | Default | Description |
 | --- | --- | --- |
-| `REVISIUM_ROBOTS_TXT` | `User-agent: *` + `Disallow: /` | Full `/robots.txt` content. Use `\n` for line breaks in env values. When unset/empty, responses include `X-Robots-Tag: noindex, nofollow, noarchive`. Set this value to take full control of crawler rules |
+| `REVISIUM_ROBOTS_TXT` | `User-agent: *\nDisallow: /` | Full `/robots.txt` content. Use `\n` for line breaks in env values. When unset/empty, responses include `X-Robots-Tag: noindex, nofollow, noarchive`. Set this value to take full control of crawler rules |
