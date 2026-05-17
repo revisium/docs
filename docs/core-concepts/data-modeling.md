@@ -22,7 +22,7 @@ Data modeling is the layer that connects the visual Admin UI with runtime APIs.
 | Nested object | Grouped/nested fields in the schema and row editors | Nested response objects and selectable GraphQL projections |
 | Array | Repeatable controls and list-like JSON values | Array response fields, array filtering/sorting support where available |
 | Enum | Constrained values in forms and filters | Enum-like values documented in generated API schemas |
-| `contentMediaType` / `format` | Better editing affordances for markdown, dates, email, and rich text | Stronger validation and clearer API contracts |
+| `contentMediaType` / `format` | Better editing affordances for Markdown, dates, email, and rich text | Stronger validation and clearer API contracts |
 | Default value | New rows start with valid values | Schema evolution can add fields to existing rows safely |
 
 The same model powers several product surfaces:
