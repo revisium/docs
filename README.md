@@ -65,3 +65,12 @@ successful build, preview the production bundle with:
 ```bash
 npm run serve
 ```
+
+### Container Runtime Env
+
+The Docker image uses the nginx template entrypoint, so these values are read
+when the container starts.
+
+| Variable | Default | Description |
+| --- | --- | --- |
+| `REVISIUM_ROBOTS_TXT` | `User-agent: *\nDisallow: /` | Full `/robots.txt` content. Use `\n` for line breaks in env values. When unset/empty, responses include `X-Robots-Tag: noindex, nofollow, noarchive`. Set this value to take full control of crawler rules |
