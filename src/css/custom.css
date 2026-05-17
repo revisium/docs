@@ -100,6 +100,27 @@
   font-weight: 600;
 }
 
+.navbar-login-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.25rem;
+  color: #525252 !important;
+  line-height: 1.2;
+}
+
+.navbar-login-link:hover {
+  color: #171717 !important;
+  text-decoration: none;
+}
+
+[data-theme="dark"] .navbar-login-link {
+  color: #d4d4d4 !important;
+}
+
+[data-theme="dark"] .navbar-login-link:hover {
+  color: #f5f5f5 !important;
+}
+
 /* ── Hero section — clean, no gradient ── */
 .hero--primary {
   background: #ffffff;
@@ -236,7 +257,7 @@
 
 .intro-route-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.85rem;
   margin: 1.5rem 0 2.5rem;
 }

@@ -25,7 +25,12 @@ import TabItem from '@theme/TabItem';
 </div>
 
 <div className="intro-route-grid">
-  <a className="intro-route intro-route-primary" href="./quick-start">
+  <a className="intro-route intro-route-primary" href="https://cloud.revisium.io">
+    <span className="intro-route-kicker">Cloud Early Access</span>
+    <strong>Start in the hosted sandbox</strong>
+    <span>Try Revisium without local setup. Best for evaluation, demos, and early projects.</span>
+  </a>
+  <a className="intro-route" href="./quick-start">
     <span className="intro-route-kicker">Start here</span>
     <strong>Run the Draft-to-API workflow</strong>
     <span>Create a project, add typed data, and query a generated Draft endpoint.</span>
@@ -41,6 +46,10 @@ import TabItem from '@theme/TabItem';
     <span>See practical ways teams use Revisium for structured operational data.</span>
   </a>
 </div>
+
+:::note Cloud status
+Revisium Cloud is currently in Early Access: use it as a hosted sandbox for evaluation and early projects. For production workloads that require full operational control, use self-hosted Docker or Kubernetes.
+:::
 
 ## What You Can Build
 
@@ -620,7 +629,7 @@ Separate teams, projects, and environments. Each with its own branches, version 
 
 ### Self-Hosted
 
-Apache 2.0, your infrastructure, no vendor lock-in. Or use [Revisium Cloud](https://cloud.revisium.io/signup).
+Apache 2.0, your infrastructure, no vendor lock-in. Or use [Revisium Cloud Early Access](https://cloud.revisium.io) as the hosted evaluation sandbox.
 
 - **Standalone** — `npx @revisium/standalone@latest` (embedded PostgreSQL, zero config)
 - **Docker Compose** — full stack with PostgreSQL, recommended for production

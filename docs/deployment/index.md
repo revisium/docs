@@ -4,8 +4,8 @@ sidebar_position: 9
 
 # Deployment
 
-:::tip Don't want to manage infrastructure?
-[Revisium Cloud](https://cloud.revisium.io/signup) — managed platform, zero ops, free to start. Sign up with Google or GitHub.
+:::tip Want the hosted path?
+[Cloud Early Access](https://cloud.revisium.io) is currently available as a hosted sandbox for evaluation, demos, and early projects. For production workloads that require full operational control, use the self-hosted options below.
 :::
 
 ## Standalone
