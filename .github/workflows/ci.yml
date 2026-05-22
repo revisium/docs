@@ -14,9 +14,11 @@ jobs:
   checks:
     uses: revisium/revisium-actions/.github/workflows/node-build.yml@763f2746000f15842e642130dba3acf09c5d00ac # v0.3.2
     with:
-      node_version: 22.11.0
+      node_version: 22.16.0
       install_command: npm ci
-      run_commands: npm run typecheck
+      run_commands: |
+        npm run typecheck
+        npm run build
 
   sonar:
     needs: checks
